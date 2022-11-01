@@ -225,6 +225,12 @@ or just one char if that's not possible"
   (add-hook 'doom-modeline-mode-hook 'my-setup-custom-doom-modeline)
   (doom-modeline-mode t))
 
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold nil)
+  (setq doom-themes-enable-italic nil)
+  (add-hook 'after-init-hook (lambda () (load-theme 'doom-solarized-light-custom t))))
+
 (use-package embark
   :general
   ("C-." 'embark-act)
@@ -496,20 +502,6 @@ _q_uit _RET_: current
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package solarized-theme
-  :init
-  (setq solarized-distinct-fringe-background t)
-  (setq solarized-high-contrast-mode-line nil)
-  (setq solarized-use-less-bold t)
-  (setq solarized-use-more-italic nil)
-  (setq solarized-use-variable-pitch nil)
-  :config
-  ;; Get rid of the underline
-  (custom-set-faces
-   '(mode-line ((t (:underline nil))))
-   '(mode-line-inactive ((t (:underline nil)))))
-  (add-hook 'after-init-hook (lambda () (load-theme 'solarized-light t))))
 
 (use-package sh-script
   :straight nil
