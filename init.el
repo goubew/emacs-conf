@@ -43,16 +43,24 @@
   (electric-pair-mode 1) ; Autoclose brackets
   (global-auto-revert-mode nil) ; Keep buffers when files change on disk
   (blink-cursor-mode 0) ; Don't blink
-  (global-hl-line-mode 1) ; Highlight the current line
   (save-place-mode 1) ; Save place in files
   (my-set-font) ; Set the right font
   (recentf-mode 1) ; Enable recent file capturing
   (if (eq system-type 'darwin) (toggle-frame-maximized)) ; Maximixe the window on MacOS
   )
+
+; https://stackoverflow.com/a/40572675
+(defvar-local was-hl-line-mode-on nil)
+(defun hl-line-on-maybe ()  (if was-hl-line-mode-on (hl-line-mode +1)))
+(defun hl-line-off-maybe () (if was-hl-line-mode-on (hl-line-mode -1)))
+(add-hook 'hl-line-mode-hook
+          (lambda () (if hl-line-mode (setq was-hl-line-mode-on t))))
   
 (add-hook 'after-init-hook 'my-init)
 (add-hook 'prog-mode-hook (lambda ()
-                            (display-line-numbers-mode 1)))
+                            (display-line-numbers-mode 1)
+                            (hl-line-mode)))
+(add-hook 'text-mode-hook 'hl-line-mode)
 
 ;; vim softtab-stop equivalent
 ;; https://stackoverflow.com/a/1450454
@@ -132,7 +140,8 @@ or just one char if that's not possible"
     "M"  'describe-mode
     "tm" 'toggle-frame-maximized
     "tw" 'toggle-truncate-lines
-    "ts" 'flyspell-mode))
+    "ts" 'flyspell-mode
+    "tT" 'tab-bar-mode))
 
 ;; --------
 ;; Packages
@@ -155,7 +164,7 @@ or just one char if that's not possible"
     "ps" 'consult-git-grep
     "sl" 'consult-line
     "sL" 'consult-line-multi
-    "sl" 'consult-mark
+    "sm" 'consult-mark
     "si" 'consult-imenu
     "so" 'consult-outline)
   (setq completion-in-region-function 'consult-completion-in-region)
@@ -180,22 +189,6 @@ or just one char if that's not possible"
   (setq doom-modeline-minor-modes nil)
   (setq doom-modeline-height 0)
   :config
-  ;; Simple Modeline for posterity
-  ;;(setq-default mode-line-format
-  ;;              (list
-  ;;               "%e"
-  ;;               '(:eval (format winum-format (winum-get-number-string)))
-  ;;               " "
-  ;;               mode-line-mule-info
-  ;;               mode-line-client
-  ;;               mode-line-modified
-  ;;               mode-line-remote
-  ;;               " "
-  ;;               (propertize "%b" 'face 'bold)
-  ;;               " (%m) "
-  ;;               mode-line-misc-info
-  ;;               "L:%l C:%C"))
-  ;;
   ;; skipped modeline segments
   ;;
   ;; workspace-name - no workspace packages currently
@@ -205,7 +198,7 @@ or just one char if that's not possible"
   ;; parrot - cute, but not needed
   ;; objed-state  - seems interesting, but not using atm
   ;; persp-mode - not using
-  ;; battery - I don't live in emacs yet
+  ;; battery - I use battery in system bar
   ;; grip - seems cool, but not using
   ;; irc mu4e gnus - maybe someday
   ;; github - not modeline worthy
@@ -213,10 +206,6 @@ or just one char if that's not possible"
   ;; indent-info - it will annoy me instantly if it's wrong already
   ;; process - (using) not sure what this does
   ;; vcs - info in magit
-  ;;
-  ;;(doom-modeline-def-modeline 'main
-  ;;  '(bar workspace-name window-number modals matches buffer-info remote-host buffer-position word-count parrot selection-info)
-  ;;  '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker))
   (doom-modeline-def-modeline 'my-doom-modeline
     '(bar window-number buffer-info remote-host buffer-position selection-info )
     '(misc-info debug repl lsp minor-modes input-method buffer-encoding major-mode process checker))
@@ -264,7 +253,9 @@ or just one char if that's not possible"
   (setq evil-want-keybinding nil)
   :config
   (add-to-list 'evil-emacs-state-modes 'vterm-mode)
-  (my-leader-def "sc" 'evil-ex-nohighlight))
+  (my-leader-def "sc" 'evil-ex-nohighlight)
+  (add-hook 'evil-visual-state-entry-hook 'hl-line-off-maybe)
+  (add-hook 'evil-visual-state-exit-hook 'hl-line-on-maybe))
 
 (use-package evil-collection
   :after evil
@@ -301,6 +292,13 @@ or just one char if that's not possible"
     "lr" 'eglot-rename
     "lu" 'xref-find-references))
 
+(use-package expand-region
+  :general
+  (general-define-key
+   :states '(visual)
+   "," 'er/contract-region
+   "." 'er/expand-region))
+
 (use-package flymake
   :straight nil
   :defer t
@@ -313,6 +311,15 @@ or just one char if that's not possible"
     "eL" 'flymake-show-project-diagnostics
     "en" 'flymake-goto-next-error
     "ep" 'flymake-goto-prev-error))
+
+(use-package git-gutter-fringe
+  :config
+  ; Stolen from doom emacs
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom)
+  ; The fringe bitmaps only seem to work when package loading isn't defered
+  (add-hook 'after-init-hook 'global-git-gutter-mode))
 
 (use-package git-timemachine
   :general
@@ -438,6 +445,8 @@ _q_uit _RET_: current
   (add-hook 'ledger-mode-hook 'my-ledger-mode))
 
 (use-package magit
+  :init
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   :general
   (my-leader-def
     "gs" 'magit-status
@@ -556,10 +565,8 @@ _q_uit _RET_: current
     (if (bound-and-true-p vterm-copy-mode)
         (evil-normal-state)
       (evil-emacs-state)))
-  (add-hook 'vterm-mode-hook (lambda ()
-                               (setq-local global-hl-line-mode nil)
-                               (evil-emacs-state)))
-  (add-hook 'vterm-copy-mode-hook (lambda () (my-evil-normal-in-vterm-copy-mode)))
+  (add-hook 'vterm-mode-hook 'evil-emacs-state)
+  (add-hook 'vterm-copy-mode-hook 'my-evil-normal-in-vterm-copy-mode)
   (setq vterm-disable-bold-font t)
   :general
   (my-leader-def "at" 'vterm)

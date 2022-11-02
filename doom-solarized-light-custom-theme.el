@@ -85,7 +85,7 @@ Can be an integer to determine the exact padding."
    (selection      dark-blue)
    (builtin        magenta)
    (comments       base4)
-   (doc-comments   base4)
+   (doc-comments   green)
    (constants      violet)
    (functions      magenta)
    (keywords       green)
