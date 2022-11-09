@@ -154,6 +154,12 @@ or just one char if that's not possible"
     "jl" 'evil-avy-goto-line
     "jw" 'evil-avy-goto-word-1))
 
+(use-package cape
+  :after consult
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
 (use-package consult
   :after vertico
   :config
