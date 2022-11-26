@@ -20,6 +20,7 @@
 (setq enable-recursive-minibuffers t) ; Recommended by vertico
 (setq recentf-max-menu-items 25) ; Set recent file limit
 (setq recentf-max-saved-items 25) ; Set recent file limit
+(add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window
 
 ;; Fonts
 (defun my-check-if-font-exists (font)
@@ -511,6 +512,7 @@ _q_uit _RET_: current
   :init
   (my-leader-def
     "pb" 'project-switch-to-buffer
+    "pc" 'project-compile
     "pf" 'project-find-file
     "pp" 'project-switch-project
   ))
