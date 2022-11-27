@@ -20,6 +20,7 @@
 (setq enable-recursive-minibuffers t) ; Recommended by vertico
 (setq recentf-max-menu-items 25) ; Set recent file limit
 (setq recentf-max-saved-items 25) ; Set recent file limit
+(setq scroll-conservatively 1); Do not recenter for 5 lines above and below window view
 (add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window
 
 ;; Fonts
