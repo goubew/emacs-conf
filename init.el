@@ -422,20 +422,21 @@ _q_uit _RET_: current
     (interactive)
     (goto-char (point-max))
     (insert "\n")
-    (insert (replace-regexp-in-string "-" "/" (org-read-date)))
-    (insert " ")
-    (insert (read-string "Enter the expense title =>"))
-    (insert "\n    ")
-    (insert (completing-read "Enter the expense: "
-                      (delete-dups (save-match-data
-                                     (let ((pos 0) (string (buffer-string)) matches)
-                                       (while (string-match "Expenses:[WN][^ ]*" string pos)
-                                         (push (match-string-no-properties 0 string) matches)
-                                         (setq pos (match-end 0)))
-                                       matches)))))
-    (insert "  $")
-    (insert (read-string "Enter the price =>"))
-    (insert "\n    Assets:Checking\n"))
+    (let ((cost (read-string "Enter the price =>")))
+      (insert (replace-regexp-in-string "-" "/" (org-read-date)))
+      (insert " ")
+      (insert (read-string "Enter the expense title =>"))
+      (insert "\n    ")
+      (insert (completing-read "Enter the expense: "
+                               (delete-dups (save-match-data
+                                              (let ((pos 0) (string (buffer-string)) matches)
+                                                (while (string-match "Expenses:[WN][^ ]*" string pos)
+                                                  (push (match-string-no-properties 0 string) matches)
+                                                  (setq pos (match-end 0)))
+                                                matches)))))
+      (insert "  $")
+      (insert cost)
+      (insert "\n    Assets:Checking\n")))
   (my-leader-def
     :keymaps 'ledger-mode-map
     "mc" 'ledger-mode-clean-buffer
