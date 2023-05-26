@@ -288,6 +288,12 @@ or just one char if that's not possible"
   :config
   (add-hook 'evil-mode-hook (lambda () (evil-escape-mode 1))))
 
+(use-package evil-numbers
+  :after evil
+  :config
+  (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
+  (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
+
 (use-package evil-surround
   :after evil
   :config
