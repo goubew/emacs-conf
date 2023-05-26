@@ -8,7 +8,7 @@
 (toggle-scroll-bar -1)
 
 (setq-default indent-tabs-mode nil); indent with spaces
-(setq-default tab-width 2) ; Display width of tab char
+(setq-default tab-width 4) ; Display width of tab char
 (setq ring-bell-function 'ignore) ; SILENCE
 (setq help-window-select t) ; Autofocus help windows
 (setq inhibit-startup-screen t) ; No splash screen
@@ -35,7 +35,7 @@
       (when (my-check-if-font-exists "Droid Sans Mono 13")
         (set-frame-font "Droid Sans Mono 14" nil t))
       (when (my-check-if-font-exists "SF Mono")
-        (set-frame-font "SF Mono Light 15" nil t))
+        (set-frame-font "SF Mono Light 12" nil t))
       (when (<= (display-pixel-width) 1280)
         (when (my-check-if-font-exists "Terminus")
           (set-frame-font "Terminus 12" nil t))))))
@@ -196,6 +196,7 @@ or just one char if that's not possible"
   (setq doom-modeline-icon nil)
   (setq doom-modeline-minor-modes nil)
   (setq doom-modeline-height 0)
+  (setq doom-modeline-width 0)
   :config
   ;; skipped modeline segments
   ;;
@@ -249,8 +250,16 @@ or just one char if that's not possible"
 (use-package evil
   :hook (after-init . evil-mode)
   :init
+  (setq evil-insert-state-message nil)
+  (setq evil-normal-state-message nil)
+  (setq evil-motion-state-message nil)
+  (setq evil-visual-state-message nil)
+  (setq evil-replace-state-message nil)
+  (setq evil-operator-state-message nil)
+
   (setq evil-respect-visual-line-mode t)
   (setq evil-search-module 'evil-search)
+  (setq evil-symbol-word-search t)
   (setq evil-shift-width 2)
   (setq evil-undo-system 'undo-fu)
   (setq evil-want-C-d-scroll t)
@@ -290,6 +299,8 @@ or just one char if that's not possible"
     (exec-path-from-shell-initialize)))
 
 (use-package eglot
+  :init
+  (setq eldoc-echo-area-use-multiline-p nil)
   :general
   (my-leader-def "le" 'eglot)
   :config
