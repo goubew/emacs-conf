@@ -43,6 +43,8 @@
 ;; Enable modes
 (defun my-init ()
   (electric-pair-mode 1) ; Autoclose brackets
+  (defun my-inhibit-electric-pair-mode (char) (minibufferp))
+  (setq electric-pair-inhibit-predicate #'my-inhibit-electric-pair-mode)
   (global-auto-revert-mode nil) ; Keep buffers when files change on disk
   (blink-cursor-mode 0) ; Don't blink
   (save-place-mode 1) ; Save place in files
@@ -155,6 +157,33 @@ or just one char if that's not possible"
     "jj" 'evil-avy-goto-char
     "jl" 'evil-avy-goto-line
     "jw" 'evil-avy-goto-word-1))
+
+(use-package cc-mode
+  :straight nil
+  :defer t
+  :config
+  (with-eval-after-load 'project
+    (defun my-swap-h-c-file ()
+      "Finds the associated .h or .c file in the current project"
+      (interactive)
+      (let ((file-name (file-name-nondirectory (buffer-file-name))))
+        (let ((related-file
+               (cond
+                ((string-match "\\.h\\'" file-name)
+                 (concat (regexp-quote (replace-regexp-in-string "\\.h\\'" ".c" file-name)) "$"))
+                ((string-match "\\.c\\'" file-name)
+                 (concat (regexp-quote (replace-regexp-in-string "\\.c\\'" ".h" file-name)) "$"))
+                )))
+          (if related-file
+              ;(project-find-file-in related-file (list (project-root (project-current))) (project-current nil))
+              (let ((found-file-list (directory-files-recursively (project-root (project-current)) related-file nil)))
+                (if (> (length found-file-list) 0)
+                    (find-file (nth 0 found-file-list))
+                  (message "Associated file not found in project")))
+            (message "File does not end in .c or .h")))))
+    (my-leader-def
+      :keymaps 'c-mode-map
+      "mo" 'my-swap-h-c-file)))
 
 (use-package cape
   :after consult
