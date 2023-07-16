@@ -151,6 +151,11 @@ or just one char if that's not possible"
 ;; Packages
 ;; --------
 
+(use-package ag
+  :after project
+  :init
+  (setq ag-highlight-search t))
+
 (use-package avy
   :general
   (my-leader-def
@@ -634,6 +639,14 @@ _q_uit _RET_: current
 
 (use-package which-key
   :config (which-key-mode))
+
+(use-package wgrep
+  :after project
+  :init
+  (setq wgrep-auto-save-buffer t))
+
+(use-package wgrep-ag
+  :after project)
 
 (use-package winum
   :config
