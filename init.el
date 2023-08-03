@@ -339,6 +339,7 @@ or just one char if that's not possible"
     (exec-path-from-shell-initialize)))
 
 (use-package eglot
+  :straight nil
   :init
   (setq eldoc-echo-area-use-multiline-p nil)
   :general
