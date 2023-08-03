@@ -116,7 +116,6 @@ or just one char if that's not possible"
       (when (> (count-windows) 1)
         (when (y-or-n-p "Close window?") (delete-window)))))
   (my-leader-def
-    "SPC" 'execute-extended-command
     "a" '(:ignore t :which-key "applications")
     "b" '(:ignore t :which-key "buffers")
     "c" '(:ignore t :which-key "conflicts")
@@ -130,6 +129,7 @@ or just one char if that's not possible"
     "p" '(:ignore t :which-key "project")
     "s" '(:ignore t :which-key "search")
     "t" '(:ignore t :which-key "toggle")
+    "x" 'execute-extended-command
     "ab" 'bookmark-set
     "ac" 'calc
     "bb" 'switch-to-buffer
@@ -229,8 +229,6 @@ or just one char if that's not possible"
   (setq inhibit-compacting-font-caches t)
   (setq doom-modeline-icon nil)
   (setq doom-modeline-minor-modes nil)
-  (setq doom-modeline-height 0)
-  (setq doom-modeline-width 0)
   :config
   ;; skipped modeline segments
   ;;
@@ -250,7 +248,7 @@ or just one char if that's not possible"
   ;; process - (using) not sure what this does
   ;; vcs - info in magit
   (doom-modeline-def-modeline 'my-doom-modeline
-    '(bar window-number buffer-info remote-host buffer-position selection-info )
+    '(bar window-number buffer-info remote-host buffer-position selection-info)
     '(misc-info debug repl lsp minor-modes input-method buffer-encoding major-mode process checker))
   (defun my-setup-custom-doom-modeline ()
     (doom-modeline-set-modeline 'my-doom-modeline 'default))
@@ -520,9 +518,10 @@ _q_uit _RET_: current
 
 (use-package orderless
   :after vertico
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  :init
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package org
   :straight nil
@@ -598,7 +597,16 @@ _q_uit _RET_: current
   :after evil)
 
 (use-package vertico
-  :hook (after-init . vertico-mode))
+  :hook (after-init . vertico-mode)
+  :straight (:files (:defaults "extensions/*")
+                   :includes (vertico-buffer
+                              vertico-directory
+                              vertico-flat
+                              vertico-indexed
+                              vertico-mouse
+                              vertico-quick
+                              vertico-repeat
+                              vertico-reverse))
   :config
   (general-define-key
    :keymaps 'vertico-map
@@ -608,13 +616,11 @@ _q_uit _RET_: current
    "C-h" 'backward-kill-word
    "C-w" 'backward-kill-word
    "C-u" 'kill-whole-line)
-
-(use-package vertico-repeat
-  :after veritco
-  :straight nil ; Included in vertico
-  :config
+  (require 'vertico-repeat)
+  (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
   (my-leader-def
-    "\\" 'vertico-repeat))
+    "SPC" 'vertico-repeat-last
+    "C-SPC" 'vertico-repeat-select))
 
 (use-package visual-fill-column
   :hook
