@@ -456,7 +456,7 @@ _q_uit _RET_: current
     ("q" nil :color blue)))
 
 (use-package jinja2-mode
-  :mode ("\\.j2\\'" . ledger-mode))
+  :mode ("\\.j2\\'" . jinja2-mode))
 
 (use-package js
   :straight nil

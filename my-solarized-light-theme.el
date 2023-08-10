@@ -36,13 +36,13 @@
   (minibuffer-prompt   (:foreground blue))
   (mode-line           (:background base2))
   (mode-line-inactive  (:background base2))
-  (region              (:background base2))
+  (region              (:background violet :foreground base3))
   (secondary-selection (:background base2))
   (shadow              (:foreground base1))
   (window-divider      (:foreground base01))
 
   ;; Built in syntax
-  (font-lock-builtin-face       (:foreground magenta))
+  (font-lock-builtin-face       (:foreground violet))
   (font-lock-constant-face      (:foreground magenta))
   (font-lock-comment-face       (:foreground base1))
   (font-lock-function-name-face (:foreground yellow))
@@ -113,6 +113,72 @@
 
   ;; highlight indent guides
   (highlight-indent-guides-character-face (:foreground yellow))
-  ))
+
+  ;; git-gutter
+  (git-gutter:modified (:background base2 :foreground green))
+  (git-gutter:added    (:background base2 :foreground green))
+  (git-gutter:deleted  (:background base2 :foreground red))
+
+  ;; flyspell
+  (flyspell-duplicate (:underline (:color orange :style 'wave)))
+  (flyspell-incorrect (:underline (:color red :style 'wave)))
+
+  ;; dired
+  (dired-broken-symlink (:background red :foreground base3))
+
+  ;; eshell
+  (eshell-prompt        (:foreground green))
+  (eshell-ls-backup     (:foreground base00))
+  (eshell-ls-archive    (:foreground base00))
+  (eshell-ls-clutter    (:foreground base00))
+  (eshell-ls-missing    (:foreground base00))
+  (eshell-ls-product    (:foreground base00))
+  (eshell-ls-special    (:foreground base00))
+  (eshell-ls-symlink    (:foreground green))
+  (eshell-ls-readonly   (:foreground base00))
+  (eshell-ls-directory  (:foreground orange))
+  (eshell-ls-executable (:foreground violet))
+  (eshell-ls-unreadable (:foreground base00))
+
+  ;; tab bar
+  (tab-bar                    (:background base2 :foreground base00))
+  (tab-bar-tab                (:foreground base01 :weight 'bold))
+  (tab-bar-tab-inactive       (:foreground base00))
+  (tab-bar-tab-ungrouped      (:foreground base00))
+  (tab-bar-tab-group-current  (:foreground base2 :weight 'bold))
+  (tab-bar-tab-group-inactive (:foreground base00))
+
+  ;; wgrep
+  (wgrep-reject-face (:foreground red))
+  (wgrep-face        (:background green :foreground base3))
+  (wgrep-done-face   (:foreground blue))
+  (wgrep-file-face   (:background green :foreground base3))
+  (wgrep-delete-face (:background red :foreground base3))
+
+  ;; hydra
+  (hydra-face-red (:foreground red))
+  (hydra-face-blue (:foreground blue))
+  (hydra-face-amaranth (:foreground magenta))
+  (hydra-face-pink (:foreground cyan))
+  (hydra-face-teal (:foreground orange))
+
+  ;; ansi
+  (ansi-color-black          (:foreground base01 :background base01))
+  (ansi-color-red            (:foreground red :background red))
+  (ansi-color-green          (:foreground green :background green))
+  (ansi-color-yellow         (:foreground yellow :background yellow))
+  (ansi-color-blue           (:foreground blue :background blue))
+  (ansi-color-magenta        (:foreground magenta :background magenta))
+  (ansi-color-cyan           (:foreground cyan :background cyan))
+  (ansi-color-white          (:foreground base1 :background base1))
+  (ansi-color-bright-black   (:foreground base01 :background base01))
+  (ansi-color-bright-red     (:foreground red :background red))
+  (ansi-color-bright-green   (:foreground green :background green))
+  (ansi-color-bright-yellow  (:foreground yellow :background yellow))
+  (ansi-color-bright-blue    (:foreground blue :background blue))
+  (ansi-color-bright-magenta (:foreground magenta :background magenta))
+  (ansi-color-bright-cyan    (:foreground cyan :background cyan))
+  (ansi-color-bright-white   (:foreground base2 :background base2))
+))
 
 (provide-theme 'my-solarized-light)
