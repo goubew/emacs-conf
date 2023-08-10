@@ -23,6 +23,7 @@ declare -A el_symlinks
 el_symlinks[init.el]="$HOME/.emacs.d/init.el"
 el_symlinks[early-init.el]="$HOME/.emacs.d/early-init.el"
 el_symlinks[doom-solarized-light-custom-theme.el]="$HOME/.emacs.d/doom-solarized-light-custom-theme.el"
+el_symlinks[my-solarized-theme.el]="$HOME/.emacs.d/my-solarized-theme.el"
 el_symlinks[default.el]="$HOME/.emacs.d/straight/versions/default.el"
 
 for el_file in "${!el_symlinks[@]}"; do

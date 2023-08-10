@@ -30,21 +30,19 @@
 
 (defun my-set-font ()
   "Sets the font to SF Mono, Droid Sans Mono, or Terminus as appropriate."
+  (interactive)
   (when (display-graphic-p)
     (progn
       (when (my-check-if-font-exists "Droid Sans Mono 13")
         (set-frame-font "Droid Sans Mono 14" nil t))
       (when (my-check-if-font-exists "SF Mono")
-        (set-frame-font "SF Mono Light 12" nil t))
+        (set-frame-font "SF Mono Light 18" nil t))
       (when (<= (display-pixel-width) 1280)
         (when (my-check-if-font-exists "Terminus")
           (set-frame-font "Terminus 12" nil t))))))
 
 ;; Enable modes
 (defun my-init ()
-  (electric-pair-mode 1) ; Autoclose brackets
-  (defun my-inhibit-electric-pair-mode (char) (minibufferp))
-  (setq electric-pair-inhibit-predicate #'my-inhibit-electric-pair-mode)
   (global-auto-revert-mode nil) ; Keep buffers when files change on disk
   (blink-cursor-mode 0) ; Don't blink
   (save-place-mode 1) ; Save place in files
@@ -62,7 +60,8 @@
   
 (add-hook 'after-init-hook 'my-init)
 (add-hook 'prog-mode-hook (lambda ()
-                            (display-line-numbers-mode 1)
+                            (electric-pair-mode 1) ; Autoclose brackets
+                            (display-line-numbers-mode 1);
                             (hl-line-mode)))
 (add-hook 'text-mode-hook 'hl-line-mode)
 
@@ -125,6 +124,7 @@ or just one char if that's not possible"
     "h" '(:ignore t :which-key "hydra")
     "j" '(:ignore t :which-key "jump")
     "l" '(:ignore t :which-key "lsp")
+    "L" '(:ignore t :which-key "lisp")
     "m" '(:ignore t :which-key "mode")
     "p" '(:ignore t :which-key "project")
     "s" '(:ignore t :which-key "search")
@@ -141,6 +141,9 @@ or just one char if that's not possible"
     "ff" 'find-file
     "fs" 'save-buffer
     "jb" 'bookmark-jump
+    "Le" 'eval-expression
+    "Ls" 'eval-last-sexp
+    "Lr" 'eval-region
     "M"  'describe-mode
     "tm" 'toggle-frame-maximized
     "tw" 'toggle-truncate-lines
@@ -152,9 +155,15 @@ or just one char if that's not possible"
 ;; --------
 
 (use-package ag
-  :after project
+  :general
+  (my-leader-def "as" 'ag)
   :init
   (setq ag-highlight-search t))
+
+(use-package autothemer
+  :config
+  (add-hook 'after-init-hook (lambda () (load-theme 'my-solarized-light t)))
+  )
 
 (use-package avy
   :general
@@ -259,7 +268,8 @@ or just one char if that's not possible"
   :config
   (setq doom-themes-enable-bold nil)
   (setq doom-themes-enable-italic nil)
-  (add-hook 'after-init-hook (lambda () (load-theme 'doom-solarized-light-custom t))))
+  ;(add-hook 'after-init-hook (lambda () (load-theme 'doom-solarized-light-custom t))))
+)
 
 (use-package embark
   :general
@@ -278,6 +288,15 @@ or just one char if that's not possible"
 (use-package embark-consult
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package eshell
+  :straight nil
+  :general
+  (my-leader-def "as" 'eshell)
+  :config
+  (general-define-key
+   :keymaps 'eshell-mode-map
+   "C-6" 'evil-switch-to-windows-last-buffer))
 
 (use-package evil
   :hook (after-init . evil-mode)
@@ -393,9 +412,6 @@ or just one char if that's not possible"
   (my-leader-def "ti" 'highlight-indent-guides-mode)
   :config
   (setq highlight-indent-guides-auto-enabled nil)
-  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-  (set-face-background 'highlight-indent-guides-even-face "dimgray")
-  (set-face-foreground 'highlight-indent-guides-character-face "#b58900") ; Solarized yellow
   (setq highlight-indent-guides-method 'bitmap))
 
 (use-package helpful
@@ -523,6 +539,7 @@ _q_uit _RET_: current
   (setq completion-category-defaults nil)
   (setq completion-category-overrides '((file (styles partial-completion)))))
 
+;; TODO: Make org mode use cape-dabbrev completions instead of pcomplete
 (use-package org
   :straight nil
   :defer t
@@ -537,17 +554,18 @@ _q_uit _RET_: current
   (defun my-org-header-link ()
     "Uses org-goto to prompt for a heading and creates a link"
     (interactive)
+    (let ((org-header
+           (save-excursion
+             (org-goto)
+             (replace-regexp-in-string "\*+" "*"
+                                       (buffer-substring-no-properties
+                                        (line-beginning-position)
+                                        (line-end-position))))))
     (insert "[[")
-    (insert
-     (save-excursion
-       (org-goto)
-       (replace-regexp-in-string "\*+" "*"
-                                 (buffer-substring-no-properties
-                                  (line-beginning-position)
-                                  (line-end-position)))))
+    (insert org-header)
     (insert "][")
-    (insert (read-string "Enter link description =>"))
-    (insert "]]"))
+    (insert (read-string "Enter link description =>" (replace-regexp-in-string "^\* *" "" org-header)))
+    (insert "]]")))
   (defun my-org-mode ()
     (setq org-adapt-indentation nil)
     (setq evil-cross-lines t) ; Make horizontal movement cross lines
