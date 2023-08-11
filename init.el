@@ -96,7 +96,7 @@ or just one char if that's not possible"
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
-      (error "Straight.el not installed. Clone https://github.com/raxod502/straight.el.git into ~/.emacs.d/straight/repos/"))
+      (error "Straight.el not installed. Clone https://github.com/radian-software/straight.el.git into ~/.emacs.d/straight/repos/"))
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package) ; Install use-package
