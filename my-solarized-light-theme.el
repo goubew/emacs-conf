@@ -238,6 +238,12 @@
   (ansi-color-bright-magenta (:foreground magenta :background magenta))
   (ansi-color-bright-cyan    (:foreground cyan :background cyan))
   (ansi-color-bright-white   (:foreground base2 :background base2))
+
+  ;; org
+  (org-table (:foreground blue))
+
+  ;; eglot
+  (eglot-inlay-hint-face (:foreground base1 :background base2 :height 0.8))
 ))
 
 (provide-theme 'my-solarized-light)

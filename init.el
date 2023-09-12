@@ -184,9 +184,9 @@ or just one char if that's not possible"
         (let ((related-file
                (cond
                 ((string-match "\\.h\\'" file-name)
-                 (concat (regexp-quote (replace-regexp-in-string "\\.h\\'" ".c" file-name)) "$"))
+                 (concat "^" (regexp-quote (replace-regexp-in-string "\\.h\\'" ".c" file-name)) "$"))
                 ((string-match "\\.c\\'" file-name)
-                 (concat (regexp-quote (replace-regexp-in-string "\\.c\\'" ".h" file-name)) "$"))
+                 (concat "^" (regexp-quote (replace-regexp-in-string "\\.c\\'" ".h" file-name)) "$"))
                 )))
           (if related-file
               ;(project-find-file-in related-file (list (project-root (project-current))) (project-current nil))
