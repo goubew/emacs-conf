@@ -36,7 +36,7 @@
       (when (my-check-if-font-exists "Droid Sans Mono 13")
         (set-frame-font "Droid Sans Mono 14" nil t))
       (when (my-check-if-font-exists "SF Mono")
-        (set-frame-font "SF Mono Light 18" nil t))
+        (set-frame-font "SF Mono Light 13" nil t))
       (when (<= (display-pixel-width) 1280)
         (when (my-check-if-font-exists "Terminus")
           (set-frame-font "Terminus 12" nil t))))))
@@ -60,7 +60,6 @@
   
 (add-hook 'after-init-hook 'my-init)
 (add-hook 'prog-mode-hook (lambda ()
-                            (electric-pair-mode 1) ; Autoclose brackets
                             (display-line-numbers-mode 1);
                             (hl-line-mode)))
 (add-hook 'text-mode-hook 'hl-line-mode)
@@ -85,6 +84,12 @@ or just one char if that's not possible"
 
 ;; Faster prompts
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; ---------------------------
+;; Load non-published packages
+;; ---------------------------
+
+(load (expand-file-name (concat user-emacs-directory "breadcrumb")))
 
 ;; -------------------
 ;; Early Package Setup
@@ -128,12 +133,13 @@ or just one char if that's not possible"
     "m" '(:ignore t :which-key "mode")
     "p" '(:ignore t :which-key "project")
     "s" '(:ignore t :which-key "search")
-    "t" '(:ignore t :which-key "toggle")
+    "t" '(:ignore t :which-key "toggle/tab")
     "x" 'execute-extended-command
     "ab" 'bookmark-set
     "ac" 'calc
     "bb" 'switch-to-buffer
     "bd" 'my-buffer-delete
+    "bs" 'scratch-buffer
     "cn" 'smerge-next
     "cp" 'smerge-prev
     "cm" 'smerge-keep-mine
@@ -145,10 +151,19 @@ or just one char if that's not possible"
     "Ls" 'eval-last-sexp
     "Lr" 'eval-region
     "M"  'describe-mode
+    "t1" (lambda() (interactive) (tab-select 1))
+    "t2" (lambda() (interactive) (tab-select 2))
+    "t3" (lambda() (interactive) (tab-select 3))
+    "t4" (lambda() (interactive) (tab-select 4))
+    "t5" (lambda() (interactive) (tab-select 5))
+    "t6" (lambda() (interactive) (tab-select 6))
+    "t7" (lambda() (interactive) (tab-select 7))
+    "t8" (lambda() (interactive) (tab-select 8))
+    "t9" (lambda() (interactive) (tab-select 9))
+    "tl" 'display-line-numbers-mode
     "tm" 'toggle-frame-maximized
     "tw" 'toggle-truncate-lines
-    "ts" 'flyspell-mode
-    "tT" 'tab-bar-mode))
+    "ts" 'flyspell-mode))
 
 ;; --------
 ;; Packages
@@ -171,6 +186,9 @@ or just one char if that's not possible"
     "jj" 'evil-avy-goto-char
     "jl" 'evil-avy-goto-line
     "jw" 'evil-avy-goto-word-1))
+
+(use-package breadcrumb
+  :hook (prog-mode . breadcrumb-local-mode))
 
 (use-package cc-mode
   :straight nil
@@ -212,6 +230,7 @@ or just one char if that's not possible"
     "bB" 'consult-buffer
     "ec" 'consult-flymake
     "fr" 'consult-recent-file
+    "pb" 'consult-project-buffer
     "ps" 'consult-git-grep
     "sl" 'consult-line
     "sL" 'consult-line-multi
@@ -270,6 +289,13 @@ or just one char if that's not possible"
   (setq doom-themes-enable-italic nil)
   ;(add-hook 'after-init-hook (lambda () (load-theme 'doom-solarized-light-custom t))))
 )
+
+(use-package elec-pair
+  :straight nil
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook (lambda ()
+                              (electric-pair-local-mode 1))))
 
 (use-package embark
   :general
@@ -455,6 +481,10 @@ _q_uit _RET_: current
     (">" smerge-diff-base-other)
     ("q" nil :color blue)))
 
+(use-package imenu-list
+  :general
+  (my-leader-def "tI" 'imenu-list-smart-toggle))
+
 (use-package jinja2-mode
   :mode ("\\.j2\\'" . jinja2-mode))
 
@@ -577,12 +607,15 @@ _q_uit _RET_: current
     (visual-line-mode 1))
   (add-hook 'org-mode-hook 'my-org-mode))
 
+(use-package origami
+  :hook (prog-mode . origami-mode))
+
 (use-package project
   :straight nil
   :defer t
   :init
+  ; buffer switch handled by consult
   (my-leader-def
-    "pb" 'project-switch-to-buffer
     "pc" 'project-compile
     "pf" 'project-find-file
     "pp" 'project-switch-project
@@ -597,8 +630,16 @@ _q_uit _RET_: current
   :config
   (defun my-shell-mode ()
     "My shell mode settings"
-    (setq sh-indentation 2))
-  (add-hook 'shell-mode-hook 'my-shell-mode))
+    (setq sh-basic-offset 2))
+  (add-hook 'sh-mode-hook 'my-shell-mode))
+
+(use-package tab-bar
+  :straight nil
+  :init
+  (setq tab-bar-new-button-show nil)
+  (setq tab-bar-close-button-show nil)
+  :general
+  (my-leader-def "tT" 'tab-bar-mode))
 
 (use-package treemacs
   :init
@@ -693,10 +734,13 @@ _q_uit _RET_: current
   :mode ("\\.ya?ml\\'" . yaml-mode))
 
 (use-package yasnippet
-  :init
-  (with-eval-after-load "eglot" (require 'yasnippet)) ; Enable in case snippet completions are provided
-  :general
+  :config
+  (yas-reload-all)
   (my-leader-def "ty" 'yas-minor-mode))
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+
+(use-package yasnippet-snippets
+  :after yasnippet)
 
 (use-package zone-nyan
   :general
