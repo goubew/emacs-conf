@@ -32,14 +32,16 @@
   "Sets the font to SF Mono, Droid Sans Mono, or Terminus as appropriate."
   (interactive)
   (when (display-graphic-p)
-    (progn
-      (when (my-check-if-font-exists "Droid Sans Mono 13")
-        (set-frame-font "Droid Sans Mono 14" nil t))
-      (when (my-check-if-font-exists "SF Mono")
-        (set-frame-font "SF Mono Light 13" nil t))
-      (when (<= (display-pixel-width) 1280)
-        (when (my-check-if-font-exists "Terminus")
-          (set-frame-font "Terminus 12" nil t))))))
+    (if (eq system-type 'darwin)
+        (set-frame-font "SF Mono Light 18" nil t)
+      (progn
+        (when (my-check-if-font-exists "Droid Sans Mono 13")
+          (set-frame-font "Droid Sans Mono 14" nil t))
+        (when (my-check-if-font-exists "SF Mono")
+          (set-frame-font "SF Mono Light 13" nil t))
+        (when (<= (display-pixel-width) 1280)
+          (when (my-check-if-font-exists "Terminus")
+            (set-frame-font "Terminus 12" nil t)))))))
 
 ;; Enable modes
 (defun my-init ()
