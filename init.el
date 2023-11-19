@@ -190,6 +190,7 @@
   (setq-default indent-tabs-mode nil); indent with spaces
   (setq-default tab-width 4) ; Display width of tab char
 
+  (setq scroll-margin 2)
   (setq use-short-answers t) ; Faster prompts
   (setq visible-cursor nil)
   (setq ring-bell-function 'ignore) ; SILENCE
