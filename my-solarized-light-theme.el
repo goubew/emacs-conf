@@ -96,7 +96,7 @@
   (line-number-current-line (:inherit 'mode-line :bold 't))
 
   ;; show-paren
-  (show-paren-match    (:background green :foreground base3))
+  (show-paren-match    (:underline t))
   (show-paren-mismatch (:background red :foreground base3))
 
   ;; avy
@@ -243,7 +243,8 @@
   (org-table (:foreground blue))
 
   ;; eglot
-  (eglot-inlay-hint-face (:foreground base1 :background base2 :height 0.8))
+  (eglot-inlay-hint-face       (:foreground base1 :background base2 :height 0.8))
+  (eglot-highlight-symbol-face (:underline t))
 ))
 
 (provide-theme 'my-solarized-light)

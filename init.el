@@ -1,114 +1,9 @@
-;; ---------------
-;; Global Settings
-;; ---------------
-
-;; Disable UI elements
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(toggle-scroll-bar -1)
-
-(setq-default indent-tabs-mode nil); indent with spaces
-(setq-default tab-width 4) ; Display width of tab char
-(setq ring-bell-function 'ignore) ; SILENCE
-(setq help-window-select t) ; Autofocus help windows
-(setq inhibit-startup-screen t) ; No splash screen
-(setq mac-command-modifier 'control) ; Command key remap
-(setq backup-directory-alist '(("." . "~/.saves"))) ; Backups in different dir
-(setq auto-save-file-name-transforms '((".*" "~/.saves/" t))) ; auto saves in different dir
-(setq ispell-program-name "aspell") ; Use aspell for flyspell
-(setq vc-follow-symlinks t) ; Follow symlinks
-(setq enable-recursive-minibuffers t) ; Recommended by vertico
-(setq recentf-max-menu-items 25) ; Set recent file limit
-(setq recentf-max-saved-items 25) ; Set recent file limit
-(setq scroll-conservatively 100); Do not recenter after scrolling offscreen
-(add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window
-
-;; Fonts
-(defun my-check-if-font-exists (font)
-  "Check if a font is installed"
-  (if (null (x-list-fonts font)) nil t))
-
-(defun my-set-font ()
-  "Sets the font to SF Mono, Droid Sans Mono, or Terminus as appropriate."
-  (interactive)
-  (when (display-graphic-p)
-    (if (eq system-type 'darwin)
-        (set-frame-font "SF Mono Light 18" nil t)
-      (progn
-        (when (my-check-if-font-exists "Droid Sans Mono 13")
-          (set-frame-font "Droid Sans Mono 14" nil t))
-        (when (my-check-if-font-exists "SF Mono")
-          (set-frame-font "SF Mono Light 13" nil t))
-        (when (<= (display-pixel-width) 1280)
-          (when (my-check-if-font-exists "Terminus")
-            (set-frame-font "Terminus 12" nil t)))))))
-
-;; Enable modes
-(defun my-init ()
-  (global-auto-revert-mode nil) ; Keep buffers when files change on disk
-  (blink-cursor-mode 0) ; Don't blink
-  (save-place-mode 1) ; Save place in files
-  (my-set-font) ; Set the right font
-  (recentf-mode 1) ; Enable recent file capturing
-  (if (eq system-type 'darwin) (toggle-frame-maximized)) ; Maximixe the window on MacOS
-  )
-
-; https://stackoverflow.com/a/40572675
-(defvar-local was-hl-line-mode-on nil)
-(defun hl-line-on-maybe ()  (if was-hl-line-mode-on (hl-line-mode +1)))
-(defun hl-line-off-maybe () (if was-hl-line-mode-on (hl-line-mode -1)))
-(add-hook 'hl-line-mode-hook
-          (lambda () (if hl-line-mode (setq was-hl-line-mode-on t))))
-  
-(add-hook 'after-init-hook 'my-init)
-(add-hook 'prog-mode-hook (lambda ()
-                            (display-line-numbers-mode 1);
-                            (hl-line-mode)))
-(add-hook 'text-mode-hook 'hl-line-mode)
-
-;; vim softtab-stop equivalent
-;; https://stackoverflow.com/a/1450454
-(defun my-backward-delete-whitespace-to-column ()
-  "Delete back to the previous column of whitespace, or as much whitespace as possible,
-or just one char if that's not possible"
-  (interactive)
-  (if indent-tabs-mode
-      (call-interactively 'backward-delete-char)
-    (let ((movement (% (current-column) tab-width))
-          (p (point)))
-      (when (= movement 0) (setq movement tab-width))
-      (save-match-data
-        (if (string-match "\\w*\\(\\s-+\\)$" (buffer-substring-no-properties (- p movement) p))
-            (backward-delete-char (- (match-end 1) (match-beginning 1)))
-          (call-interactively 'backward-delete-char))))))
-(define-key prog-mode-map (kbd "DEL") 'my-backward-delete-whitespace-to-column)
-(define-key emacs-lisp-mode-map (kbd "DEL") 'my-backward-delete-whitespace-to-column)
-
-;; Faster prompts
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; ---------------------------
-;; Load non-published packages
-;; ---------------------------
-
-(load (expand-file-name (concat user-emacs-directory "breadcrumb")))
-
 ;; -------------------
-;; Early Package Setup
+;; use-package macro packages
 ;; -------------------
-
-(setq straight-use-package-by-default t) ; Adds :straight to use-package transparently
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-      (error "Straight.el not installed. Clone https://github.com/radian-software/straight.el.git into ~/.emacs.d/straight/repos/"))
-  (load bootstrap-file nil 'nomessage))
-
-(straight-use-package 'use-package) ; Install use-package
 
 (use-package general
+  :ensure t
   :config
   (general-create-definer my-leader-def
     :states '(normal insert visual emacs)
@@ -172,28 +67,30 @@ or just one char if that's not possible"
 ;; --------
 
 (use-package ag
+  :ensure t
   :general
   (my-leader-def "as" 'ag)
   :init
   (setq ag-highlight-search t))
 
 (use-package autothemer
+  :ensure t
   :config
-  (add-hook 'after-init-hook (lambda () (load-theme 'my-solarized-light t)))
-  )
+  (add-hook 'after-init-hook (lambda () (load-theme 'my-solarized-light t))))
 
 (use-package avy
+  :ensure t
   :general
   (my-leader-def
-    "jj" 'evil-avy-goto-char
-    "jl" 'evil-avy-goto-line
-    "jw" 'evil-avy-goto-word-1))
+    "SPC" 'avy-goto-char
+    "jj"  'avy-goto-char
+    "jl"  'avy-goto-line
+    "jw"  'avy-goto-word-0))
 
 (use-package breadcrumb
   :hook (prog-mode . breadcrumb-local-mode))
 
 (use-package cc-mode
-  :straight nil
   :defer t
   :config
   (with-eval-after-load 'project
@@ -220,12 +117,14 @@ or just one char if that's not possible"
       "mo" 'my-swap-h-c-file)))
 
 (use-package cape
+  :ensure t
   :after consult
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file))
 
 (use-package consult
+  :ensure t
   :after vertico
   :config
   (my-leader-def
@@ -246,7 +145,6 @@ or just one char if that's not possible"
    "C-p" 'completion-at-point))
 
 (use-package css-mode
-  :straight nil
   :defer t
   :config
   (defun my-css-mode ()
@@ -255,51 +153,19 @@ or just one char if that's not possible"
   (add-hook 'css-mode-hook 'my-css-mode))
 
 (use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
   :init
   (setq inhibit-compacting-font-caches t)
   (setq doom-modeline-icon nil)
-  (setq doom-modeline-minor-modes nil)
-  :config
-  ;; skipped modeline segments
-  ;;
-  ;; workspace-name - no workspace packages currently
-  ;; modals - editing state not needed
-  ;; matches - requires anzu, evil-ex-substitute, and symbol-overlay
-  ;; word count - don't need to count words
-  ;; parrot - cute, but not needed
-  ;; objed-state  - seems interesting, but not using atm
-  ;; persp-mode - not using
-  ;; battery - I use battery in system bar
-  ;; grip - seems cool, but not using
-  ;; irc mu4e gnus - maybe someday
-  ;; github - not modeline worthy
-  ;; input-method - (using) not entirely sure what this does
-  ;; indent-info - it will annoy me instantly if it's wrong already
-  ;; process - (using) not sure what this does
-  ;; vcs - info in magit
-  (doom-modeline-def-modeline 'my-doom-modeline
-    '(bar window-number buffer-info remote-host buffer-position selection-info)
-    '(misc-info debug repl lsp minor-modes input-method buffer-encoding major-mode process checker))
-  (defun my-setup-custom-doom-modeline ()
-    (doom-modeline-set-modeline 'my-doom-modeline 'default))
-  (add-hook 'doom-modeline-mode-hook 'my-setup-custom-doom-modeline)
-  (doom-modeline-mode t))
-
-(use-package doom-themes
-  :config
-  (setq doom-themes-enable-bold nil)
-  (setq doom-themes-enable-italic nil)
-  ;(add-hook 'after-init-hook (lambda () (load-theme 'doom-solarized-light-custom t))))
-)
+  (setq doom-modeline-minor-modes nil))
 
 (use-package elec-pair
-  :straight nil
   :defer t
-  :init
-  (add-hook 'prog-mode-hook (lambda ()
-                              (electric-pair-local-mode 1))))
+  :hook (prog-mode . electric-pair-local-mode))
 
 (use-package embark
+  :ensure t
   :general
   ("C-." 'embark-act)
   ("C-;" 'embark-dwim)
@@ -314,11 +180,79 @@ or just one char if that's not possible"
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
+  :ensure t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+(use-package emacs
+  :init
+  ; Set default buffer local vars
+  (setq-default indent-tabs-mode nil); indent with spaces
+  (setq-default tab-width 4) ; Display width of tab char
+
+  (setq use-short-answers t) ; Faster prompts
+  (setq visible-cursor nil)
+  (setq ring-bell-function 'ignore) ; SILENCE
+  (setq help-window-select t) ; Autofocus help windows
+  (setq inhibit-startup-screen t) ; No splash screen
+  (setq backup-directory-alist '(("." . "~/.saves"))) ; Backups in different dir
+  (setq auto-save-file-name-transforms '((".*" "~/.saves/" t))) ; auto saves in different dir
+  (setq ispell-program-name "aspell") ; Use aspell for flyspell
+  (setq vc-follow-symlinks t) ; Follow symlinks
+  (setq enable-recursive-minibuffers t) ; Recommended by vertico
+  (setq recentf-max-menu-items 25) ; Set recent file limit
+  (setq recentf-max-saved-items 25) ; Set recent file limit
+  (setq scroll-conservatively 101); Do not recenter after scrolling offscreen
+
+  (add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window
+
+  (add-hook 'after-init-hook (lambda()
+                               (global-auto-revert-mode nil)
+                               (save-place-mode 1)
+                               (recentf-mode 1)))
+  (add-hook 'prog-mode-hook (lambda()
+                              (display-line-numbers-mode 1)
+                              (hl-line-mode)))
+  (add-hook 'text-mode-hook 'hl-line-mode)
+
+  ; Terminal mode has a menu-bar too
+  (menu-bar-mode -1)
+  (when (display-graphic-p)
+    (blink-cursor-mode 0)
+    (tool-bar-mode -1)
+    (toggle-scroll-bar -1)
+
+    (when (display-graphic-p)
+      (if (eq system-type 'darwin)
+          (set-frame-font "SF Mono Light 18" nil t)
+        (progn
+          (when (not (null (x-list-fonts "Droid Sans Mono")))
+            (set-frame-font "Droid Sans Mono 14" nil t))
+          (when (not (null (x-list-fonts "SF Mono")))
+            (set-frame-font "SF Mono Light 13" nil t))))))
+
+  (when (eq system-type 'darwin)
+    (setq mac-command-modifier 'control))
+
+  ;; vim softtab-stop equivalent
+  ;; https://stackoverflow.com/a/1450454
+  (defun my-backward-delete-whitespace-to-column ()
+    "Delete back to the previous column of whitespace, or as much whitespace as possible,
+or just one char if that's not possible"
+    (interactive)
+    (if indent-tabs-mode
+        (call-interactively 'backward-delete-char)
+      (let ((movement (% (current-column) tab-width))
+            (p (point)))
+        (when (= movement 0) (setq movement tab-width))
+        (save-match-data
+          (if (string-match "\\w*\\(\\s-+\\)$" (buffer-substring-no-properties (- p movement) p))
+              (backward-delete-char (- (match-end 1) (match-beginning 1)))
+            (call-interactively 'backward-delete-char))))))
+  (define-key prog-mode-map (kbd "DEL") 'my-backward-delete-whitespace-to-column)
+  (define-key emacs-lisp-mode-map (kbd "DEL") 'my-backward-delete-whitespace-to-column))
+
 (use-package eshell
-  :straight nil
   :general
   (my-leader-def "as" 'eshell)
   :config
@@ -327,6 +261,7 @@ or just one char if that's not possible"
    "C-6" 'evil-switch-to-windows-last-buffer))
 
 (use-package evil
+  :ensure t
   :hook (after-init . evil-mode)
   :init
   (setq evil-insert-state-message nil)
@@ -349,16 +284,16 @@ or just one char if that's not possible"
   (setq evil-want-keybinding nil)
   :config
   (add-to-list 'evil-emacs-state-modes 'vterm-mode)
-  (my-leader-def "sc" 'evil-ex-nohighlight)
-  (add-hook 'evil-visual-state-entry-hook 'hl-line-off-maybe)
-  (add-hook 'evil-visual-state-exit-hook 'hl-line-on-maybe))
+  (my-leader-def "sc" 'evil-ex-nohighlight))
 
 (use-package evil-collection
+  :ensure t
   :after evil
   :config
   (add-hook 'evil-mode-hook (lambda () (evil-collection-init))))
 
 (use-package evil-escape
+  :ensure t
   :after evil
   :init
   (setq evil-escape-key-sequence "fd")
@@ -368,23 +303,26 @@ or just one char if that's not possible"
   (add-hook 'evil-mode-hook (lambda () (evil-escape-mode 1))))
 
 (use-package evil-numbers
+  :ensure t
   :after evil
   :config
   (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
   (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
 
 (use-package evil-surround
+  :ensure t
   :after evil
   :config
   (add-hook 'evil-mode-hook (lambda () (global-evil-surround-mode 1))))
 
 (use-package exec-path-from-shell
+  :if (eq system-type 'darwin)
+  :ensure t
   :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
 (use-package eglot
-  :straight nil
   :init
   (setq eldoc-echo-area-use-multiline-p nil)
   :general
@@ -398,6 +336,7 @@ or just one char if that's not possible"
     "lu" 'xref-find-references))
 
 (use-package expand-region
+  :ensure t
   :general
   (general-define-key
    :states '(visual)
@@ -405,7 +344,6 @@ or just one char if that's not possible"
    "." 'er/expand-region))
 
 (use-package flymake
-  :straight nil
   :defer t
   :init
   (my-leader-def
@@ -418,6 +356,8 @@ or just one char if that's not possible"
     "ep" 'flymake-goto-prev-error))
 
 (use-package git-gutter-fringe
+  :if (display-graphic-p)
+  :ensure t
   :config
   ; Stolen from doom emacs
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
@@ -427,14 +367,17 @@ or just one char if that's not possible"
   (add-hook 'after-init-hook 'global-git-gutter-mode))
 
 (use-package git-timemachine
+  :ensure t
   :general
   (my-leader-def
     "gt" 'git-timemachine))
 
 (use-package groovy-mode
+  :ensure t
   :mode ("\\.groovy\\'" . groovy-mode))
 
 (use-package highlight-indent-guides
+  :ensure t
   :hook (yaml-mode . highlight-indent-guides-mode)
   :general
   (my-leader-def "ti" 'highlight-indent-guides-mode)
@@ -443,6 +386,7 @@ or just one char if that's not possible"
   (setq highlight-indent-guides-method 'bitmap))
 
 (use-package helpful
+  :ensure t
   :general
   ("C-h f" 'helpful-callable)
   ("C-h v" 'helpful-variable)
@@ -452,6 +396,7 @@ or just one char if that's not possible"
   ("C-h C" 'helpful-command))
 
 (use-package hydra
+  :ensure t
   :general
   (my-leader-def "hs" 'hydra-smerge/body)
   :config
@@ -484,33 +429,33 @@ _q_uit _RET_: current
     ("q" nil :color blue)))
 
 (use-package imenu-list
+  :ensure t
   :general
   (my-leader-def "tI" 'imenu-list-smart-toggle))
 
 (use-package jinja2-mode
+  :ensure t
   :mode ("\\.j2\\'" . jinja2-mode))
 
 (use-package js
-  :straight nil
   :defer t
-  :config
-  (defun my-js-mode ()
-    "My js mode settings"
-    (setq js-indent-level 2))
-  (add-hook 'js-mode-hook 'my-js-mode))
+  :init
+  (setq js-indent-level 2))
 
 (use-package kubernetes
+  :ensure t
   :general
-
   (my-leader-def "ak" 'kubernetes-overview)
   :config
   (setq kubernetes-poll-frequency 3600)
   (setq kubernetes-redraw-frequency 3600))
 
 (use-package kubernetes-evil
+  :ensure t
   :after (evil kubernetes))
 
 (use-package ledger-mode
+  :ensure t
   :mode ("\\.ledger\\'" . ledger-mode)
   :init
   (setq ledger-binary-path "/usr/local/bin/ledger")
@@ -552,6 +497,7 @@ _q_uit _RET_: current
   (add-hook 'ledger-mode-hook 'my-ledger-mode))
 
 (use-package magit
+  :ensure t
   :init
   (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   :general
@@ -560,11 +506,13 @@ _q_uit _RET_: current
     "gb" 'magit-blame))
 
 (use-package marginalia
+  :ensure t
   :after vertico
   :config
   (marginalia-mode))
 
 (use-package orderless
+  :ensure t
   :after vertico
   :init
   (setq completion-styles '(orderless basic))
@@ -573,8 +521,14 @@ _q_uit _RET_: current
 
 ;; TODO: Make org mode use cape-dabbrev completions instead of pcomplete
 (use-package org
-  :straight nil
   :defer t
+  :init
+  (setq org-adapt-indentation nil)
+  (setq evil-cross-lines t) ; Make horizontal movement cross lines
+  (setq org-goto-interface 'outline-path-completion)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq visual-fill-column-width 90)
+  (setq visual-fill-column-center-text t)
   :config
   (my-leader-def
     :keymaps 'org-mode-map
@@ -599,44 +553,33 @@ _q_uit _RET_: current
     (insert (read-string "Enter link description =>" (replace-regexp-in-string "^\* *" "" org-header)))
     (insert "]]")))
   (defun my-org-mode ()
-    (setq org-adapt-indentation nil)
-    (setq evil-cross-lines t) ; Make horizontal movement cross lines
-    (setq org-goto-interface 'outline-path-completion)
-    (setq org-outline-path-complete-in-steps nil)
-    (setq visual-fill-column-width 90)
-    (setq visual-fill-column-center-text t)
     (electric-indent-local-mode -1)
     (visual-line-mode 1))
   (add-hook 'org-mode-hook 'my-org-mode))
 
 (use-package origami
+  :ensure t
   :hook (prog-mode . origami-mode))
 
 (use-package project
-  :straight nil
   :defer t
   :init
   ; buffer switch handled by consult
   (my-leader-def
     "pc" 'project-compile
     "pf" 'project-find-file
-    "pp" 'project-switch-project
-  ))
+    "pp" 'project-switch-project))
 
 (use-package rainbow-delimiters
+  :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package sh-script
-  :straight nil
   :defer t
-  :config
-  (defun my-shell-mode ()
-    "My shell mode settings"
-    (setq sh-basic-offset 2))
-  (add-hook 'sh-mode-hook 'my-shell-mode))
+  :init
+  (setq sh-basic-offset 2))
 
 (use-package tab-bar
-  :straight nil
   :init
   (setq tab-bar-new-button-show nil)
   (setq tab-bar-close-button-show nil)
@@ -644,6 +587,7 @@ _q_uit _RET_: current
   (my-leader-def "tT" 'tab-bar-mode))
 
 (use-package treemacs
+  :ensure t
   :init
   (setq treemacs-no-png-images t)
   (with-eval-after-load 'winum
@@ -652,22 +596,17 @@ _q_uit _RET_: current
   (my-leader-def "tt" 'treemacs))
 
 (use-package treemacs-evil
+  :ensure t
   :after (evil treemacs))
 
 (use-package undo-fu
+  :ensure t
   :after evil)
 
+; TODO Readd vertico-repeat loading
 (use-package vertico
+  :ensure t
   :hook (after-init . vertico-mode)
-  :straight (:files (:defaults "extensions/*")
-                   :includes (vertico-buffer
-                              vertico-directory
-                              vertico-flat
-                              vertico-indexed
-                              vertico-mouse
-                              vertico-quick
-                              vertico-repeat
-                              vertico-reverse))
   :config
   (general-define-key
    :keymaps 'vertico-map
@@ -676,18 +615,15 @@ _q_uit _RET_: current
    :keymaps 'minibuffer-local-map
    "C-h" 'backward-kill-word
    "C-w" 'backward-kill-word
-   "C-u" 'kill-whole-line)
-  (require 'vertico-repeat)
-  (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
-  (my-leader-def
-    "SPC" 'vertico-repeat-last
-    "C-SPC" 'vertico-repeat-select))
+   "C-u" 'kill-whole-line))
 
 (use-package visual-fill-column
+  :ensure t
   :hook
   (visual-line-mode . visual-fill-column-mode))
 
 (use-package vterm
+  :ensure t
   :init
   ;; https://github.com/akermu/emacs-libvterm/issues/313#issuecomment-811850431
   (defun my-evil-normal-in-vterm-copy-mode ()
@@ -706,19 +642,23 @@ _q_uit _RET_: current
    "C-6" 'evil-switch-to-windows-last-buffer))
 
 (use-package which-key
-  :config (which-key-mode))
+  :ensure t
+  :hook (after-init . which-key-mode))
 
 (use-package wgrep
+  :ensure t
   :after project
   :init
   (setq wgrep-auto-save-buffer t))
 
 (use-package wgrep-ag
+  :ensure t
   :after project)
 
 (use-package winum
+  :ensure t
+  :hook (after-init . winum-mode)
   :config
-  (winum-mode 1)
   (my-leader-def
     "1" 'winum-select-window-1
     "2" 'winum-select-window-2
@@ -730,29 +670,31 @@ _q_uit _RET_: current
     "8" 'winum-select-window-8
     "9" 'winum-select-window-9)
   ;Remove winum from which-key
-  (push '((nil . "winum-select-window-[1-9]") . t) which-key-replacement-alist))
+  (with-eval-after-load 'which-key
+    (push '((nil . "winum-select-window-[1-9]") . t) which-key-replacement-alist)))
 
 (use-package yaml-mode
-  :mode ("\\.ya?ml\\'" . yaml-mode))
+  :ensure t
+  :mode
+  ("\\.ya?ml\\'" . yaml-mode))
 
 (use-package yasnippet
-  :config
-  (yas-reload-all)
-  (my-leader-def "ty" 'yas-minor-mode))
-  (add-hook 'prog-mode-hook #'yas-minor-mode)
+  :ensure t
+  :general
+  (my-leader-def "ty" 'yas-minor-mode)
+  :hook
+  (prog-mode-hook . yas-minor-mode))
 
 (use-package yasnippet-snippets
-  :after yasnippet)
+  :ensure t
+  :after yasnippet
+  :config
+  (yas-reload-all))
 
 (use-package zone-nyan
+  :ensure t
   :general
   (my-leader-def "tn" 'zone-nyan-preview))
 
-;; -----
-;; Final
-;; -----
-
+;; Open the init file
 (find-file "~/.emacs.d/init.el")
-
-;; Return gc-cons-threshold from early-init value
-(setq gc-cons-threshold (* 2 1000 1000))
