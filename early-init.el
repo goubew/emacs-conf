@@ -8,10 +8,5 @@
 ;; Add non-packages files to the load path
 (add-to-list 'load-path (concat user-emacs-directory "packages/"))
 
-;; Set the package list to a fake value
-;; Use :ensure to install packages instead of package-install-selected-packages
-;; Delete the packages directory instead of package-autoremove
-(setq package-selected-packages '())
-
 ;; Add MELPA archive
 (with-eval-after-load 'package (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))

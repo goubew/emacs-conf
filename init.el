@@ -73,6 +73,12 @@
   :init
   (setq ag-highlight-search t))
 
+(use-package anzu
+  :ensure t
+  :after evil
+  :config
+  (global-anzu-mode))
+
 (use-package autothemer
   :ensure t
   :config
@@ -286,6 +292,10 @@ or just one char if that's not possible"
   :config
   (add-to-list 'evil-emacs-state-modes 'vterm-mode)
   (my-leader-def "sc" 'evil-ex-nohighlight))
+
+(use-package evil-anzu
+  :ensure t
+  :after (anzu evil))
 
 (use-package evil-collection
   :ensure t
@@ -575,6 +585,15 @@ _q_uit _RET_: current
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package ranger
+  :ensure t
+  :init
+  (setq ranger-show-hidden t)
+  :general
+  (my-leader-def "ar" 'ranger)
+  :config
+  (ranger-override-dired-mode t))
+
 (use-package sh-script
   :defer t
   :init
@@ -673,6 +692,11 @@ _q_uit _RET_: current
   ;Remove winum from which-key
   (with-eval-after-load 'which-key
     (push '((nil . "winum-select-window-[1-9]") . t) which-key-replacement-alist)))
+
+(use-package xclip
+  :unless (display-graphic-p)
+  :ensure t
+  :hook (init-mode . xclip-mode))
 
 (use-package yaml-mode
   :ensure t
