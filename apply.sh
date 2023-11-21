@@ -1,11 +1,11 @@
 #!/bin/bash
 
-cd "$(dirname "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 mkdir -p "$HOME/.emacs.d/packages"
 mkdir -p "$HOME/.saves"
 
-ln -s init.el                     "$HOME/.emacs.d/init.el"
-ln -s early-init.el               "$HOME/.emacs.d/early-init.el"
-ln -s my-solarized-light-theme.el "$HOME/.emacs.d/my-solarized-light-theme.el"
-ln -s breadcrumb.el               "$HOME/.emacs.d/packages/breadcrumb.el"
+ln -s "${SCRIPT_DIR}"/init.el                     "$HOME/.emacs.d/init.el"
+ln -s "${SCRIPT_DIR}"/early-init.el               "$HOME/.emacs.d/early-init.el"
+ln -s "${SCRIPT_DIR}"/my-solarized-light-theme.el "$HOME/.emacs.d/my-solarized-light-theme.el"
+ln -s "${SCRIPT_DIR}"/breadcrumb.el               "$HOME/.emacs.d/packages/breadcrumb.el"
