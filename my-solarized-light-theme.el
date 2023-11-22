@@ -5,11 +5,11 @@
 
  ((((class color) (min-colors #xFFFFFF))) ;; Supports 24bit colors only
 
- ;(base03    "#002b36") ;; Darkest blue background tone
- ;(base02    "#073642") ;; Dark blue background tone
+  (base03    "#002b36") ;; Darkest blue background tone
+  (base02    "#073642") ;; Dark blue background tone
   (base01    "#586e75") ;; Darkest grey tone        (bold)
   (base00    "#657b83") ;; Dark grey tone           (foreground)
- ;(base0     "#839496") ;; Light grey tone
+  (base0     "#839496") ;; Light grey tone
   (base1     "#93a1a1") ;; Lighest grey tone        (accent)
   (base2     "#eee8d5") ;; Light background tone    (alt background)
   (base3     "#fdf6e3") ;; Lightest background tone (background)
@@ -27,7 +27,7 @@
   ;; basics
   (default (:background base3 :foreground base00))
 
-  (cursor              (:background base01 :foreground base3))
+  (cursor              (:background base02))
   (fringe              (:background base2))
   (highlight           (:background base2))
   (hl-line             (:background base2))
@@ -39,7 +39,6 @@
   (region              (:background yellow :foreground base3))
   (secondary-selection (:background base2))
   (shadow              (:foreground base1))
-  (window-divider      (:foreground base01))
 
   ;; Built in syntax
   (font-lock-builtin-face       (:foreground violet))
@@ -334,6 +333,12 @@
   (sh-escaped-newline (:inherit 'font-lock-string-face))
   (sh-quoted-exec     (:foreground violet))
   (sh-heredoc         (:foreground yellow))
+
+
+  ;; Window dividers
+  (window-divider             (:foreground base02))
+  (window-divider-last-pixel  (:foreground base02))
+  (window-divider-first-pixel (:foreground base02))
 ))
 
 (provide-theme 'my-solarized-light)

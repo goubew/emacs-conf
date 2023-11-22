@@ -82,6 +82,12 @@
 (use-package autothemer
   :ensure t
   :config
+  (defun my-reload-theme ()
+      "Reloads the theme to test changes"
+    (interactive)
+    (disable-theme 'my-solarized-light)
+    (load-theme 'my-solarized-light t))
+  (my-leader-def "T" 'my-reload-theme)
   (add-hook 'after-init-hook (lambda () (load-theme 'my-solarized-light t))))
 
 (use-package avy
@@ -230,6 +236,11 @@
     (toggle-scroll-bar -1)
 
     (when (display-graphic-p)
+
+      (setq window-divider-default-places t); Make vertical and horizontal window dividers)
+      (setq window-divider-default-right-width 4)
+      (setq window-divider-default-bottom-width 4)
+      (window-divider-mode)
       (if (not (null (x-list-fonts "QuadLemon")))
           (set-frame-font "QuadLemon" nil t)
         (if (eq system-type 'darwin)
