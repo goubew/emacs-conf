@@ -230,13 +230,20 @@
     (toggle-scroll-bar -1)
 
     (when (display-graphic-p)
-      (if (eq system-type 'darwin)
-          (set-frame-font "SF Mono Light 18" nil t)
-        (progn
-          (when (not (null (x-list-fonts "Droid Sans Mono")))
-            (set-frame-font "Droid Sans Mono 14" nil t))
-          (when (not (null (x-list-fonts "SF Mono")))
-            (set-frame-font "SF Mono Light 13" nil t))))))
+      (if (not (null (x-list-fonts "QuadLemon")))
+          (set-frame-font "QuadLemon" nil t)
+        (if (eq system-type 'darwin)
+            (set-frame-font "SF Mono Light 18" nil t)
+          (progn
+            (when (not (null (x-list-fonts "Droid Sans Mono")))
+              (set-frame-font "Droid Sans Mono 14" nil t))
+            (when (not (null (x-list-fonts "SF Mono")))
+              (set-frame-font "SF Mono Light 13" nil t)))))))
+
+  ; Fringe icons do not scale at high DPI
+  ; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=31203
+  (when (>= (display-pixel-width) 3840)
+    (fringe-mode 0))
 
   (when (eq system-type 'darwin)
     (setq mac-command-modifier 'control))
