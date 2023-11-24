@@ -197,8 +197,9 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package emacs
+  :defer t
   :init
-  ; Set default buffer local vars
+  ;; Set default buffer local vars
   (setq-default indent-tabs-mode nil); indent with spaces
   (setq-default tab-width 4) ; Display width of tab char
 
@@ -228,54 +229,37 @@
                               (hl-line-mode)))
   (add-hook 'text-mode-hook 'hl-line-mode)
 
-  ; Terminal mode has a menu-bar too
+  ;; Terminal mode has a menu-bar too
   (menu-bar-mode -1)
   (when (display-graphic-p)
     (blink-cursor-mode 0)
     (tool-bar-mode -1)
     (toggle-scroll-bar -1)
 
-    (when (display-graphic-p)
+    ;; Enable window dividers
+    (setq window-divider-default-places t); Make vertical and horizontal window dividers)
+    (setq window-divider-default-right-width 1)
+    (setq window-divider-default-bottom-width 1)
+    (window-divider-mode t)
 
-      (setq window-divider-default-places t); Make vertical and horizontal window dividers)
-      (setq window-divider-default-right-width 4)
-      (setq window-divider-default-bottom-width 4)
-      (window-divider-mode)
-      (if (not (null (x-list-fonts "QuadLemon")))
-          (set-frame-font "QuadLemon" nil t)
-        (if (eq system-type 'darwin)
-            (set-frame-font "SF Mono Light 18" nil t)
-          (progn
-            (when (not (null (x-list-fonts "Droid Sans Mono")))
-              (set-frame-font "Droid Sans Mono 14" nil t))
-            (when (not (null (x-list-fonts "SF Mono")))
-              (set-frame-font "SF Mono Light 13" nil t)))))))
+    ;; Set font
+    (if (not (null (x-list-fonts "QuadLemon")))
+        (set-frame-font "QuadLemon" nil t)
+      (if (eq system-type 'darwin)
+          (set-frame-font "SF Mono Light 18" nil t)
+        (progn
+          (when (not (null (x-list-fonts "Droid Sans Mono")))
+            (set-frame-font "Droid Sans Mono 14" nil t))
+          (when (not (null (x-list-fonts "SF Mono")))
+            (set-frame-font "SF Mono Light 13" nil t))))))
 
-  ; Fringe icons do not scale at high DPI
-  ; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=31203
+  ;; Fringe icons do not scale at high DPI
+  ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=31203
   (when (>= (display-pixel-width) 3840)
     (fringe-mode 0))
 
   (when (eq system-type 'darwin)
-    (setq mac-command-modifier 'control))
-
-  ;; vim softtab-stop equivalent
-  ;; https://stackoverflow.com/a/1450454
-  (defun my-backward-delete-whitespace-to-column ()
-    "Delete back to the previous column of whitespace, or as much whitespace as possible,
-or just one char if that's not possible"
-    (interactive)
-    (if indent-tabs-mode
-        (call-interactively 'backward-delete-char)
-      (let ((movement (% (current-column) tab-width))
-            (p (point)))
-        (when (= movement 0) (setq movement tab-width))
-        (save-match-data
-          (if (string-match "\\w*\\(\\s-+\\)$" (buffer-substring-no-properties (- p movement) p))
-              (backward-delete-char (- (match-end 1) (match-beginning 1)))
-            (call-interactively 'backward-delete-char))))))
-  (define-key prog-mode-map (kbd "DEL") 'my-backward-delete-whitespace-to-column)
-  (define-key emacs-lisp-mode-map (kbd "DEL") 'my-backward-delete-whitespace-to-column))
+    (setq mac-command-modifier 'control)))
 
 (use-package eshell
   :general
@@ -335,6 +319,7 @@ or just one char if that's not possible"
   :ensure t
   :after evil
   :config
+  ;; Avoid using C-a C-x to keep the default C-x bindings
   (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
   (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
 
@@ -388,11 +373,11 @@ or just one char if that's not possible"
   :if (display-graphic-p)
   :ensure t
   :config
-  ; Stolen from doom emacs
+  ;; Stolen from doom emacs
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom)
-  ; The fringe bitmaps only seem to work when package loading isn't defered
+  ;; The fringe bitmaps only seem to work when package loading isn't defered
   (add-hook 'after-init-hook 'global-git-gutter-mode))
 
 (use-package git-timemachine
@@ -552,6 +537,7 @@ _q_uit _RET_: current
 (use-package org
   :defer t
   :init
+
   (setq org-adapt-indentation nil)
   (setq evil-cross-lines t) ; Make horizontal movement cross lines
   (setq org-goto-interface 'outline-path-completion)
@@ -590,10 +576,16 @@ _q_uit _RET_: current
   :ensure t
   :hook (prog-mode . origami-mode))
 
+(use-package ox-ascii
+  :defer t
+  :init
+  (setq org-ascii-global-margin 0)
+  (setq org-ascii-text-width 70))
+
 (use-package project
   :defer t
   :init
-  ; buffer switch handled by consult
+  ;; buffer switch handled by consult
   (my-leader-def
     "pc" 'project-compile
     "pf" 'project-find-file
@@ -738,6 +730,9 @@ _q_uit _RET_: current
   :ensure t
   :general
   (my-leader-def "tn" 'zone-nyan-preview))
+
+;; Load customizations if they exist
+(when (file-exists-p custom-file) (load-file custom-file))
 
 ;; Open the init file
 (find-file "~/.emacs.d/init.el")

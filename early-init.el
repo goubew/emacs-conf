@@ -10,3 +10,6 @@
 
 ;; Add MELPA archive
 (with-eval-after-load 'package (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
+
+;; Set custom file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
