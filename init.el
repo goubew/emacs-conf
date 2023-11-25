@@ -609,6 +609,11 @@ _q_uit _RET_: current
   :init
   (setq sh-basic-offset 2))
 
+(use-package simple-mpc
+  :ensure t
+  :general
+  (my-leader-def "am" 'simple-mpc))
+
 (use-package tab-bar
   :init
   (setq tab-bar-new-button-show nil)
