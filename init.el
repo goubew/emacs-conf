@@ -9,6 +9,10 @@
     :states '(normal insert visual emacs)
     :prefix "SPC"
     :non-normal-prefix "C-SPC")
+  (general-define-key
+   :states 'insert
+   "]c" 'next-error
+   "[c" 'previous-error)
   (defun my-buffer-delete ()
     "Prompts to delete the window attached to a buffer when more than one window exists"
     (interactive)
@@ -538,6 +542,7 @@ _q_uit _RET_: current
   :defer t
   :init
 
+  (setq org-indent-mode-turns-on-hiding-stars nil)
   (setq org-adapt-indentation nil)
   (setq evil-cross-lines t) ; Make horizontal movement cross lines
   (setq org-goto-interface 'outline-path-completion)
