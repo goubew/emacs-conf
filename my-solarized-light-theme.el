@@ -141,7 +141,7 @@
 
   ;; tab bar
   (tab-bar                    (:background base2 :foreground base00))
-  (tab-bar-tab                (:foreground base01 :weight 'bold))
+  (tab-bar-tab                (:foreground cyan :weight 'bold))
   (tab-bar-tab-inactive       (:foreground base00))
   (tab-bar-tab-ungrouped      (:foreground base00))
   (tab-bar-tab-group-current  (:foreground base2 :weight 'bold))

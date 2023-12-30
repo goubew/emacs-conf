@@ -103,9 +103,6 @@
     "jl"  'avy-goto-line
     "jw"  'avy-goto-word-0))
 
-(use-package breadcrumb
-  :hook (prog-mode . breadcrumb-local-mode))
-
 (use-package cc-mode
   :defer t
   :config
@@ -621,6 +618,7 @@ _q_uit _RET_: current
 
 (use-package tab-bar
   :init
+  (setq tab-bar-separator "|")
   (setq tab-bar-new-button-show nil)
   (setq tab-bar-close-button-show nil)
   :general
