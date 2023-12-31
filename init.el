@@ -9,7 +9,7 @@
     :states '(normal insert visual emacs)
     :prefix "SPC"
     :non-normal-prefix "C-SPC")
-  (general-define-key
+  (general-def
    :states 'insert
    "]c" 'next-error
    "[c" 'previous-error)
@@ -35,7 +35,6 @@
     "p" '(:ignore t :which-key "project")
     "s" '(:ignore t :which-key "search")
     "t" '(:ignore t :which-key "toggle/tab")
-    "x" 'execute-extended-command
     "ab" 'bookmark-set
     "ac" 'calc
     "bb" 'switch-to-buffer
@@ -64,7 +63,9 @@
     "tl" 'display-line-numbers-mode
     "tm" 'toggle-frame-maximized
     "tw" 'toggle-truncate-lines
-    "ts" 'flyspell-mode))
+    "ts" 'flyspell-mode
+    "u"  'universal-argument
+    "x"  'execute-extended-command))
 
 ;; --------
 ;; Packages
@@ -150,12 +151,32 @@
     "sL" 'consult-line-multi
     "sm" 'consult-mark
     "si" 'consult-imenu
-    "so" 'consult-outline)
-  (setq completion-in-region-function 'consult-completion-in-region)
-  (general-define-key
+    "so" 'consult-outline))
+
+(use-package corfu
+  :ensure t
+  :hook (after-init . global-corfu-mode)
+  :init
+  (setq corfu-on-exact-match 'show)
+  (setq corfu-cycle t)
+  (setq corfu-preview-current t)
+  (setq corfu-preselect 'prompt)
+  (setq corfu-quit-at-boundary 'separator)
+  :config
+  (general-def
    :states 'insert
    "C-n" 'completion-at-point
-   "C-p" 'completion-at-point))
+   "C-p" 'completion-at-point)
+  (general-def
+    :keymaps 'completion-in-region-mode
+    :definer 'minor-mode
+    :states 'insert
+    :predicate 'corfu-mode
+    "C-n" 'corfu-next
+    "C-p" 'corfu-previous
+    "C-l" 'corfu-complete
+    "C-e" 'corfu-quit
+    "<return>" 'corfu-insert))
 
 (use-package css-mode
   :defer t
@@ -266,7 +287,7 @@
   :general
   (my-leader-def "as" 'eshell)
   :config
-  (general-define-key
+  (general-def
    :keymaps 'eshell-mode-map
    "C-6" 'evil-switch-to-windows-last-buffer))
 
@@ -353,7 +374,7 @@
 (use-package expand-region
   :ensure t
   :general
-  (general-define-key
+  (general-def
    :states '(visual)
    "," 'er/contract-region
    "." 'er/expand-region))
@@ -500,7 +521,7 @@ _q_uit _RET_: current
     "mc" 'ledger-mode-clean-buffer
     "mn" 'my-new-ledger-entry
     "mk" 'ledger-copy-transaction-at-point)
-  (general-define-key
+  (general-def
    :keymaps 'ledger-mode-map
    "DEL" 'my-backward-delete-whitespace-to-column)
   (defun my-ledger-mode ()
@@ -538,7 +559,7 @@ _q_uit _RET_: current
 (use-package org
   :defer t
   :init
-
+  (setq org-agenda-files '("~/org/"))
   (setq org-indent-mode-turns-on-hiding-stars nil)
   (setq org-adapt-indentation nil)
   (setq evil-cross-lines t) ; Make horizontal movement cross lines
@@ -547,12 +568,21 @@ _q_uit _RET_: current
   (setq visual-fill-column-width 90)
   (setq visual-fill-column-center-text t)
   :config
+  (defun my-org-meta-return ()
+    "Moves the curor to the end of the line and calls org-meta-return"
+    (interactive)
+    (move-end-of-line nil)
+    (org-meta-return))
+  (general-def
+   :states '(normal insert)
+   :keymaps 'org-mode-map
+   "M-<return>" 'my-org-meta-return)
   (my-leader-def
     :keymaps 'org-mode-map
+    "mj" 'org-goto
     "mo" 'org-open-at-point
     "mle" 'org-insert-link
     "mln" 'my-org-header-link
-    "mj" 'org-goto
     "mtl" 'org-toggle-link-display)
   (defun my-org-header-link ()
     "Uses org-goto to prompt for a heading and creates a link"
@@ -646,7 +676,7 @@ _q_uit _RET_: current
   :ensure t
   :hook (after-init . vertico-mode)
   :config
-  (general-define-key
+  (general-def
    :keymaps 'vertico-map
    "C-j" 'vertico-next
    "C-k" 'vertico-previous
@@ -674,7 +704,7 @@ _q_uit _RET_: current
   :general
   (my-leader-def "at" 'vterm)
   :config
-  (general-define-key
+  (general-def
    :keymaps 'vterm-mode-map
    "C-u" 'vterm-send-C-u
    "C-6" 'evil-switch-to-windows-last-buffer))
