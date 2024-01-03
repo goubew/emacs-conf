@@ -334,11 +334,18 @@
   (sh-quoted-exec     (:foreground violet))
   (sh-heredoc         (:foreground yellow))
 
-
   ;; Window dividers
   (window-divider             (:foreground base02))
   (window-divider-last-pixel  (:foreground base02))
   (window-divider-first-pixel (:foreground base02))
+
+  ;; Corfu
+  (corfu-bar          (:background base02))
+  (corfu-border       (:background base03))
+  (corfu-current      (:background base3))
+  (corfu-default      (:background base2))
+  (corfu-deprecated   (:strike-through t :inherit 'shadow))
+  (corfu-annotations  (:inherit 'completions-annotations))
 ))
 
 (provide-theme 'my-solarized-light)
