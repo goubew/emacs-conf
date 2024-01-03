@@ -35,6 +35,7 @@
     "p" '(:ignore t :which-key "project")
     "s" '(:ignore t :which-key "search")
     "t" '(:ignore t :which-key "toggle/tab")
+    "q" '(:ignore t :which-key "query ai")
     "ab" 'bookmark-set
     "ac" 'calc
     "bb" 'switch-to-buffer
@@ -408,9 +409,28 @@
   (my-leader-def
     "gt" 'git-timemachine))
 
+(use-package gptel
+  :ensure t
+  :general
+  (my-leader-def
+    "qq" 'gptel
+    "qs" 'gptel-send
+    "qm" 'gptel-menu)
+  :config
+  (general-def
+    :keymaps 'gtpel-mode-map
+    "C-<return>" 'gtpel-send
+    "C-RET" 'gtpel-send)
+  (gptel-make-openai ;Not a typo, same API as OpenAI
+   "llama-cpp"
+   :stream t
+   :protocol "http"
+   :host "localhost:8080"
+   :models '("dummy")))
+
 (use-package groovy-mode
   :ensure t
-  :mode ("\\.groovy\\'" . groovy-mode))
+  :mode ("\\.\\(groovy\\|gradle\\)\\'" . groovy-mode))
 
 (use-package highlight-indent-guides
   :ensure t
@@ -576,7 +596,8 @@ _q_uit _RET_: current
   (general-def
    :states '(normal insert)
    :keymaps 'org-mode-map
-   "M-<return>" 'my-org-meta-return)
+   "M-<return>" 'my-org-meta-return
+   "M-RET" 'my-org-meta-return)
   (my-leader-def
     :keymaps 'org-mode-map
     "mj" 'org-goto
