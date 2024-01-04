@@ -38,7 +38,7 @@
     "q" '(:ignore t :which-key "query ai")
     "ab" 'bookmark-set
     "ac" 'calc
-    "bb" 'switch-to-buffer
+    "bB" 'switch-to-buffer
     "bd" 'my-buffer-delete
     "bs" 'scratch-buffer
     "cn" 'smerge-next
@@ -143,7 +143,7 @@
   :after vertico
   :config
   (my-leader-def
-    "bB" 'consult-buffer
+    "bb" 'consult-buffer
     "ec" 'consult-flymake
     "fr" 'consult-recent-file
     "pb" 'consult-project-buffer
@@ -193,6 +193,7 @@
   :init
   (column-number-mode 1)
   (setq inhibit-compacting-font-caches t)
+  (setq doom-modeline-workspace-name nil)
   (setq doom-modeline-icon nil)
   (setq doom-modeline-minor-modes nil))
 
