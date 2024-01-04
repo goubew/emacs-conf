@@ -160,7 +160,7 @@
   :init
   (setq corfu-on-exact-match 'show)
   (setq corfu-cycle t)
-  (setq corfu-preview-current t)
+  (setq corfu-preview-current 'insert)
   (setq corfu-preselect 'prompt)
   (setq corfu-quit-at-boundary 'separator)
   :config
@@ -249,7 +249,8 @@
                                (recentf-mode 1)))
   (add-hook 'prog-mode-hook (lambda()
                               (display-line-numbers-mode 1)
-                              (hl-line-mode)))
+                              (hl-line-mode)
+                              (flyspell-prog-mode)))
   (add-hook 'text-mode-hook 'hl-line-mode)
 
   ;; Terminal mode has a menu-bar too
@@ -556,6 +557,7 @@ _q_uit _RET_: current
   :ensure t
   :init
   (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+  (setq magit-diff-refine-hunk t)
   :general
   (my-leader-def
     "gs" 'magit-status

@@ -346,6 +346,11 @@
   (corfu-default      (:background base2))
   (corfu-deprecated   (:strike-through t :inherit 'shadow))
   (corfu-annotations  (:inherit 'completions-annotations))
+
+  ;; diff-refine
+  (diff-refine-added    (:background green :foreground base3))
+  (diff-refine-changed  (:background yellow :foreground base3))
+  (diff-refine-removed  (:background red :foreground base3))
 ))
 
 (provide-theme 'my-solarized-light)
