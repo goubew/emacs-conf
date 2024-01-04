@@ -191,6 +191,7 @@
   :ensure t
   :hook (after-init . doom-modeline-mode)
   :init
+  (column-number-mode 1)
   (setq inhibit-compacting-font-caches t)
   (setq doom-modeline-icon nil)
   (setq doom-modeline-minor-modes nil))
@@ -568,6 +569,10 @@ _q_uit _RET_: current
   :after vertico
   :config
   (marginalia-mode))
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.md\\'" . gfm-mode))
 
 (use-package orderless
   :ensure t
