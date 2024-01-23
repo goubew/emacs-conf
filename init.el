@@ -10,7 +10,7 @@
     :prefix "SPC"
     :non-normal-prefix "C-SPC")
   (general-def
-   :states 'insert
+   :states 'normal
    "]c" 'next-error
    "[c" 'previous-error)
   (defun my-buffer-delete ()
@@ -61,6 +61,7 @@
     "t7" (lambda() (interactive) (tab-select 7))
     "t8" (lambda() (interactive) (tab-select 8))
     "t9" (lambda() (interactive) (tab-select 9))
+    "th" 'hl-line-mode
     "tl" 'display-line-numbers-mode
     "tm" 'toggle-frame-maximized
     "tw" 'toggle-truncate-lines
@@ -75,7 +76,7 @@
 (use-package ag
   :ensure t
   :general
-  (my-leader-def "as" 'ag)
+  (my-leader-def "aa" 'ag)
   :init
   (setq ag-highlight-search t))
 
@@ -152,7 +153,9 @@
     "sL" 'consult-line-multi
     "sm" 'consult-mark
     "si" 'consult-imenu
-    "so" 'consult-outline))
+    "sI" 'consult-imenu-multi
+    "so" 'consult-outline
+    "y"  'consult-yank-from-kill-ring))
 
 (use-package corfu
   :ensure t
@@ -241,7 +244,8 @@
   (setq enable-recursive-minibuffers t) ; Recommended by vertico
   (setq recentf-max-menu-items 25) ; Set recent file limit
   (setq recentf-max-saved-items 25) ; Set recent file limit
-  (setq scroll-conservatively 101); Do not recenter after scrolling offscreen
+  (setq scroll-conservatively 101); Do not recenter after scrolling off screen
+  (setq native-comp-async-report-warnings-errors 'silent); Do not pop up comp warnings
 
   (add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window
 
@@ -587,11 +591,13 @@ _q_uit _RET_: current
 (use-package org
   :defer t
   :init
-  (setq org-agenda-files '("~/org/"))
-  (setq org-indent-mode-turns-on-hiding-stars nil)
-  (setq org-adapt-indentation nil)
   (setq evil-cross-lines t) ; Make horizontal movement cross lines
+  (setq org-adapt-indentation nil)
+  (setq org-agenda-files '("~/org/"))
+  (setq org-ascii-text-width 65)
+  (setq org-edit-src-content-indentation 0)
   (setq org-goto-interface 'outline-path-completion)
+  (setq org-indent-mode-turns-on-hiding-stars nil)
   (setq org-outline-path-complete-in-steps nil)
   (setq visual-fill-column-width 90)
   (setq visual-fill-column-center-text t)
@@ -629,8 +635,7 @@ _q_uit _RET_: current
     (insert (read-string "Enter link description =>" (replace-regexp-in-string "^\* *" "" org-header)))
     (insert "]]")))
   (defun my-org-mode ()
-    (electric-indent-local-mode -1)
-    (visual-line-mode 1))
+    (electric-indent-local-mode -1))
   (add-hook 'org-mode-hook 'my-org-mode))
 
 (use-package origami
@@ -785,7 +790,7 @@ _q_uit _RET_: current
   :general
   (my-leader-def "ty" 'yas-minor-mode)
   :hook
-  (prog-mode-hook . yas-minor-mode))
+  (prog-mode . yas-minor-mode))
 
 (use-package yasnippet-snippets
   :ensure t

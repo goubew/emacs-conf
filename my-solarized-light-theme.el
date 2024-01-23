@@ -262,14 +262,14 @@
   (org-archived                   (:inherit 'shadow))
   (org-block-begin-line           (:extend t :inherit 'org-meta-line))
   (org-block-end-line             (:extend t :inherit 'org-block-begin-line))
-  (org-block                      (:extend t :inherit 'shadow))
+  (org-block                      (:foreground base00))
   (org-checkbox                   (:inherit 'bold))
   (org-checkbox-statistics-done   (:inherit 'org-done))
   (org-checkbox-statistics-todo   (:inherit 'org-todo))
   (org-cite                       (:inherit 'link))
   (org-cite-key                   (:inherit 'link))
   (org-clock-overlay              (:background base2))
-  (org-code                       (:inherit 'shadow))
+  (org-code                       (:foreground green))
   (org-column-title               (:weight 'bold :underline t :background base2))
   (org-column                     (:weight 'normal :slant 'normal :underline nil :strike-through nil :background base2))
   (org-date-selected              (:inverse-video t :foreground red))
@@ -351,6 +351,9 @@
   (diff-refine-added    (:background green :foreground base3))
   (diff-refine-changed  (:background yellow :foreground base3))
   (diff-refine-removed  (:background red :foreground base3))
+
+  ;; markdown
+  (markdown-pre-face (:foreground base00))
 ))
 
 (provide-theme 'my-solarized-light)
