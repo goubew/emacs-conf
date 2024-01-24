@@ -190,6 +190,10 @@
     (setq css-indent-offset 2))
   (add-hook 'css-mode-hook 'my-css-mode))
 
+(use-package dockerfile-mode
+  :ensure t
+  :mode (("Dockerfile\\'" . dockerfile-mode)))
+
 (use-package doom-modeline
   :ensure t
   :hook (after-init . doom-modeline-mode)
@@ -651,6 +655,7 @@ _q_uit _RET_: current
 (use-package project
   :defer t
   :init
+  (setq project-vc-extra-root-markers '(".project"))
   ;; buffer switch handled by consult
   (my-leader-def
     "pc" 'project-compile
