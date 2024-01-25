@@ -76,8 +76,9 @@
 (use-package ag
   :ensure t
   :general
-  (my-leader-def "aa" 'ag)
+  (my-leader-def "aa" 'ag-project)
   :init
+  (setq ag-reuse-buffers 't)
   (setq ag-highlight-search t))
 
 (use-package anzu
@@ -203,6 +204,12 @@
   (setq doom-modeline-workspace-name nil)
   (setq doom-modeline-icon nil)
   (setq doom-modeline-minor-modes nil))
+
+(use-package dumb-jump
+  :ensure t
+  :after evil
+  :config
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (use-package elec-pair
   :defer t
@@ -655,7 +662,7 @@ _q_uit _RET_: current
 (use-package project
   :defer t
   :init
-  (setq project-vc-extra-root-markers '(".project"))
+  (setq project-vc-extra-root-markers '(".projectile"))
   ;; buffer switch handled by consult
   (my-leader-def
     "pc" 'project-compile

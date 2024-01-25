@@ -342,7 +342,7 @@
   ;; Corfu
   (corfu-bar          (:background base02))
   (corfu-border       (:background base03))
-  (corfu-current      (:background base3))
+  (corfu-current      (:inverse-video t))
   (corfu-default      (:background base2))
   (corfu-deprecated   (:strike-through t :inherit 'shadow))
   (corfu-annotations  (:inherit 'completions-annotations))
@@ -354,6 +354,9 @@
 
   ;; markdown
   (markdown-pre-face (:foreground base00))
+
+  ;; doom modeline
+  (doom-modeline-panel (:foreground blue))
 ))
 
 (provide-theme 'my-solarized-light)
