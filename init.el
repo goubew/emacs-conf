@@ -167,6 +167,7 @@
   (setq corfu-preview-current 'insert)
   (setq corfu-preselect 'prompt)
   (setq corfu-quit-at-boundary 'separator)
+  (setq corfu-left-margin-width 0)
   :config
   (general-def
    :states 'insert
@@ -257,6 +258,7 @@
   (setq recentf-max-saved-items 25) ; Set recent file limit
   (setq scroll-conservatively 101); Do not recenter after scrolling off screen
   (setq native-comp-async-report-warnings-errors 'silent); Do not pop up comp warnings
+  (setq split-width-threshold 200); Only split horizontally for 200 cols
 
   (add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window
 
@@ -757,7 +759,9 @@ _q_uit _RET_: current
 
 (use-package which-key
   :ensure t
-  :hook (after-init . which-key-mode))
+  :hook (after-init . which-key-mode)
+  :config
+  (push '((nil . "lambda") . t) which-key-replacement-alist))
 
 (use-package wgrep
   :ensure t
