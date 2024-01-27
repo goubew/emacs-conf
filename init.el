@@ -110,6 +110,7 @@
 (use-package cc-mode
   :defer t
   :config
+  (c-set-offset 'case-label '+)
   (with-eval-after-load 'project
     (defun my-swap-h-c-file ()
       "Finds the associated .h or .c file in the current project"
