@@ -258,7 +258,6 @@
   (setq recentf-max-menu-items 25) ; Set recent file limit
   (setq recentf-max-saved-items 25) ; Set recent file limit
   (setq scroll-conservatively 101); Do not recenter after scrolling off screen
-  (setq native-comp-async-report-warnings-errors 'silent); Do not pop up comp warnings
   (setq split-width-threshold 200); Only split horizontally for 200 cols
 
   (add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window

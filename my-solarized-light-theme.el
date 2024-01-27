@@ -347,6 +347,20 @@
   (corfu-deprecated   (:strike-through t :inherit 'shadow))
   (corfu-annotations  (:inherit 'completions-annotations))
 
+  ;; completions
+  (completions-common-part (:foreground blue))
+
+  ;; imenu-list
+ (imenu-list-entry-face nil)
+ (imenu-list-entry-face-0 (:foreground violet :inherit 'imenu-list-entry-face))
+ (imenu-list-entry-face-1 (:foreground green :inherit 'imenu-list-entry-face))
+ (imenu-list-entry-face-2 (:foreground blue :inherit 'imenu-list-entry-face))
+ (imenu-list-entry-face-3 (:foreground orange :inherit 'imenu-list-entry-face))
+ (imenu-list-entry-subalist-face-0 (:weight 'bold :underline t :inherit 'imenu-list-entry-face-0))
+ (imenu-list-entry-subalist-face-1 (:weight 'bold :underline t :inherit 'imenu-list-entry-face-1))
+ (imenu-list-entry-subalist-face-2 (:weight 'bold :underline t :inherit 'imenu-list-entry-face-2))
+ (imenu-list-entry-subalist-face-3 (:weight 'bold :underline t :inherit 'imenu-list-entry-face-3))
+
   ;; diff-refine
   (diff-refine-added    (:background green :foreground base3))
   (diff-refine-changed  (:background yellow :foreground base3))

@@ -13,3 +13,6 @@
 
 ;; Set custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+;; Disable native comp warnings
+(setq native-comp-async-report-warnings-errors nil); Do not pop up comp warnings
