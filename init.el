@@ -91,7 +91,7 @@
   :ensure t
   :config
   (defun my-reload-theme ()
-      "Reloads the theme to test changes"
+    "Reloads the theme to test changes"
     (interactive)
     (disable-theme 'my-solarized-light)
     (load-theme 'my-solarized-light t))
@@ -386,6 +386,7 @@
   (my-leader-def "le" 'eglot)
   :config
   (my-leader-def
+    "la" 'eglot-code-actions
     "ld" 'xref-find-definitions
     "lh" 'eldoc
     "lo" 'eglot-code-action-organize-imports
