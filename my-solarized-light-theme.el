@@ -368,6 +368,7 @@
 
   ;; markdown
   (markdown-pre-face (:foreground base00))
+  (markdown-inline-code-face (:foreground magenta))
 
   ;; doom modeline
   (doom-modeline-panel (:foreground blue))
