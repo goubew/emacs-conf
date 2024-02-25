@@ -562,9 +562,6 @@ _q_uit _RET_: current
     "mc" 'ledger-mode-clean-buffer
     "mn" 'my-new-ledger-entry
     "mk" 'ledger-copy-transaction-at-point)
-  (general-def
-   :keymaps 'ledger-mode-map
-   "DEL" 'my-backward-delete-whitespace-to-column)
   (defun my-ledger-mode ()
     "My ledger mode settings"
     (setq tab-width 4)
@@ -608,7 +605,6 @@ _q_uit _RET_: current
   (setq evil-cross-lines t) ; Make horizontal movement cross lines
   (setq org-adapt-indentation nil)
   (setq org-agenda-files '("~/org/"))
-  (setq org-ascii-text-width 65)
   (setq org-edit-src-content-indentation 0)
   (setq org-goto-interface 'outline-path-completion)
   (setq org-indent-mode-turns-on-hiding-stars nil)
@@ -660,7 +656,8 @@ _q_uit _RET_: current
   :defer t
   :init
   (setq org-ascii-global-margin 0)
-  (setq org-ascii-text-width 70))
+  (setq org-ascii-inner-margin 0)
+  (setq org-ascii-text-width 65))
 
 (use-package project
   :defer t
