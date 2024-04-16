@@ -602,13 +602,13 @@ _q_uit _RET_: current
 (use-package org
   :defer t
   :init
-  (setq evil-cross-lines t) ; Make horizontal movement cross lines
   (setq org-adapt-indentation nil)
   (setq org-agenda-files '("~/org/"))
   (setq org-edit-src-content-indentation 0)
   (setq org-goto-interface 'outline-path-completion)
   (setq org-indent-mode-turns-on-hiding-stars nil)
   (setq org-outline-path-complete-in-steps nil)
+  (setq org-src-window-setup t)
   (setq visual-fill-column-width 90)
   (setq visual-fill-column-center-text t)
   :config
@@ -645,7 +645,9 @@ _q_uit _RET_: current
     (insert (read-string "Enter link description =>" (replace-regexp-in-string "^\* *" "" org-header)))
     (insert "]]")))
   (defun my-org-mode ()
-    (electric-indent-local-mode -1))
+    (electric-indent-local-mode -1)
+    (setq-local evil-cross-lines t) ; Make horizontal movement cross lines
+    )
   (add-hook 'org-mode-hook 'my-org-mode))
 
 (use-package origami
