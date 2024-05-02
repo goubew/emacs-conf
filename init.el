@@ -621,7 +621,9 @@ _q_uit _RET_: current
    :states '(normal insert)
    :keymaps 'org-mode-map
    "M-<return>" 'my-org-meta-return
-   "M-RET" 'my-org-meta-return)
+   "M-RET" 'my-org-meta-return
+   "j" 'evil-next-visual-line
+   "k" 'evil-previous-visual-line)
   (my-leader-def
     :keymaps 'org-mode-map
     "mj" 'org-goto
