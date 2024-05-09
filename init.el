@@ -28,6 +28,7 @@
     "f" '(:ignore t :which-key "file")
     "g" '(:ignore t :which-key "git")
     "h" '(:ignore t :which-key "hydra")
+    "i" '(:ignore t :which-key "info")
     "j" '(:ignore t :which-key "jump")
     "l" '(:ignore t :which-key "lsp")
     "L" '(:ignore t :which-key "lisp")
@@ -304,7 +305,16 @@
     (fringe-mode 0))
 
   (when (eq system-type 'darwin)
-    (setq mac-command-modifier 'control)))
+    (setq mac-command-modifier 'control))
+
+  (defun my-current-filename ()
+    "Copy the full path of the current file and write it to the minibuffer"
+    (interactive)
+    (let ((bufname (buffer-file-name (window-buffer (minibuffer-selected-window)))))
+      (kill-new bufname)
+      (message bufname)))
+
+  (my-leader-def "if" 'my-current-filename))
 
 (use-package eshell
   :general
