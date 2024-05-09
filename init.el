@@ -45,6 +45,8 @@
     "cp" 'smerge-prev
     "cm" 'smerge-keep-mine
     "cb" 'smerge-keep-base
+    "cu" 'smerge-keep-upper
+    "cl" 'smerge-keep-lower
     "ff" 'find-file
     "fs" 'save-buffer
     "jb" 'bookmark-jump
