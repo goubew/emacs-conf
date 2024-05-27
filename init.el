@@ -705,6 +705,11 @@ _q_uit _RET_: current
     "pf" 'project-find-file
     "pp" 'project-switch-project))
 
+(use-package powershell
+  :ensure t
+  :mode
+  ("\\.pwsh\\'" . powershell-mode))
+
 (use-package rainbow-delimiters
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
