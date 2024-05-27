@@ -10,6 +10,8 @@
     :prefix "SPC"
     :non-normal-prefix "C-SPC")
   (general-def
+    "M-u" 'universal-argument)
+  (general-def
    :states 'normal
    "]c" 'next-error
    "[c" 'previous-error)
