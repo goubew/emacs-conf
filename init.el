@@ -37,6 +37,7 @@
     "s" '(:ignore t :which-key "search")
     "t" '(:ignore t :which-key "toggle/tab")
     "q" '(:ignore t :which-key "query ai")
+    ";"  'eval-expression
     "ab" 'bookmark-set
     "ac" 'calc
     "bB" 'switch-to-buffer
@@ -83,6 +84,20 @@
   :init
   (setq ag-reuse-buffers 't)
   (setq ag-highlight-search t))
+
+(use-package ansible
+  :ensure t
+  :after yaml-mode
+  :init
+  (defun my-should-ansible ()
+    "Check if ansible should be enabled"
+    (when (string-match "/playbooks/.*\.ya?ml\\'" (buffer-file-name))
+      (ansible)))
+  (add-hook 'yaml-mode-hook 'my-should-ansible))
+
+(use-package ansible-doc
+  :ensure t
+  :after ansible)
 
 (use-package anzu
   :ensure t
