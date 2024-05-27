@@ -82,7 +82,10 @@
 (use-package ag
   :ensure t
   :general
-  (my-leader-def "aa" 'ag-project)
+  (my-leader-def "aa" 'ag-regexp)
+  (my-leader-def "aA" 'ag)
+  (my-leader-def "pa" 'ag-project-regexp)
+  (my-leader-def "pA" 'ag-project)
   :init
   (setq ag-reuse-buffers 't)
   (setq ag-highlight-search t))
