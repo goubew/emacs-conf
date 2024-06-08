@@ -226,7 +226,6 @@
   :init
   (column-number-mode 1)
   (setq inhibit-compacting-font-caches t)
-  (setq doom-modeline-workspace-name nil)
   (setq doom-modeline-icon nil)
   (setq doom-modeline-minor-modes nil))
 
@@ -235,6 +234,18 @@
   :after evil
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
+
+(use-package eat
+  :ensure t
+  :general
+  (my-leader-def
+    "at" 'eat
+    "pt" 'eat-project)
+  :config
+  (general-def
+    :keymaps 'eat-semi-char-mode-map
+    "C-u" 'eat-self-input
+    "C-6" 'evil-switch-to-windows-last-buffer))
 
 (use-package elec-pair
   :defer t
@@ -367,7 +378,8 @@
   (setq evil-want-C-w-delete t)
   (setq evil-want-keybinding nil)
   :config
-  (add-to-list 'evil-emacs-state-modes 'vterm-mode)
+  (add-to-list 'evil-emacs-state-modes 'eat-mode)
+  (add-to-list 'evil-emacs-state-modes 'Info-mode)
   (my-leader-def "sc" 'evil-ex-nohighlight))
 
 (use-package evil-anzu
@@ -386,7 +398,6 @@
   :init
   (setq evil-escape-key-sequence "fd")
   (setq evil-escape-delay 0.5)
-  (setq evil-escape-excluded-major-modes '(vterm-mode))
   :config
   (add-hook 'evil-mode-hook (lambda () (evil-escape-mode 1))))
 
@@ -776,25 +787,6 @@ _q_uit _RET_: current
   :ensure t
   :hook
   (visual-line-mode . visual-fill-column-mode))
-
-(use-package vterm
-  :ensure t
-  :init
-  ;; https://github.com/akermu/emacs-libvterm/issues/313#issuecomment-811850431
-  (defun my-evil-normal-in-vterm-copy-mode ()
-    (if (bound-and-true-p vterm-copy-mode)
-        (evil-normal-state)
-      (evil-emacs-state)))
-  (add-hook 'vterm-mode-hook 'evil-emacs-state)
-  (add-hook 'vterm-copy-mode-hook 'my-evil-normal-in-vterm-copy-mode)
-  (setq vterm-disable-bold-font t)
-  :general
-  (my-leader-def "at" 'vterm)
-  :config
-  (general-def
-   :keymaps 'vterm-mode-map
-   "C-u" 'vterm-send-C-u
-   "C-6" 'evil-switch-to-windows-last-buffer))
 
 (use-package which-key
   :ensure t
