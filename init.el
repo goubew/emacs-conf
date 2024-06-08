@@ -121,6 +121,10 @@
   (my-leader-def "T" 'my-reload-theme)
   (add-hook 'after-init-hook (lambda () (load-theme 'my-solarized-light t))))
 
+(use-package ace-window
+  :general
+  ("C-x o" 'ace-window))
+
 (use-package avy
   :ensure t
   :general
@@ -237,6 +241,8 @@
 
 (use-package eat
   :ensure t
+  :init
+  (setq eat-enable-shell-prompt-annotation nil)
   :general
   (my-leader-def
     "at" 'eat
@@ -756,8 +762,6 @@ _q_uit _RET_: current
   :ensure t
   :init
   (setq treemacs-no-png-images t)
-  (with-eval-after-load 'winum
-    (my-leader-def "0" 'treemacs-select-window))
   :general
   (my-leader-def "tt" 'treemacs))
 
@@ -803,24 +807,6 @@ _q_uit _RET_: current
 (use-package wgrep-ag
   :ensure t
   :after project)
-
-(use-package winum
-  :ensure t
-  :hook (after-init . winum-mode)
-  :config
-  (my-leader-def
-    "1" 'winum-select-window-1
-    "2" 'winum-select-window-2
-    "3" 'winum-select-window-3
-    "4" 'winum-select-window-4
-    "5" 'winum-select-window-5
-    "6" 'winum-select-window-6
-    "7" 'winum-select-window-7
-    "8" 'winum-select-window-8
-    "9" 'winum-select-window-9)
-  ;Remove winum from which-key
-  (with-eval-after-load 'which-key
-    (push '((nil . "winum-select-window-[1-9]") . t) which-key-replacement-alist)))
 
 (use-package xclip
   :unless (display-graphic-p)

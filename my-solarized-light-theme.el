@@ -98,6 +98,13 @@
   (show-paren-match    (:underline t))
   (show-paren-mismatch (:background red :foreground base3))
 
+  ;; ace-window
+  (aw-key-face (:inherit 'font-lock-builtin-face))
+  (aw-mode-line-face (:inherit 'mode-line-buffer-id))
+  (aw-background-face (:foreground base1))
+  (aw-minibuffer-leading-char-face (:inherit 'aw-leading-char-face))
+  (aw-leading-char-face (:background orange :foreground base3))
+
   ;; avy
   (avy-background-face (:foreground base01))
   (avy-lead-face       (:background red :foreground base3))
