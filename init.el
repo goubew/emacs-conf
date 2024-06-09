@@ -134,6 +134,13 @@
     "jl"  'avy-goto-line
     "jw"  'avy-goto-word-0))
 
+(use-package cape
+  :ensure t
+  :after consult
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
 (use-package cc-mode
   :defer t
   :config
@@ -151,7 +158,6 @@
                  (concat "^" (regexp-quote (replace-regexp-in-string "\\.c\\'" ".h" file-name)) "$"))
                 )))
           (if related-file
-              ;(project-find-file-in related-file (list (project-root (project-current))) (project-current nil))
               (let ((found-file-list (directory-files-recursively (project-root (project-current)) related-file nil)))
                 (if (> (length found-file-list) 0)
                     (find-file (nth 0 found-file-list))
@@ -161,12 +167,20 @@
       :keymaps 'c-mode-map
       "mo" 'my-swap-h-c-file)))
 
-(use-package cape
+(use-package circe
   :ensure t
-  :after consult
   :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
+  (defun my-prompt-circe-pass (server)
+    "Prompts and returns a password for circe"
+    (read-passwd "Enter the circe password=>"))
+  (setq circe-network-options
+        '(("Libera Chat"
+           :nick "wag"
+           :nickserv-password
+           (lambda (server) (read-passwd "Enter the SAML password=>")))))
+  :general
+  (my-leader-def
+    "ac" 'circe))
 
 (use-package consult
   :ensure t
@@ -386,6 +400,7 @@
   :config
   (add-to-list 'evil-emacs-state-modes 'eat-mode)
   (add-to-list 'evil-emacs-state-modes 'Info-mode)
+  (add-to-list 'evil-emacs-state-modes 'circe-mode)
   (my-leader-def "sc" 'evil-ex-nohighlight))
 
 (use-package evil-anzu

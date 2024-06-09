@@ -99,11 +99,11 @@
   (show-paren-mismatch (:background red :foreground base3))
 
   ;; ace-window
-  (aw-key-face (:inherit 'font-lock-builtin-face))
-  (aw-mode-line-face (:inherit 'mode-line-buffer-id))
-  (aw-background-face (:foreground base1))
+  (aw-key-face                     (:inherit 'font-lock-builtin-face))
+  (aw-mode-line-face               (:inherit 'mode-line-buffer-id))
+  (aw-background-face              (:foreground base1))
   (aw-minibuffer-leading-char-face (:inherit 'aw-leading-char-face))
-  (aw-leading-char-face (:background orange :foreground base3))
+  (aw-leading-char-face            (:background orange :foreground base3))
 
   ;; avy
   (avy-background-face (:foreground base01))
@@ -111,6 +111,17 @@
   (avy-lead-face-0     (:background green :foreground base3))
   (avy-lead-face-1     (:background yellow :foreground base3))
   (avy-lead-face-2     (:background cyan :foreground base3))
+
+  ;; circe
+  (circe-fool-face               (:foreground base01))
+  (circe-topic-diff-removed-face (:inherit 'diff-removed))
+  (circe-topic-diff-new-face     (:inherit 'diff-added))
+  (circe-originator-face         nil)
+  (circe-my-message-face         nil)
+  (circe-highlight-nick-face     (:weight 'bold :foreground violet))
+  (circe-server-face             (:foreground blue))
+  (circe-prompt-face             (:weight 'bold :foreground cyan :background base2))
+
 
   ;; isearch
   (isearch        (:background blue :foreground base3))
@@ -162,11 +173,16 @@
   (wgrep-delete-face (:background red :foreground base3))
 
   ;; hydra
-  (hydra-face-red (:foreground red))
-  (hydra-face-blue (:foreground blue))
+  (hydra-face-red      (:foreground red))
+  (hydra-face-blue     (:foreground blue))
   (hydra-face-amaranth (:foreground magenta))
-  (hydra-face-pink (:foreground cyan))
-  (hydra-face-teal (:foreground orange))
+  (hydra-face-pink     (:foreground cyan))
+  (hydra-face-teal     (:foreground orange))
+
+  ;; lui
+  (lui-button-face               (:underline t :foreground green))
+  (lui-time-stamp-face           (:weight 'bold :foreground violet))
+  (lui-irc-colors-monospace-face nil)
 
   ;; magit
   (magit-blame-highlight             (:extend t :foreground base2 :background base01))
