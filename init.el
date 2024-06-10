@@ -680,9 +680,10 @@ _q_uit _RET_: current
     "Moves the curor to the end of the line and calls org-meta-return"
     (interactive)
     (move-end-of-line nil)
-    (org-meta-return))
+    (org-meta-return)
+    (evil-append))
   (general-def
-   :states '(normal insert)
+   :states '(normal)
    :keymaps 'org-mode-map
    "M-<return>" 'my-org-meta-return
    "M-RET" 'my-org-meta-return
