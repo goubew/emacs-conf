@@ -140,6 +140,11 @@
   (flyspell-duplicate (:underline (:color orange :style 'wave)))
   (flyspell-incorrect (:underline (:color red :style 'wave)))
 
+  ;; diff-hl
+  (diff-hl-change (:foreground blue :background blue))
+  (diff-hl-delete (:foreground red :background red))
+  (diff-hl-insert (:foreground green :background green))
+
   ;; dired
   (dired-broken-symlink (:background red :foreground base3))
 

@@ -170,9 +170,6 @@
 (use-package circe
   :ensure t
   :init
-  (defun my-prompt-circe-pass (server)
-    "Prompts and returns a password for circe"
-    (read-passwd "Enter the circe password=>"))
   (setq circe-network-options
         '(("Libera Chat"
            :nick "wag"
@@ -180,7 +177,7 @@
            (lambda (server) (read-passwd "Enter the SAML password=>")))))
   :general
   (my-leader-def
-    "ac" 'circe))
+    "aC" 'circe))
 
 (use-package consult
   :ensure t
@@ -233,6 +230,12 @@
     "My css mode settings"
     (setq css-indent-offset 2))
   (add-hook 'css-mode-hook 'my-css-mode))
+
+(use-package diff-hl
+  :if (display-graphic-p)
+  :ensure t
+  :config
+  :hook ((prog-mode vc-dir-mode) . diff-hl-mode))
 
 (use-package dockerfile-mode
   :ensure t
@@ -352,7 +355,7 @@
 
   ;; Fringe icons do not scale at high DPI
   ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=31203
-  (when (>= (display-pixel-width) 3840)
+  (when (and (>= (display-pixel-height) 2160) (>= (display-pixel-width) 3840))
     (fringe-mode 0))
 
   (when (eq system-type 'darwin)
@@ -477,22 +480,15 @@
     "en" 'flymake-goto-next-error
     "ep" 'flymake-goto-prev-error))
 
-(use-package git-gutter-fringe
-  :if (display-graphic-p)
-  :ensure t
-  :config
-  ;; Stolen from doom emacs
-  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom)
-  ;; The fringe bitmaps only seem to work when package loading isn't defered
-  (add-hook 'after-init-hook 'global-git-gutter-mode))
-
 (use-package git-timemachine
   :ensure t
   :general
   (my-leader-def
     "gt" 'git-timemachine))
+
+(use-package go-mode
+  :ensure t
+  :mode ("\\.go\\'" . go-mode))
 
 (use-package gptel
   :ensure t
@@ -539,7 +535,9 @@
 (use-package hydra
   :ensure t
   :general
-  (my-leader-def "hs" 'hydra-smerge/body)
+  (my-leader-def
+    "hd" 'hydra-diff-hl/body
+    "hs" 'hydra-smerge/body)
   :config
   (defhydra hydra-smerge
     (:color red :hint nil
@@ -567,7 +565,16 @@ _q_uit _RET_: current
     ("<" smerge-diff-base-mine)
     ("=" smerge-diff-mine-other)
     (">" smerge-diff-base-other)
-    ("q" nil :color blue)))
+    ("q" nil :color blue))
+  (defhydra hydra-diff-hl
+    (:color orange :hint nil)
+    "
+^Hunk Nav^
+_j_: next
+_k_: prev
+"
+    ("j" diff-hl-next-hunk)
+    ("k" diff-hl-previous-hunk)))
 
 (use-package imenu-list
   :ensure t
