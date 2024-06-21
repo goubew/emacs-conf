@@ -79,17 +79,6 @@
 ;; Packages
 ;; --------
 
-(use-package ag
-  :ensure t
-  :general
-  (my-leader-def "aa" 'ag-regexp)
-  (my-leader-def "aA" 'ag)
-  (my-leader-def "pa" 'ag-project-regexp)
-  (my-leader-def "pA" 'ag-project)
-  :init
-  (setq ag-reuse-buffers 't)
-  (setq ag-highlight-search t))
-
 (use-package ansible
   :ensure t
   :after yaml-mode
@@ -188,7 +177,7 @@
     "ec" 'consult-flymake
     "fr" 'consult-recent-file
     "pb" 'consult-project-buffer
-    "ps" 'consult-git-grep
+    "ps" 'consult-ripgrep
     "sl" 'consult-line
     "sL" 'consult-line-multi
     "sm" 'consult-mark
@@ -235,7 +224,7 @@
   :if (display-graphic-p)
   :ensure t
   :config
-  :hook ((prog-mode vc-dir-mode) . diff-hl-mode))
+  :hook ((prog-mode vc-dir-mode ledger-mode) . diff-hl-mode))
 
 (use-package dockerfile-mode
   :ensure t
@@ -669,7 +658,6 @@ _k_: prev
   (setq completion-category-defaults nil)
   (setq completion-category-overrides '((file (styles partial-completion)))))
 
-;; TODO: Make org mode use cape-dabbrev completions instead of pcomplete
 (use-package org
   :defer t
   :init
@@ -796,7 +784,6 @@ _k_: prev
   :ensure t
   :after evil)
 
-; TODO Readd vertico-repeat loading
 (use-package vertico
   :ensure t
   :hook (after-init . vertico-mode)
@@ -826,10 +813,6 @@ _k_: prev
   :after project
   :init
   (setq wgrep-auto-save-buffer t))
-
-(use-package wgrep-ag
-  :ensure t
-  :after project)
 
 (use-package xclip
   :unless (display-graphic-p)
