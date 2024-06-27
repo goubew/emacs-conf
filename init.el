@@ -67,7 +67,6 @@
     "t7" (lambda() (interactive) (tab-select 7))
     "t8" (lambda() (interactive) (tab-select 8))
     "t9" (lambda() (interactive) (tab-select 9))
-    "th" 'hl-line-mode
     "tl" 'display-line-numbers-mode
     "tm" 'toggle-frame-maximized
     "tw" 'toggle-truncate-lines
@@ -105,10 +104,10 @@
   (defun my-reload-theme ()
     "Reloads the theme to test changes"
     (interactive)
-    (disable-theme 'my-solarized-light)
-    (load-theme 'my-solarized-light t))
+    (disable-theme 'my-everforest-light)
+    (load-theme 'my-everforest-light t))
   (my-leader-def "T" 'my-reload-theme)
-  (add-hook 'after-init-hook (lambda () (load-theme 'my-solarized-light t))))
+  (add-hook 'after-init-hook (lambda () (load-theme 'my-everforest-light t))))
 
 (use-package ace-window
   :general
@@ -224,6 +223,8 @@
   :if (display-graphic-p)
   :ensure t
   :config
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :hook ((prog-mode vc-dir-mode ledger-mode) . diff-hl-mode))
 
 (use-package dockerfile-mode
@@ -303,7 +304,7 @@
   (setq enable-recursive-minibuffers t) ; Recommended by vertico
   (setq recentf-max-menu-items 25) ; Set recent file limit
   (setq recentf-max-saved-items 25) ; Set recent file limit
-  (setq scroll-conservatively 101); Do not recenter after scrolling off screen
+  (setq scroll-conservatively 33); Adjust recent sensitivity
   (setq split-width-threshold 200); Only split horizontally for 200 cols
 
   (add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window
@@ -314,9 +315,8 @@
                                (recentf-mode 1)))
   (add-hook 'prog-mode-hook (lambda()
                               (display-line-numbers-mode 1)
-                              (hl-line-mode)
                               (flyspell-prog-mode)))
-  (add-hook 'text-mode-hook 'hl-line-mode)
+  (add-hook 'text-mode-hook 'flyspell-mode)
 
   ;; Terminal mode has a menu-bar too
   (menu-bar-mode -1)
@@ -335,7 +335,7 @@
     (if (not (null (x-list-fonts "QuadLemon")))
         (set-frame-font "QuadLemon" nil t)
       (if (eq system-type 'darwin)
-          (set-frame-font "SF Mono Light 18" nil t)
+          (set-frame-font "SF Mono Light 19" nil t)
         (progn
           (when (not (null (x-list-fonts "Droid Sans Mono")))
             (set-frame-font "Droid Sans Mono 14" nil t))
@@ -521,6 +521,23 @@
   ("C-h F" 'helpful-function)
   ("C-h C" 'helpful-command))
 
+(use-package hl-line
+  :defer t
+  :init
+  (my-leader-def
+    "th" 'hl-line-mode)
+  ; https://stackoverflow.com/posts/40572675/revisions
+  (defvar-local was-hl-line-mode-on nil)
+  (defun hl-line-on-maybe ()  (if was-hl-line-mode-on (hl-line-mode +1)))
+  (defun hl-line-off-maybe () (if was-hl-line-mode-on (hl-line-mode -1)))
+  (add-hook 'hl-line-mode-hook
+            (lambda () (if hl-line-mode (setq was-hl-line-mode-on t))))
+
+  (add-hook 'prog-mode-hook 'hl-line-mode)
+
+  (add-hook 'evil-visual-state-entry-hook 'hl-line-off-maybe)
+  (add-hook 'evil-visual-state-exit-hook 'hl-line-on-maybe))
+
 (use-package hydra
   :ensure t
   :general
@@ -672,7 +689,6 @@ _k_: prev
   (setq visual-fill-column-center-text t)
   :config
   (defun my-org-meta-return ()
-    "Moves the curor to the end of the line and calls org-meta-return"
     (interactive)
     (move-end-of-line nil)
     (org-meta-return)
