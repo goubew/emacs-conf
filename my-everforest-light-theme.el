@@ -132,8 +132,8 @@
 
   ;; isearch
   (isearch        (:background blue :foreground bg0))
-  (lazy-highlight (:background cyan :foreground bg0))
-  (isearch-fail   (:background red :foreground bg0))
+  (lazy-highlight (:background bg_blue))
+  (isearch-fail   (:background bg_red))
 
   ;; highlight indent guides
   (highlight-indent-guides-character-face (:foreground yellow))

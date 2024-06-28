@@ -380,6 +380,7 @@
 
   (setq evil-respect-visual-line-mode t)
   (setq evil-search-module 'evil-search)
+  (setq evil-ex-search-persistent-highlight nil)
   (setq evil-symbol-word-search t)
   (setq evil-shift-width 2)
   (setq evil-undo-system 'undo-fu)
@@ -532,9 +533,6 @@
   (defun hl-line-off-maybe () (if was-hl-line-mode-on (hl-line-mode -1)))
   (add-hook 'hl-line-mode-hook
             (lambda () (if hl-line-mode (setq was-hl-line-mode-on t))))
-
-  (add-hook 'prog-mode-hook 'hl-line-mode)
-
   (add-hook 'evil-visual-state-entry-hook 'hl-line-off-maybe)
   (add-hook 'evil-visual-state-exit-hook 'hl-line-on-maybe))
 
