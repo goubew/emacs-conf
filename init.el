@@ -104,10 +104,10 @@
   (defun my-reload-theme ()
     "Reloads the theme to test changes"
     (interactive)
-    (disable-theme 'my-everforest-light)
-    (load-theme 'my-everforest-light t))
+    (disable-theme 'desert-light)
+    (load-theme 'desert-light t))
   (my-leader-def "T" 'my-reload-theme)
-  (add-hook 'after-init-hook (lambda () (load-theme 'my-everforest-light t))))
+  (add-hook 'after-init-hook (lambda () (load-theme 'desert-light t))))
 
 (use-package ace-window
   :general

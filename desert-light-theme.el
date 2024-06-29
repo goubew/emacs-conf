@@ -1,7 +1,7 @@
 (require 'autothemer)
 
 (autothemer-deftheme
- my-everforest-light "An everforest light theme with personal mode support"
+ desert-light "An light theme based on Solarized and Everforest"
 
  ((((class color) (min-colors #xFFFFFF))) ;; Supports 24bit colors only
   (bg0       "#fdf6e3")
@@ -17,12 +17,12 @@
   (bg_yellow "#faedcd")
   (ever_fg   "#5c6a72")
   (fg        "#657b83")
-  (yellow    "#dfa000")
-  (orange    "#f57d26")
-  (red       "#f85552")
+  (yellow    "#c99b0c")
+  (orange    "#cb4b16")
+  (red       "#ee514e")
   (magenta   "#df69ba")
-  (violet    "#6c71c4")
-  (blue      "#3a94c5")
+  (violet    "#7376a3")
+  (blue      "#ad6d79") ; "blue"
   (cyan      "#3fa77c")
   (green     "#8da101")
   (grey0     "#a6b0a0")
@@ -132,7 +132,7 @@
 
   ;; isearch
   (isearch        (:background blue :foreground bg0))
-  (lazy-highlight (:background bg_blue))
+  (lazy-highlight (:background bg_yellow))
   (isearch-fail   (:background bg_red))
 
   ;; highlight indent guides
@@ -407,4 +407,4 @@
   (evil-ex-substitute-replacement (:underline t :foreground red))
 ))
 
-(provide-theme 'my-everforest-light)
+(provide-theme 'desert-light)

@@ -1,7 +1,3 @@
-;; Increase the GC threshold for faster startup
-;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
-
 ;; Load .el files over .elc if they are newer
 (setq load-prefer-newer t)
 
@@ -15,4 +11,4 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 ;; Disable native comp warnings
-(setq native-comp-async-report-warnings-errors nil); Do not pop up comp warnings
+(setq native-comp-async-report-warnings-errors 'silent); Do not pop up comp warnings
