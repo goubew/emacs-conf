@@ -45,12 +45,12 @@
   (mode-line-inactive  (:background bg1))
   (region              (:background bg_visual))
   (secondary-selection (:background bg1))
-  (shadow              (:foreground grey0))
+  (shadow              (:foreground grey1))
 
   ;; Built in syntax
   (font-lock-builtin-face       (:foreground violet))
   (font-lock-constant-face      (:foreground magenta))
-  (font-lock-comment-face       (:foreground grey0))
+  (font-lock-comment-face       (:foreground grey1))
   (font-lock-function-name-face (:foreground yellow))
   (font-lock-keyword-face       (:foreground green))
   (font-lock-string-face        (:foreground cyan))
@@ -222,7 +222,7 @@
   (magit-branch-local                (:foreground grey2))
   (magit-branch-remote               (:foreground green))
   (magit-tag                         (:foreground yellow))
-  (magit-hash                        (:foreground grey0))
+  (magit-hash                        (:foreground grey1))
   (magit-refname                     (:foreground yellow))
   (magit-log-date                    (:foreground yellow))
   (magit-log-author                  (:foreground red))
@@ -242,7 +242,7 @@
   (magit-section-heading-selection   (:foreground red))
   (magit-section-heading             (:weight 'bold :foreground red))
   (magit-section-highlight           (:background bg1))
-  (magit-dimmed                      (:foreground grey0))
+  (magit-dimmed                      (:foreground grey1))
 
   ;; orderless
   (orderless-match-face-0 (:foreground blue))
@@ -258,7 +258,7 @@
   (ansi-color-blue           (:foreground blue :background blue))
   (ansi-color-magenta        (:foreground magenta :background magenta))
   (ansi-color-cyan           (:foreground cyan :background cyan))
-  (ansi-color-white          (:foreground grey0 :background grey0))
+  (ansi-color-white          (:foreground grey1 :background grey1))
   (ansi-color-bright-black   (:foreground grey2 :background grey2))
   (ansi-color-bright-red     (:foreground red :background red))
   (ansi-color-bright-green   (:foreground green :background green))
@@ -314,7 +314,7 @@
   (org-ellipsis                   (:underline t :foreground yellow))
   (org-footnote                   (:underline t :foreground violet))
   (org-formula                    (:foreground red))
-  (org-headline-done              (:foreground grey0))
+  (org-headline-done              (:foreground grey1))
   (org-headline-todo              (:foreground red))
   (org-hide                       (:foreground bg0))
   (org-imminent-deadline          (:inherit 'org-warning))
@@ -356,7 +356,7 @@
   (org-warning                    (:inherit 'font-lock-warning-face))
 
   ;; eglot
-  (eglot-inlay-hint-face       (:foreground grey0 :background bg1 :height 0.8))
+  (eglot-inlay-hint-face       (:foreground grey1 :background bg1 :height 0.8))
   (eglot-highlight-symbol-face (:underline t))
 
   ;; sh-mode
