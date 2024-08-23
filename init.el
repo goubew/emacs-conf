@@ -189,7 +189,7 @@
   :ensure t
   :hook (after-init . global-corfu-mode)
   :init
-  (setq corfu-on-exact-match 'show)
+  (setq corfu-on-exact-match 'insert)
   (setq corfu-cycle t)
   (setq corfu-preview-current 'insert)
   (setq corfu-preselect 'prompt)
@@ -410,6 +410,7 @@
   :ensure t
   :after evil
   :init
+  (setq evil-escape-inhibit-functions '(evil-emacs-state-p))
   (setq evil-escape-key-sequence "fd")
   (setq evil-escape-delay 0.5)
   :config
