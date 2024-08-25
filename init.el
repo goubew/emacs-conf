@@ -45,6 +45,7 @@
     "bB" 'switch-to-buffer
     "bd" 'my-buffer-delete
     "bs" 'scratch-buffer
+    "bt" 'tab-bar-switch-to-tab
     "cn" 'smerge-next
     "cp" 'smerge-prev
     "cm" 'smerge-keep-mine
@@ -97,6 +98,27 @@
   :after evil
   :config
   (global-anzu-mode))
+
+(use-package app-launcher
+  :demand t
+  :init
+  ;; Sourced from https://gitlab.com/dwt1/configuring-emacs/-/blob/main/07-the-final-touches/scripts/app-launchers.el
+  (defun my-emacs-run-launcher ()
+    "Create and select a frame called emacs-run-launcher which consists only of a minibuffer and has specific dimensions. Runs app-launcher-run-app on that frame, which is an emacs command that prompts you to select an app and open it in a dmenu like behaviour. Delete the frame after that command has exited"
+    (interactive)
+    (with-selected-frame
+        (make-frame '((name . "emacs-run-launcher")
+                      (minibuffer . only)
+                      (fullscreen . 0) ; no fullscreen
+                      (undecorated . t) ; remove title bar
+                      (internal-border-width . 10)
+                      (width . 80)
+                      (height . 11)))
+      (unwind-protect
+          (app-launcher-run-app)
+        (delete-frame))))
+  :general
+  (my-leader-def "aa" 'my-emacs-run-launcher))
 
 (use-package autothemer
   :ensure t
@@ -250,11 +272,17 @@
   :ensure t
   :init
   (setq eat-enable-shell-prompt-annotation nil)
-  :general
+  (setq eat-kill-buffer-on-exit t)
   (my-leader-def
     "at" 'eat
     "pt" 'eat-project)
-  :config
+  (defun my-eat-new ()
+    (interactive)
+    (let ((current-prefix-arg
+           (gethash "id"
+                    (json-parse-string
+                     (shell-command-to-string "hyprctl activeworkspace -j")))))
+      (call-interactively 'eat)))
   (general-def
     :keymaps 'eat-semi-char-mode-map
     "C-u" 'eat-self-input
@@ -306,6 +334,7 @@
   (setq recentf-max-saved-items 25) ; Set recent file limit
   (setq scroll-conservatively 33); Adjust recent sensitivity
   (setq split-width-threshold 200); Only split horizontally for 200 cols
+  (setq frame-title-format "Emacs")
 
   (add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window
 
@@ -320,10 +349,10 @@
 
   ;; Terminal mode has a menu-bar too
   (menu-bar-mode -1)
-  (when (display-graphic-p)
+  (when (or (display-graphic-p) (daemonp))
     (blink-cursor-mode 0)
     (tool-bar-mode -1)
-    (toggle-scroll-bar -1)
+    (scroll-bar-mode 0)
 
     ;; Enable window dividers
     (setq window-divider-default-places t); Make vertical and horizontal window dividers)
@@ -331,24 +360,45 @@
     (setq window-divider-default-bottom-width 1)
     (window-divider-mode t)
 
-    ;; Set font
-    (if (not (null (x-list-fonts "QuadLemon")))
-        (set-frame-font "QuadLemon" nil t)
-      (if (eq system-type 'darwin)
-          (set-frame-font "SF Mono Light 19" nil t)
-        (progn
-          (when (not (null (x-list-fonts "Droid Sans Mono")))
-            (set-frame-font "Droid Sans Mono 14" nil t))
-          (when (not (null (x-list-fonts "SF Mono")))
-            (set-frame-font "SF Mono Light 13" nil t))))))
+    (defun my-set-font ()
+      "Sets the font"
+      (interactive)
+      (if (not (null (x-list-fonts "Iosevka")))
+          (set-frame-font "Iosevka 14" nil t)
+        (if (eq system-type 'darwin)
+            (set-frame-font "SF Mono Light 19" nil t)
+          (progn
+            (when (not (null (x-list-fonts "Droid Sans Mono")))
+              (set-frame-font "Droid Sans Mono 14" nil t))
+            (when (not (null (x-list-fonts "SF Mono")))
+              (set-frame-font "SF Mono Light 13" nil t))))))
 
-  ;; Fringe icons do not scale at high DPI
-  ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=31203
-  (when (and (>= (display-pixel-height) 2160) (>= (display-pixel-width) 3840))
-    (fringe-mode 0))
+    (if (daemonp)
+        (add-hook 'server-after-make-frame-hook #'my-set-font)
+      (my-set-font)))
 
   (when (eq system-type 'darwin)
     (setq mac-command-modifier 'control))
+
+  (defun count-paragraphs (start end)
+    "Return number of paragraphs between START and END."
+    (save-excursion
+      (save-restriction
+        (narrow-to-region start end)
+        (goto-char (point-min))
+        (- (buffer-size) (forward-paragraph (buffer-size))))))
+
+  (defun count-paragraphs-region-or-buffer ()
+    "Report number of paragraphs in the region (if it's active) or the entire buffer."
+    (declare (interactive-only count-paragraphs))
+    (interactive)
+    (let ((paragraphs (if (use-region-p)
+                          (count-paragraphs (region-beginning) (region-end))
+                        (count-paragraphs (point-min) (point-max)))))
+      (message "%s has %d paragraph%s"
+               (if (use-region-p) "Region" "Buffer")
+               paragraphs
+               (if (> paragraphs 1) "s" ""))))
 
   (defun my-current-filename ()
     "Copy the full path of the current file and write it to the minibuffer"
@@ -391,9 +441,10 @@
   (setq evil-want-C-w-delete t)
   (setq evil-want-keybinding nil)
   :config
-  (add-to-list 'evil-emacs-state-modes 'eat-mode)
-  (add-to-list 'evil-emacs-state-modes 'Info-mode)
-  (add-to-list 'evil-emacs-state-modes 'circe-mode)
+  (evil-set-initial-state 'Info-mode 'emacs)
+  (evil-set-initial-state 'circe-mode 'emacs)
+  (evil-set-initial-state 'mpdel-browser-mode 'emacs)
+  (evil-set-initial-state 'eat-mode 'emacs)
   (my-leader-def "sc" 'evil-ex-nohighlight))
 
 (use-package evil-anzu
@@ -666,6 +717,20 @@ _k_: prev
   :ensure t
   :mode ("\\.md\\'" . gfm-mode))
 
+(use-package mpdel
+  :ensure t
+  :general
+  (my-leader-def "am" 'mpdel-browser-open)
+  :config
+  (mpdel-mode))
+
+(use-package mpdel-embark
+  :ensure t
+  :after (embark mpdel)
+  :config
+  (progn
+    (mpdel-embark-setup)))
+
 (use-package orderless
   :ensure t
   :after vertico
@@ -705,7 +770,8 @@ _k_: prev
     "mo" 'org-open-at-point
     "mle" 'org-insert-link
     "mln" 'my-org-header-link
-    "mtl" 'org-toggle-link-display)
+    "mtl" 'org-toggle-link-display
+    "mtv" 'visual-line-mode)
   (defun my-org-header-link ()
     "Uses org-goto to prompt for a heading and creates a link"
     (interactive)
@@ -746,7 +812,12 @@ _k_: prev
   (my-leader-def
     "pc" 'project-compile
     "pf" 'project-find-file
-    "pp" 'project-switch-project))
+    "pp" 'project-switch-project)
+  :config
+  (define-key project-prefix-map "m" #'magit-project-status)
+  (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
+  (define-key project-prefix-map "s" #'consult-ripgrep)
+  (add-to-list 'project-switch-commands '(consult-ripgrep "Ripgrep") t))
 
 (use-package powershell
   :ensure t
@@ -770,11 +841,6 @@ _k_: prev
   :defer t
   :init
   (setq sh-basic-offset 2))
-
-(use-package simple-mpc
-  :ensure t
-  :general
-  (my-leader-def "am" 'simple-mpc))
 
 (use-package tab-bar
   :init

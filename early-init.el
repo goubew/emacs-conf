@@ -12,3 +12,6 @@
 
 ;; Disable native comp warnings
 (setq native-comp-async-report-warnings-errors 'silent); Do not pop up comp warnings
+
+;; Set load path
+(add-to-list 'load-path (expand-file-name "extra-packages" user-emacs-directory))
