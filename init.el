@@ -441,10 +441,7 @@
   (setq evil-want-C-w-delete t)
   (setq evil-want-keybinding nil)
   :config
-  (evil-set-initial-state 'Info-mode 'emacs)
-  (evil-set-initial-state 'circe-mode 'emacs)
-  (evil-set-initial-state 'mpdel-browser-mode 'emacs)
-  (evil-set-initial-state 'eat-mode 'emacs)
+  ; Set initial emacs states in the evil-collection config
   (my-leader-def "sc" 'evil-ex-nohighlight))
 
 (use-package evil-anzu
@@ -455,7 +452,11 @@
   :ensure t
   :after evil
   :config
-  (add-hook 'evil-mode-hook (lambda () (evil-collection-init))))
+  (evil-collection-init)
+  (evil-set-initial-state 'Info-mode 'emacs)
+  (evil-set-initial-state 'circe-mode 'emacs)
+  (evil-set-initial-state 'mpdel-browser-mode 'emacs)
+  (evil-set-initial-state 'eat-mode 'emacs))
 
 (use-package evil-escape
   :ensure t
