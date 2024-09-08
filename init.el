@@ -242,7 +242,6 @@
   (add-hook 'css-mode-hook 'my-css-mode))
 
 (use-package diff-hl
-  :if (display-graphic-p)
   :ensure t
   :config
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
@@ -514,6 +513,8 @@
 (use-package flymake
   :defer t
   :init
+  (setq flymake-no-changes-timeout 5)
+  (setq flymake-start-on-save-buffer t)
   (my-leader-def
     "ee" 'flymake-mode)
   :config
@@ -727,7 +728,7 @@ _k_: prev
 
 (use-package mpdel-embark
   :ensure t
-  :after (embark mpdel)
+  :after mpdel
   :config
   (progn
     (mpdel-embark-setup)))
