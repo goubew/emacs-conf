@@ -100,7 +100,7 @@
   (global-anzu-mode))
 
 (use-package app-launcher
-  :demand t
+  :if (daemonp)
   :init
   ;; Sourced from https://gitlab.com/dwt1/configuring-emacs/-/blob/main/07-the-final-touches/scripts/app-launchers.el
   (defun my-emacs-run-launcher ()
@@ -117,7 +117,6 @@
       (unwind-protect
           (app-launcher-run-app)
         (delete-frame))))
-  :general
   (my-leader-def "aa" 'my-emacs-run-launcher))
 
 (use-package autothemer
@@ -904,6 +903,9 @@ _k_: prev
 
 (use-package yaml-mode
   :ensure t
+  :init
+  (add-hook 'yaml-mode-hook (lambda()
+                              (display-line-numbers-mode 1)))
   :mode
   ("\\.ya?ml\\'" . yaml-mode))
 

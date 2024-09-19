@@ -6,12 +6,12 @@ function safe_link() {
   local src="$1"
   local dest="$2"
 
-  if [[ -L $src ]]; then
-    unlink "$src"
-  elif [[ -e $src ]]; then
-    mv "$src" "${src}.bak"
-    ln -s "$src" "$dest"
+  if [[ -L $dest ]]; then
+    unlink "$dest"
+  elif [[ -e $dest ]]; then
+    mv "$dest" "${dest}.bak"
   fi
+  ln -s "$src" "$dest"
 }
 
 mkdir -p "$HOME/.emacs.d/extra-packages"
