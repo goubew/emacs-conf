@@ -8,7 +8,7 @@
   (general-create-definer my-leader-def
     :states '(normal insert visual emacs)
     :prefix "SPC"
-    :non-normal-prefix "C-SPC")
+    :non-normal-prefix "C-c")
   (general-def
     "M-u" 'universal-argument)
   (general-def
@@ -26,7 +26,7 @@
     "a" '(:ignore t :which-key "applications")
     "b" '(:ignore t :which-key "buffers")
     "c" '(:ignore t :which-key "conflicts")
-    "e" '(:ignore t :which-key "errors")
+    "e" '(:ignore t :which-key "errors/elisp")
     "f" '(:ignore t :which-key "file")
     "g" '(:ignore t :which-key "git")
     "h" '(:ignore t :which-key "hydra")
@@ -39,7 +39,6 @@
     "s" '(:ignore t :which-key "search")
     "t" '(:ignore t :which-key "toggle/tab")
     "q" '(:ignore t :which-key "query ai")
-    ";"  'eval-expression
     "ab" 'bookmark-set
     "ac" 'calc
     "bB" 'switch-to-buffer
@@ -52,6 +51,7 @@
     "cb" 'smerge-keep-base
     "cu" 'smerge-keep-upper
     "cl" 'smerge-keep-lower
+    "ee"  'eval-expression
     "ff" 'find-file
     "fs" 'save-buffer
     "jb" 'bookmark-jump
@@ -453,7 +453,9 @@
   (evil-collection-init)
   (evil-set-initial-state 'Info-mode 'emacs)
   (evil-set-initial-state 'circe-mode 'emacs)
-  (evil-set-initial-state 'mpdel-browser-mode 'emacs)
+  (evil-set-initial-state 'mingus-playlist-mode 'emacs)
+  (evil-set-initial-state 'mingus-help-mode 'emacs)
+  (evil-set-initial-state 'mingus-browse-mode 'emacs)
   (evil-set-initial-state 'eat-mode 'emacs))
 
 (use-package evil-escape
@@ -718,19 +720,10 @@ _k_: prev
   :ensure t
   :mode ("\\.md\\'" . gfm-mode))
 
-(use-package mpdel
+(use-package mingus
   :ensure t
   :general
-  (my-leader-def "am" 'mpdel-browser-open)
-  :config
-  (mpdel-mode))
-
-(use-package mpdel-embark
-  :ensure t
-  :after mpdel
-  :config
-  (progn
-    (mpdel-embark-setup)))
+  (my-leader-def "am" 'mingus))
 
 (use-package orderless
   :ensure t
