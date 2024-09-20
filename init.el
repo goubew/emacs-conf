@@ -81,17 +81,16 @@
 
 (use-package ansible
   :ensure t
-  :after yaml-mode
   :init
   (defun my-should-ansible ()
     "Check if ansible should be enabled"
     (when (string-match "/playbooks/.*\.ya?ml\\'" (buffer-file-name))
-      (ansible)))
-  (add-hook 'yaml-mode-hook 'my-should-ansible))
+      (ansible-mode)))
+  :hook (yaml-mode . my-should-ansible))
 
 (use-package ansible-doc
   :ensure t
-  :after ansible)
+  :hook (ansible-mode . ansible-doc-mode))
 
 (use-package anzu
   :ensure t
