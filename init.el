@@ -827,6 +827,14 @@ _k_: prev
   :general
   (my-leader-def "tT" 'tab-bar-mode))
 
+(use-package treesit-auto
+  :ensure t
+  :init
+  (setq treesit-auto-install 'prompt)
+  :hook (after-init . global-treesit-auto-mode)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all))
+
 (use-package undo-fu
   :ensure t
   :after evil)

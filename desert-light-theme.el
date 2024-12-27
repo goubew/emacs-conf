@@ -19,7 +19,7 @@
   (fg        "#657b83")
   (yellow    "#c99b0c")
   (orange    "#cb4b16")
-  (red       "#ee514e")
+  (red       "#dc322f")
   (magenta   "#df69ba")
   (violet    "#7376a3")
   (blue      "#ad6d79") ; "blue"
@@ -54,7 +54,7 @@
   (font-lock-function-name-face (:foreground yellow))
   (font-lock-keyword-face       (:foreground green))
   (font-lock-string-face        (:foreground cyan))
-  (font-lock-number-face        (:foreground bg0))
+  (font-lock-number-face        (:foreground orange))
   (font-lock-variable-name-face (:foreground blue))
   (font-lock-type-face          (:foreground yellow))
   (font-lock-property-face      (:foreground blue))
