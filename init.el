@@ -191,6 +191,9 @@
   :ensure t
   :after vertico
   :config
+  (general-def
+    "C-x b" 'consult-buffer
+    "C-x p b" 'consult-project-buffer)
   (my-leader-def
     "bb" 'consult-buffer
     "ec" 'consult-flymake
@@ -404,7 +407,14 @@
       (kill-new bufname)
       (message bufname)))
 
-  (my-leader-def "if" 'my-current-filename))
+  (my-leader-def "if" 'my-current-filename)
+
+  (defun my-eval-and-run-all-tests-in-buffer ()
+    "Delete all loaded tests from the runtime, evaluate the current buffer and run all loaded tests with ert."
+    (interactive)
+    (ert-delete-all-tests)
+    (eval-buffer)
+    (ert 't)))
 
 (use-package eshell
   :general
@@ -648,18 +658,6 @@ _k_: prev
   :init
   (setq js-indent-level 2))
 
-(use-package kubernetes
-  :ensure t
-  :general
-  (my-leader-def "ak" 'kubernetes-overview)
-  :config
-  (setq kubernetes-poll-frequency 3600)
-  (setq kubernetes-redraw-frequency 3600))
-
-(use-package kubernetes-evil
-  :ensure t
-  :after (evil kubernetes))
-
 (use-package ledger-mode
   :ensure t
   :mode ("\\.ledger\\'" . ledger-mode)
@@ -812,23 +810,9 @@ _k_: prev
   (define-key project-prefix-map "s" #'consult-ripgrep)
   (add-to-list 'project-switch-commands '(consult-ripgrep "Ripgrep") t))
 
-(use-package powershell
-  :ensure t
-  :mode
-  ("\\.pwsh\\'" . powershell-mode))
-
 (use-package rainbow-delimiters
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package ranger
-  :ensure t
-  :init
-  (setq ranger-show-hidden t)
-  :general
-  (my-leader-def "ar" 'ranger)
-  :config
-  (ranger-override-dired-mode t))
 
 (use-package sh-script
   :defer t
@@ -842,17 +826,6 @@ _k_: prev
   (setq tab-bar-close-button-show nil)
   :general
   (my-leader-def "tT" 'tab-bar-mode))
-
-(use-package treemacs
-  :ensure t
-  :init
-  (setq treemacs-no-png-images t)
-  :general
-  (my-leader-def "tt" 'treemacs))
-
-(use-package treemacs-evil
-  :ensure t
-  :after (evil treemacs))
 
 (use-package undo-fu
   :ensure t
