@@ -889,12 +889,6 @@ _k_: prev
   :hook
   (prog-mode . yas-minor-mode))
 
-(use-package yasnippet-snippets
-  :ensure t
-  :after yasnippet
-  :config
-  (yas-reload-all))
-
 (use-package zone-nyan
   :ensure t
   :general
