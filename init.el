@@ -288,6 +288,25 @@
     "C-u" 'eat-self-input
     "C-6" 'evil-switch-to-windows-last-buffer))
 
+;; Make sure models are pre-pulled in ollama
+(use-package ellama
+  :ensure t
+  :general
+  (my-leader-def "o" 'ellama-transient-main-menu)
+  :init
+  (require 'llm-ollama)
+  (setopt ellama-provider
+          (make-llm-ollama
+           :chat-model "mistral-nemo:12B"
+           :embedding-model "nomic-embed-text"))
+  (setopt ellama-coding-provider
+          (make-llm-ollama
+           :chat-model "qwen2.5-coder:14b"
+           :embedding-model "nomic-embed-text"))
+  (setopt ellama-naming-scheme 'ellama-generate-name-by-words)
+  :config
+  (add-hook 'org-ctrl-c-ctrl-c-hook #'ellama-chat-send-last-message))
+
 (use-package elec-pair
   :defer t
   :hook (prog-mode . electric-pair-local-mode))
@@ -543,25 +562,6 @@
 (use-package go-mode
   :ensure t
   :mode ("\\.go\\'" . go-mode))
-
-(use-package gptel
-  :ensure t
-  :general
-  (my-leader-def
-    "qq" 'gptel
-    "qs" 'gptel-send
-    "qm" 'gptel-menu)
-  :config
-  (general-def
-    :keymaps 'gtpel-mode-map
-    "C-<return>" 'gtpel-send
-    "C-RET" 'gtpel-send)
-  (gptel-make-openai ;Not a typo, same API as OpenAI
-   "llama-cpp"
-   :stream t
-   :protocol "http"
-   :host "localhost:8080"
-   :models '("dummy")))
 
 (use-package groovy-mode
   :ensure t
