@@ -442,6 +442,13 @@ _k_: prev
   :init
   (setq js-indent-level 2))
 
+(use-package key-chord
+  :ensure t
+  :after meow
+  :config
+  (key-chord-mode 1)
+  (key-chord-define meow-insert-state-keymap "fd" 'meow-insert-exit))
+
 (use-package ledger-mode
   :ensure t
   :mode ("\\.ledger\\'" . ledger-mode)
