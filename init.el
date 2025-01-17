@@ -56,11 +56,12 @@
   (add-hook 'after-init-hook (lambda () (load-theme 'desert-light t))))
 
 (use-package ace-window
+  :ensure t
   :bind ("C-x o" . ace-window))
 
 (use-package avy
   :ensure t
-  :bind ("C-'" . avy-goto-char))
+  :bind ("C-c j" . avy-goto-char))
 
 (use-package cape
   :ensure t
@@ -446,8 +447,8 @@ _k_: prev
   :ensure t
   :after meow
   :config
-  (key-chord-mode 1)
-  (key-chord-define meow-insert-state-keymap "fd" 'meow-insert-exit))
+  (key-chord-define meow-insert-state-keymap "fd" 'meow-insert-exit)
+  (key-chord-mode 1))
 
 (use-package ledger-mode
   :ensure t
@@ -509,14 +510,7 @@ _k_: prev
   :init
   (defun meow-setup ()
     (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
-    (meow-motion-overwrite-define-key
-     '("j" . meow-next)
-     '("k" . meow-prev)
-     '("<escape>" . ignore))
     (meow-leader-define-key
-     ;; SPC j/k will run the original command in MOTION state.
-     '("j" . "H-j")
-     '("k" . "H-k")
      ;; Use SPC (0-9) for digit arguments.
      '("1" . meow-digit-argument)
      '("2" . meow-digit-argument)
