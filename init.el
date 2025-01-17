@@ -648,6 +648,10 @@ _k_: prev
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package rainbow-mode
+  :ensure t
+  :commands 'rainbow-mode)
+
 (use-package sh-script
   :defer t
   :custom

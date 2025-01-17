@@ -10,14 +10,13 @@
   (bg3       "#e6e2cc")
   (bg4       "#e0dcc7")
   (bg5       "#bdc3af")
-  (bg_visual "#eaedc8")
   (bg_red    "#fbe3da")
   (bg_green  "#f0f1d2")
   (bg_blue   "#e9f0e9")
   (bg_yellow "#faedcd")
   (ever_fg   "#5c6a72")
   (fg        "#657b83")
-  (yellow    "#c99b0c")
+  (yellow    "#b58900")
   (orange    "#cb4b16")
   (red       "#dc322f")
   (magenta   "#df69ba")
@@ -43,7 +42,7 @@
   (minibuffer-prompt   (:foreground blue))
   (mode-line           (:background bg3))
   (mode-line-inactive  (:background bg1))
-  (region              (:background bg_visual))
+  (region              (:background bg_yellow))
   (secondary-selection (:background bg1))
   (shadow              (:foreground grey1))
 
@@ -132,7 +131,7 @@
 
   ;; isearch
   (isearch        (:background blue :foreground bg0))
-  (lazy-highlight (:background bg_yellow))
+  (lazy-highlight (:background bg_green))
   (isearch-fail   (:background bg_red))
 
   ;; highlight indent guides
