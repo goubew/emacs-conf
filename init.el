@@ -57,10 +57,24 @@
 
 (use-package ace-window
   :ensure t
-  :bind ("C-x o" . ace-window))
+  :bind (("C-x o" . ace-window)
+         ("C-c w" . ace-window)))
 
 (use-package avy
   :ensure t
+  :hydra
+  (hydra-navigate
+   (global-map "C-c n")
+   "navigate"
+   ("b" beginning-of-buffer "beginning")
+   ("e" end-of-buffer "end")
+   ("j" (scroll-up-command 5) "down line")
+   ("k" (scroll-down-command 5) "up line")
+   ("l" consult-line "search line")
+   ("u" scroll-up-command "down page")
+   ("i" scroll-down-command "up page")
+   ("f" avy-goto-char-timer "find cursor location")
+   ("q" nil "quit"))
   :bind ("C-c j" . avy-goto-char))
 
 (use-package cape
@@ -108,6 +122,7 @@
 (use-package consult
   :ensure t
   :bind (;; C-c bindings in `mode-specific-map'
+         ("C-c b" . consult-buffer)
          ("C-c M-x" . consult-mode-command)
          ("C-c h" . consult-history)
          ("C-c k" . consult-kmacro)
@@ -167,7 +182,6 @@
   ;; the window mode line.
   (advice-add #'register-preview :override #'consult-register-window)
   (setq register-preview-delay 0.5)
-
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref))
@@ -381,7 +395,12 @@ _k_: prev
     (interactive)
     (ert-delete-all-tests)
     (eval-buffer)
-    (ert 't)))
+    (ert 't))
+
+  (global-set-key (kbd "C-c =") 'indent-region)
+  (global-set-key (kbd "C-c s") search-map)
+  (global-set-key (kbd "C-c o") goto-map)
+  (global-set-key (kbd "C-c r") ctl-x-r-map))
 
 (use-package exec-path-from-shell
   :if (eq system-type 'darwin)
@@ -447,7 +466,12 @@ _k_: prev
   :ensure t
   :after meow
   :config
-  (key-chord-define meow-insert-state-keymap "fd" 'meow-insert-exit)
+  (defun my-meow-insert-exit ()
+    (interactive)
+    "Exit meow's insert mode and save the buffer if it has a buffer-file-name"
+    (meow-insert-exit)
+    (when (buffer-file-name) (save-buffer)))
+  (key-chord-define meow-insert-state-keymap "fd" 'my-meow-insert-exit)
   (key-chord-mode 1))
 
 (use-package ledger-mode
@@ -637,11 +661,12 @@ _k_: prev
 (use-package project
   :defer t
   :init
+  (global-set-key (kbd "C-c p") project-prefix-map)
   (setq project-vc-extra-root-markers '(".projectile"))
   :config
+  (define-key project-prefix-map "s" #'consult-ripgrep)
   (define-key project-prefix-map "m" #'magit-project-status)
   (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
-  (define-key project-prefix-map "s" #'consult-ripgrep)
   (add-to-list 'project-switch-commands '(consult-ripgrep "Ripgrep") t))
 
 (use-package rainbow-delimiters
@@ -676,13 +701,13 @@ _k_: prev
   :ensure t
   :bind (:map vertico-map
               ("C-j" . vertico-next)
-              ("C-k" . vertico-previous))
+              ("C-k" . vertico-previous)
+              ("C-u" . kill-whole-line))
   :hook (after-init . vertico-mode))
 
 (use-package visual-fill-column
   :ensure t
-  :hook
-  (visual-line-mode . visual-fill-column-mode))
+  :hook (visual-line-mode . visual-fill-column-mode))
 
 (use-package which-key
   :ensure t
