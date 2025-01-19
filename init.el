@@ -42,8 +42,7 @@
                       (height . 11)))
       (unwind-protect
           (app-launcher-run-app)
-        (delete-frame))))
-  (my-leader-def "aa" 'my-emacs-run-launcher))
+        (delete-frame)))))
 
 (use-package autothemer
   :ensure t
@@ -531,7 +530,8 @@ _k_: prev
           meow-use-cursor-position-hack t
           meow-expand-exclude-mode-list ()
           meow-keypad-self-insert-undefined nil
-          meow-use-clipboard t)
+          meow-use-clipboard t
+          meow-cursor-type-region-cursor 'box)
     (add-to-list 'meow-mode-state-list '(helpful-mode . motion))
     (meow-leader-define-key
      ;; Use SPC (0-9) for digit arguments.
