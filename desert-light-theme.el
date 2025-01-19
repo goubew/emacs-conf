@@ -391,9 +391,9 @@
   (imenu-list-entry-subalist-face-3 (:weight 'bold :underline t :inherit 'imenu-list-entry-face-3))
 
   ;; diff-refine
-  (diff-refine-added    (:inverse-video t))
-  (diff-refine-changed  (:inverse-video t))
-  (diff-refine-removed  (:inverse-video t))
+  (diff-refine-added    (:background bg_green :foreground green))
+  (diff-refine-changed  (:background bg_blue :foreground blue))
+  (diff-refine-removed  (:background bg_red :foreground red))
 
   ;; markdown
   (markdown-pre-face (:foreground fg))
