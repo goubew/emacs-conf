@@ -309,6 +309,7 @@ _k_: prev
   (scroll-conservatively 33); Adjust recent sensitivity
   (split-width-threshold 200); Only split horizontally for 200 cols
   (frame-title-format "Emacs")
+  (tab-always-indent 'complete)
   :init
   ;; Set default buffer local vars
   (setq-default indent-tabs-mode nil); indent with spaces
