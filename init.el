@@ -546,8 +546,7 @@ _k_: prev
      '("8" . meow-digit-argument)
      '("9" . meow-digit-argument)
      '("0" . meow-digit-argument)
-     '("/" . meow-keypad-describe-key)
-     '("?" . meow-cheatsheet))
+     '("/" . meow-keypad-describe-key))
     (meow-normal-define-key
      '("0" . meow-expand-0)
      '("9" . meow-expand-9)
