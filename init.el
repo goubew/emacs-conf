@@ -62,9 +62,10 @@
 
 (use-package avy
   :ensure t
+  :bind (("C-c n" . hydra-navigate/body)
+         ("C-c j" . avy-goto-char))
   :hydra
-  (hydra-navigate
-   (global-map "C-c n")
+  (hydra-navigate ()
    "navigate"
    ("b" beginning-of-buffer "beginning")
    ("e" end-of-buffer "end")
@@ -74,8 +75,7 @@
    ("u" scroll-up-command "down page")
    ("i" scroll-down-command "up page")
    ("f" avy-goto-char-timer "find cursor location")
-   ("q" nil "quit"))
-  :bind ("C-c j" . avy-goto-char))
+   ("q" nil "quit")))
 
 (use-package cape
   :ensure t
@@ -126,45 +126,41 @@
          ("C-c M-x" . consult-mode-command)
          ("C-c h" . consult-history)
          ("C-c k" . consult-kmacro)
-         ("C-c m" . consult-man)
-         ("C-c i" . consult-info)
+         ("C-c y" . consult-yank-pop)
+         ("C-c B" . consult-bookmark)
+         ("C-c o e" . consult-compile-error)
+         ("C-c o f" . consult-flymake)               ;; Alternative: consult-flycheck
+         ("C-c o g" . consult-goto-line)             ;; orig. goto-line
+         ("C-c o M-g" . consult-goto-line)           ;; orig. goto-line
+         ("C-c o o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("C-c o m" . consult-mark)
+         ("C-c o k" . consult-global-mark)
+         ("C-c o i" . consult-imenu)
+         ("C-c o I" . consult-imenu-multi)
+         ("C-c i m" . consult-man)
+         ("C-c i i" . consult-info)
+         ("C-c r s" . consult-register-store)
+         ("C-c r r" . consult-register)
+         ("C-c r l" . consult-register-load)
+         ("C-c s d" . consult-find)                  ;; Alternative: consult-fd
+         ("C-c s e" . consult-isearch-history)
+         ("C-c s c" . consult-locate)
+         ("C-c s g" . consult-grep)
+         ("C-c s G" . consult-git-grep)
+         ("C-c s r" . consult-ripgrep)
+         ("C-c s l" . consult-line)
+         ("C-c s L" . consult-line-multi)
+         ("C-c s k" . consult-keep-lines)
+         ("C-c s u" . consult-focus-lines)
          ([remap Info-search] . consult-info)
          ;; C-x bindings in `ctl-x-map'
-         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
          ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
          ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
          ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
          ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
          ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
          ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
-         ;; Custom M-# bindings for fast register access
-         ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
-         ("C-M-#" . consult-register)
-         ;; Other custom bindings
-         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
-         ;; M-g bindings in `goto-map'
-         ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
-         ("M-g g" . consult-goto-line)             ;; orig. goto-line
-         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
-         ("M-g m" . consult-mark)
-         ("M-g k" . consult-global-mark)
-         ("M-g i" . consult-imenu)
-         ("M-g I" . consult-imenu-multi)
-         ;; M-s bindings in `search-map'
-         ("M-s d" . consult-find)                  ;; Alternative: consult-fd
-         ("M-s c" . consult-locate)
-         ("M-s g" . consult-grep)
-         ("M-s G" . consult-git-grep)
-         ("M-s r" . consult-ripgrep)
-         ("M-s l" . consult-line)
-         ("M-s L" . consult-line-multi)
-         ("M-s k" . consult-keep-lines)
-         ("M-s u" . consult-focus-lines)
          ;; Isearch integration
-         ("M-s e" . consult-isearch-history)
          :map isearch-mode-map
          ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
          ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
@@ -397,10 +393,7 @@ _k_: prev
     (eval-buffer)
     (ert 't))
 
-  (global-set-key (kbd "C-c =") 'indent-region)
-  (global-set-key (kbd "C-c s") search-map)
-  (global-set-key (kbd "C-c o") goto-map)
-  (global-set-key (kbd "C-c r") ctl-x-r-map))
+  (global-set-key (kbd "C-c =") 'indent-region))
 
 (use-package exec-path-from-shell
   :if (eq system-type 'darwin)
