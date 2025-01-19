@@ -253,7 +253,7 @@ _k_: prev
 ;; Make sure models are pre-pulled in ollama
 (use-package ellama
   :ensure t
-  :bind ("C-c o" . ellama-transient-main-menu)
+  :bind ("C-c ?" . ellama-transient-main-menu)
   :init
   (require 'llm-ollama)
   (setopt ellama-provider
@@ -505,7 +505,8 @@ _k_: prev
 
 (use-package magit
   :ensure t
-  :bind ("C-x g" . magit-status)
+  :bind (("C-x g" . magit-status)
+         ("C-c v" . magit-status))
   :init
   (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
         magit-diff-refine-hunk t))
@@ -526,7 +527,12 @@ _k_: prev
   :ensure t
   :init
   (defun meow-setup ()
-    (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+    (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
+          meow-use-cursor-position-hack t
+          meow-expand-exclude-mode-list ()
+          meow-keypad-self-insert-undefined nil
+          meow-use-clipboard t)
+    (add-to-list 'meow-mode-state-list '(helpful-mode . motion))
     (meow-leader-define-key
      ;; Use SPC (0-9) for digit arguments.
      '("1" . meow-digit-argument)
