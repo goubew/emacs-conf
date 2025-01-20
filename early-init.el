@@ -10,8 +10,7 @@
 
 ;; Add MELPA archive
 (with-eval-after-load 'package
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (setq package-archive-priorities
         '(("gnu" . 10)
           ("nongnu" . 5)
