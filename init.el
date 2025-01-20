@@ -206,14 +206,11 @@
   :config
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-  :hydra (hydra-diff-hl (:color orange :hint nil)
-                        "
-^Hunk Nav^
-_j_: next
-_k_: prev
-"
-                        ("j" diff-hl-next-hunk)
-                        ("k" diff-hl-previous-hunk)))
+  :hydra
+  (hydra-diff-hl ()
+                 "hunks"
+                 ("j" diff-hl-next-hunk)
+                 ("k" diff-hl-previous-hunk)))
 
 (use-package dockerfile-mode
   :ensure t
@@ -246,7 +243,8 @@ _k_: prev
                     (json-parse-string
                      (shell-command-to-string "hyprctl activeworkspace -j")))))
       (call-interactively 'eat)))
-  :bind (:map eat-semi-char-mode-map
+  :bind (("C-c e" . eat)
+         :map eat-semi-char-mode-map
               ("C-u" . eat-self-input)))
 
 ;; Make sure models are pre-pulled in ollama
@@ -393,7 +391,12 @@ _k_: prev
     (eval-buffer)
     (ert 't))
 
-  (global-set-key (kbd "C-c =") 'indent-region))
+  (defun my-switch-to-previous-buffer ()
+    (interactive)
+    (switch-to-buffer (other-buffer)))
+
+  :bind (("C-c =" . indent-region)
+         ("C-c f" . my-switch-to-previous-buffer)))
 
 (use-package exec-path-from-shell
   :if (eq system-type 'darwin)
@@ -534,6 +537,7 @@ _k_: prev
           meow-use-clipboard t
           meow-cursor-type-region-cursor 'box)
     (add-to-list 'meow-mode-state-list '(helpful-mode . motion))
+    (add-to-list 'meow-mode-state-list '(eat-mode . insert))
     (meow-leader-define-key
      ;; Use SPC (0-9) for digit arguments.
      '("1" . meow-digit-argument)
@@ -712,6 +716,10 @@ _k_: prev
   :ensure t
   :hook (after-init . which-key-mode))
 
+(use-package ws-butler
+  :ensure t
+  :hook (prog-mode . ws-butler-mode))
+
 (use-package wgrep
   :ensure t
   :after project
@@ -739,3 +747,6 @@ _k_: prev
 
 ;; Load customizations if they exist
 (when (file-exists-p custom-file) (load-file custom-file))
+
+;; Open the init file
+(find-file (concat user-emacs-directory "init.el"))
