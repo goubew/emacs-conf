@@ -396,7 +396,10 @@
     (switch-to-buffer (other-buffer)))
 
   :bind (("C-c =" . indent-region)
-         ("C-c f" . my-switch-to-previous-buffer)))
+         ("C-c f" . my-switch-to-previous-buffer)
+         :map minibuffer-local-map
+         ("C-w" . backward-kill-word)))
+
 
 (use-package exec-path-from-shell
   :if (eq system-type 'darwin)
@@ -573,8 +576,8 @@
      '("b" . meow-back-word)
      '("B" . meow-back-symbol)
      '("c" . meow-change)
-     '("d" . meow-delete)
-     '("D" . meow-backward-delete)
+     '("d" . meow-kill) ; prev meow-delete
+     ;; '("D" . meow-backward-delete) ; prev meow-backward-delete
      '("e" . meow-next-word)
      '("E" . meow-next-symbol)
      '("f" . meow-find)
@@ -599,15 +602,16 @@
      '("Q" . meow-goto-line)
      '("r" . meow-replace)
      '("R" . meow-swap-grab)
-     '("s" . meow-kill)
+     '("s" . meow-visit) ; prev meow-kill
      '("t" . meow-till)
      '("u" . meow-undo)
      '("U" . meow-undo-in-selection)
-     '("v" . meow-visit)
+     '("v" . meow-line) ; prev meow-visit
+     '("V" . meow-goto-line) ; prev unset
      '("w" . meow-mark-word)
      '("W" . meow-mark-symbol)
-     '("x" . meow-line)
-     '("X" . meow-goto-line)
+     '("x" . meow-delete) ; prev meow-line
+     '("X" . meow-backward-delete); prev meow-goto-line
      '("y" . meow-save)
      '("Y" . meow-sync-grab)
      '("z" . meow-pop-selection)
