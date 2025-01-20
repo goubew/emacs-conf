@@ -47,12 +47,7 @@
 (use-package autothemer
   :ensure t
   :config
-  (defun my-reload-theme ()
-    "Reloads the theme to test changes"
-    (interactive)
-    (disable-theme 'desert-light)
-    (load-theme 'desert-light t))
-  (add-hook 'after-init-hook (lambda () (load-theme 'desert-light t))))
+  (add-hook 'after-init-hook (lambda () (load-theme 'my-gruvbox-light t))))
 
 (use-package ace-window
   :ensure t

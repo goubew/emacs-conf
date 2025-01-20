@@ -1,7 +1,7 @@
 (require 'my-theme-base)
 
 (my-theme-deftheme
- gruvbox
+ my-gruvbox-light
  "A retro-groove colour theme"
 
  ((((class color) (min-colors #xFFFFFF))) ; col 2 Xterm/256
@@ -36,4 +36,4 @@
   (fg2 "#504945")
   (fg1 "#3c3836")
   (fg0 "#282828")
-  )
+  ))
