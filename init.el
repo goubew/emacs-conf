@@ -612,6 +612,7 @@
      '("Y" . meow-sync-grab)
      '("z" . meow-pop-selection)
      '("'" . repeat)
+     '("=" . indent-region)
      '("<escape>" . ignore)))
   :config
   (meow-setup)
