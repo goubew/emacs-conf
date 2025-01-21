@@ -56,7 +56,7 @@
 
 (use-package avy
   :ensure t
-  :bind (("C-c n" . hydra-navigate/body)
+  :bind (("C-c k" . hydra-navigate/body)
          ("C-c j" . avy-goto-char))
   :hydra
   (hydra-navigate ()
@@ -119,13 +119,12 @@
          ("C-c b" . consult-buffer)
          ("C-c M-x" . consult-mode-command)
          ("C-c h" . consult-history)
-         ("C-c k" . consult-kmacro)
          ("C-c y" . consult-yank-pop)
          ("C-c B" . consult-bookmark)
          ("C-c o e" . consult-compile-error)
          ("C-c o f" . consult-flymake)               ;; Alternative: consult-flycheck
          ("C-c o g" . consult-goto-line)             ;; orig. goto-line
-         ("C-c o M-g" . consult-goto-line)           ;; orig. goto-line
+         ("C-c o k" . consult-kmacro)
          ("C-c o o" . consult-outline)               ;; Alternative: consult-org-heading
          ("C-c o m" . consult-mark)
          ("C-c o k" . consult-global-mark)

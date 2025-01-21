@@ -44,7 +44,7 @@
      (homoglyph           (:foreground bright-yellow))
      (match               (:foreground bright-green))
 
-  ;;; whitespace-mode
+     ;; whitespace-mode
      (whitespace-empty            (:inherit 'default))
      (whitespace-hspace           (:inherit 'default))
      (whitespace-indentation      (:inherit 'default))
@@ -225,10 +225,10 @@
 
      ;; ansi
      (ansi-color-black          (:foreground gray :background gray))
-     (ansi-color-bright-red            (:foreground bright-red :background bright-red))
-     (ansi-color-bright-green          (:foreground bright-green :background bright-green))
-     (ansi-color-bright-yellow         (:foreground bright-yellow :background bright-yellow))
-     (ansi-color-bright-blue           (:foreground bright-blue :background bright-blue))
+     (ansi-color-red            (:foreground bright-red :background bright-red))
+     (ansi-color-green          (:foreground bright-green :background bright-green))
+     (ansi-color-yellow         (:foreground bright-yellow :background bright-yellow))
+     (ansi-color-blue           (:foreground bright-blue :background bright-blue))
      (ansi-color-magenta        (:foreground bright-purple :background bright-purple))
      (ansi-color-cyan           (:foreground bright-aqua :background bright-aqua))
      (ansi-color-white          (:foreground bg :background bg))
