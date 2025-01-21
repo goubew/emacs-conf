@@ -378,6 +378,14 @@
 
      ;; evil
      (evil-ex-substitute-replacement (:underline t :foreground bright-red))
+
+     ;; transient
+     (transient-key-exit (:foreground bright-red :inherit 'transient-key))
+     (transient-key-return (:foreground bright-green :inherit 'transient-key))
+     (transient-key-noop (:foreground bg2 :inherit 'transient-key))
+     (transient-key-stay (:foreground bright-aqua :inherit 'transient-key))
+     (transient-key (:inherit 'font-lock-builtin-face))
+
      )))
 
 (provide 'my-theme-base)
