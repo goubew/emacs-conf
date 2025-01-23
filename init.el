@@ -100,8 +100,11 @@
                   (find-file (nth 0 found-file-list))
                 (message "Associated file not found in project")))
           (message "File does not end in .c or .h")))))
-  :bind (:map c-mode-map
-              ("C-c m o" . my-swap-h-c-file)))
+  :bind
+  ( :map c-mode-map
+    ("C-c d o" . my-swap-h-c-file)
+    :map c-ts-mode-map
+    ("C-c d o" . my-swap-h-c-file)))
 
 (use-package circe
   :ensure t

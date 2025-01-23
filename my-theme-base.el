@@ -19,7 +19,7 @@
      (mode-line           (:background bg1))
      (mode-line-inactive  (:background bg0_s))
      (region              (:background bg1))
-     (secondary-selection (:background bg1))
+     (secondary-selection (:background bg2))
      (shadow              (:foreground fg2))
 
      ;; Built in syntax bad
@@ -385,6 +385,13 @@
      (transient-key-noop (:foreground bg2 :inherit 'transient-key))
      (transient-key-stay (:foreground bright-aqua :inherit 'transient-key))
      (transient-key (:inherit 'font-lock-builtin-face))
+
+     ;; meow
+     (meow-cheatsheet-highlight (:foreground fg0 :inherit 'meow-cheatsheet-command))
+     (meow-cheatsheet-command (:inherit 'default))
+     (meow-search-indicator (:foreground fg4))
+     (meow-kmacro-cursor (:underline t))
+     (meow-keypad-cannot-display (:height 0.7 :foreground fg0))
 
      )))
 
