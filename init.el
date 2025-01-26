@@ -134,10 +134,11 @@
          ("C-c o i" . consult-imenu)
          ("C-c o I" . consult-imenu-multi)
          ("C-c i m" . consult-man)
+         ("C-c i r" . consult-recent-file)
          ("C-c i i" . consult-info)
-         ("C-c r s" . consult-register-store)
-         ("C-c r r" . consult-register)
-         ("C-c r l" . consult-register-load)
+         ("C-c R" . consult-register-store)
+         ("C-c M-r" . consult-register)
+         ("C-c r" . consult-register-load)
          ("C-c s d" . consult-find)                  ;; Alternative: consult-fd
          ("C-c s e" . consult-isearch-history)
          ("C-c s c" . consult-locate)
@@ -240,7 +241,7 @@
                     (json-parse-string
                      (shell-command-to-string "hyprctl activeworkspace -j")))))
       (call-interactively 'eat)))
-  :bind (("C-c e" . eat)
+  :bind (("C-c t" . eat)
          :map eat-semi-char-mode-map
               ("C-u" . eat-self-input)))
 
@@ -422,6 +423,10 @@
   :ensure t
   :bind ("C-=" . er/expand-region))
 
+(use-package flymake
+  :bind (("C-c e n" . flymake-goto-next-error)
+         ("C-c e p" . flymake-goto-prev-error)))
+
 (use-package git-timemachine
   :ensure t
   :commands 'git-timemachine)
@@ -529,14 +534,20 @@
 
 (use-package meow
   :ensure t
+  :custom
+  (meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+  (meow-expand-exclude-mode-list ())
+  (meow-keypad-self-insert-undefined nil)
+  (meow-use-clipboard t)
+  (meow-use-dynamic-face-color nil)
+  (meow-cursor-type-region-cursor 'box)
+  (meow-expand-hint-counts '((word . 10)
+                             (line . 10)
+                             (block . 10)
+                             (find . 10)
+                             (till . 10)))
   :init
   (defun meow-setup ()
-    (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
-          meow-use-cursor-position-hack t
-          meow-expand-exclude-mode-list ()
-          meow-keypad-self-insert-undefined nil
-          meow-use-clipboard t
-          meow-cursor-type-region-cursor 'box)
     (add-to-list 'meow-mode-state-list '(helpful-mode . motion))
     (add-to-list 'meow-mode-state-list '(eat-mode . insert))
     (meow-leader-define-key

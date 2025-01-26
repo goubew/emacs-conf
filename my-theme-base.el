@@ -392,6 +392,13 @@
      (meow-search-indicator (:foreground fg4))
      (meow-kmacro-cursor (:underline t))
      (meow-keypad-cannot-display (:height 0.7 :foreground fg0))
+     (meow-position-highlight-number (:background bright-blue :foreground bg0))
+     (meow-position-highlight-number-3 (:background bright-blue :foreground bg0))
+     (meow-position-highlight-number-2 (:background bright-purple :foreground bg0))
+     (meow-position-highlight-number-1 (:background bright-aqua :foreground bg0))
+     (meow-position-highlight-reverse-number-3 (:inherit 'meow-position-highlight-number-3))
+     (meow-position-highlight-reverse-number-2 (:inherit 'meow-position-highlight-number-2))
+     (meow-position-highlight-reverse-number-1 (:inherit 'meow-position-highlight-number-1))
 
      )))
 
