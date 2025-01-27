@@ -455,6 +455,11 @@
          ("C-h F" . helpful-function)
          ("C-h C" . helpful-command)))
 
+(use-package java-ts-mode
+  :defer t
+  :custom
+  (java-ts-mode-indent-offset 2))
+
 (use-package jinja2-mode
   :ensure t
   :mode ("\\.j2\\'" . jinja2-mode))
