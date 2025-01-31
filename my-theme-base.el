@@ -20,12 +20,12 @@
      (mode-line-inactive  (:background bg0_s))
      (region              (:background bg1))
      (secondary-selection (:background bg2))
-     (shadow              (:foreground fg2))
+     (shadow              (:foreground fg3))
 
      ;; Built in syntax bad
      (font-lock-builtin-face       (:foreground bright-red))
      (font-lock-constant-face      (:foreground bright-purple))
-     (font-lock-comment-face       (:foreground fg2))
+     (font-lock-comment-face       (:foreground fg3))
      (font-lock-function-name-face (:foreground bright-yellow))
      (font-lock-keyword-face       (:foreground bright-red))
      (font-lock-string-face        (:foreground bright-green))
@@ -94,7 +94,7 @@
      (avy-lead-face-2     (:background bright-aqua :foreground bg))
 
      ;; circe
-     (circe-fool-face               (:foreground fg2))
+     (circe-fool-face               (:foreground fg3))
      (circe-topic-diff-removed-face (:inherit 'diff-removed))
      (circe-topic-diff-new-face     (:inherit 'diff-added))
      (circe-originator-face         nil)
@@ -132,7 +132,7 @@
      (eshell-ls-executable (:weight 'bold))
      (eshell-ls-missing    (:foreground bright-red))
      (eshell-ls-product    (:foreground bright-red))
-     (eshell-ls-readonly   (:foreground fg2))
+     (eshell-ls-readonly   (:foreground fg3))
      (eshell-ls-special    (:foreground bright-yellow))
      (eshell-ls-symlink    (:foreground bright-red))
      (eshell-ls-unreadable (:foreground bright-red))
