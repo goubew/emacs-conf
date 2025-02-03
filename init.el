@@ -427,6 +427,10 @@
   :bind (("C-c e n" . flymake-goto-next-error)
          ("C-c e p" . flymake-goto-prev-error)))
 
+(use-package flyspell-correct
+  :ensure t
+  :bind ("C-C e s" . flyspell-correct-wrapper))
+
 (use-package git-timemachine
   :ensure t
   :commands 'git-timemachine)
