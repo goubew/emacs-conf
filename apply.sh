@@ -14,7 +14,7 @@ function safe_link() {
   ln -s "$src" "$dest"
 }
 
-mkdir -p "$HOME/.emacs.d/extra-packages"
+mkdir -p "$HOME/.emacs.d/packages"
 mkdir -p "$HOME/.saves"
 mkdir -p "$HOME/org"
 
