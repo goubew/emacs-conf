@@ -78,7 +78,7 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file))
 
-(use-package cc-mode
+(use-package c-ts-mode
   :defer t
   :config
   (c-set-offset 'case-label '+)
@@ -100,11 +100,8 @@
                   (find-file (nth 0 found-file-list))
                 (message "Associated file not found in project")))
           (message "File does not end in .c or .h")))))
-  :bind
-  ( :map c-mode-map
-    ("C-c d o" . my-swap-h-c-file)
-    :map c-ts-mode-map
-    ("C-c d o" . my-swap-h-c-file)))
+  :bind (:map c-ts-mode-map
+              ("C-c d o" . my-swap-h-c-file)))
 
 (use-package circe
   :ensure t
