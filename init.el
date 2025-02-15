@@ -1,17 +1,3 @@
-;; --------------------------
-;; use-package macro packages
-;; --------------------------
-
-(use-package hydra
-  :ensure t)
-
-(use-package use-package-hydra
-  :ensure t)
-
-;; --------
-;; Packages
-;; --------
-
 (use-package ansible
   :ensure t
   :init
@@ -24,6 +10,11 @@
 (use-package ansible-doc
   :ensure t
   :hook (ansible-mode . ansible-doc-mode))
+
+(use-package anzu
+  :ensure t
+  :after evil
+  :config (global-anzu-mode))
 
 (use-package app-launcher
   :if (daemonp)
@@ -56,20 +47,7 @@
 
 (use-package avy
   :ensure t
-  :bind (("C-c k" . hydra-navigate/body)
-         ("C-c j" . avy-goto-char))
-  :hydra
-  (hydra-navigate ()
-   "navigate"
-   ("b" beginning-of-buffer "beginning")
-   ("e" end-of-buffer "end")
-   ("j" (scroll-up-command 5) "down line")
-   ("k" (scroll-down-command 5) "up line")
-   ("l" consult-line "search line")
-   ("u" scroll-up-command "down page")
-   ("i" scroll-down-command "up page")
-   ("f" avy-goto-char-timer "find cursor location")
-   ("q" nil "quit")))
+  :bind ("C-c j" . avy-goto-char-timer))
 
 (use-package cape
   :ensure t
@@ -101,7 +79,7 @@
                 (message "Associated file not found in project")))
           (message "File does not end in .c or .h")))))
   :bind (:map c-ts-mode-map
-              ("C-c d o" . my-swap-h-c-file)))
+              ("C-c m o" . my-swap-h-c-file)))
 
 (use-package circe
   :ensure t
@@ -176,16 +154,26 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref))
 
-(use-package corfu
-  :ensure t
-  :hook (prog-mode . global-corfu-mode)
-  :custom
-  (corfu-on-exact-match 'insert)
-  (corfu-cycle t)
-  (corfu-preview-current 'insert)
-  (corfu-preselect 'prompt)
-  (corfu-quit-at-boundary 'separator)
-  (corfu-left-margin-width 0))
+;(use-package corfu
+;  :ensure t
+;  :hook (prog-mode . global-corfu-mode)
+;  :custom
+;  (corfu-on-exact-match 'insert)
+;  (corfu-cycle t)
+;  (corfu-preview-current 'insert)
+;  (corfu-preselect 'prompt)
+;  (corfu-quit-at-boundary 'separator)
+;  (corfu-left-margin-width 0)
+;  :bind (:map evil-insert-state-map
+;        ("C-n" . 'completion-at-point)
+;        ("C-p" . 'completion-at-point)
+;        :map corfu-map
+;        ("C-n" . 'corfu-next)
+;        ("C-p" . 'corfu-previous)
+;        ("C-l" . 'corfu-complete)
+;        ("C-e" . 'corfu-quit)
+;        ("<return>" . 'corfu-insert)
+;        ))
 
 (use-package css-mode
   :defer t
@@ -200,12 +188,7 @@
   :hook ((prog-mode vc-dir-mode ledger-mode) . diff-hl-mode)
   :config
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-  :hydra
-  (hydra-diff-hl ()
-                 "hunks"
-                 ("j" diff-hl-next-hunk)
-                 ("k" diff-hl-previous-hunk)))
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
 (use-package dockerfile-mode
   :ensure t
@@ -222,7 +205,7 @@
 
 (use-package dumb-jump
   :ensure t
-  :after xref
+  :after evil
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
@@ -238,9 +221,9 @@
                     (json-parse-string
                      (shell-command-to-string "hyprctl activeworkspace -j")))))
       (call-interactively 'eat)))
-  :bind (("C-c t" . eat)
+  :bind (("C-c a t" . eat)
          :map eat-semi-char-mode-map
-              ("C-u" . eat-self-input)))
+         ("C-u" . eat-self-input)))
 
 ;; Make sure models are pre-pulled in ollama
 (use-package ellama
@@ -396,6 +379,72 @@
          :map minibuffer-local-map
          ("C-w" . backward-kill-word)))
 
+(use-package evil
+  :ensure t
+  :hook (after-init . evil-mode)
+  :custom
+  (evil-insert-state-message nil)
+  (evil-normal-state-message nil)
+  (evil-motion-state-message nil)
+  (evil-visual-state-message nil)
+  (evil-replace-state-message nil)
+  (evil-operator-state-message nil)
+  (evil-respect-visual-line-mode t)
+  (evil-search-module 'evil-search)
+  (evil-ex-search-persistent-highlight nil)
+  (evil-symbol-word-search t)
+  (evil-shift-width 2)
+  (evil-undo-system 'undo-fu)
+  (evil-want-C-d-scroll t)
+  (evil-want-C-i-jump t)
+  (evil-want-C-u-delete t)
+  (evil-want-C-u-scroll t)
+  (evil-want-C-w-delete t)
+  (evil-want-keybinding nil)
+  :init
+  (defun my-emulate-ctrl-c ()
+    (interactive)
+    (setq  unread-command-events (nconc (listify-key-sequence (kbd "C-c")) unread-command-events)))
+  :bind (("C-c s c" . 'evil-ex-nohighlight)
+         :map evil-normal-state-map
+         ("SPC" . 'my-emulate-ctrl-c))
+
+(use-package evil-anzu
+  :ensure t
+  :after (anzu evil))
+
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config
+  (evil-collection-init)
+  (evil-set-initial-state 'Info-mode 'emacs)
+  (evil-set-initial-state 'circe-mode 'emacs)
+  (evil-set-initial-state 'eat-mode 'emacs))
+
+;(use-package evil-escape
+;  :ensure t
+;  :after evil
+;  :init
+;  (setq evil-escape-inhibit-functions '(evil-emacs-state-p))
+;  (setq evil-escape-key-sequence "fd")
+;  (setq evil-escape-delay 0.5)
+;  :config
+;  (add-hook 'evil-mode-hook (lambda () (evil-escape-mode 1))))
+
+(use-package evil-numbers
+  :ensure t
+  :after evil
+  :config
+  ;; Avoid using C-a C-x to keep the default C-x bindings
+  (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
+  (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
+
+(use-package evil-surround
+  :ensure t
+  :after evil
+  :config
+  (global-evil-surround-mode))
 
 (use-package exec-path-from-shell
   :if (eq system-type 'darwin)
@@ -418,7 +467,10 @@
 
 (use-package expand-region
   :ensure t
-  :bind ("C-=" . er/expand-region))
+  :after evil
+  :bind (:map evil-visual-state-map
+         ("," . er/contract-region)
+         ("." . er/expand-region)))
 
 (use-package flymake
   :bind (("C-c e n" . flymake-goto-next-error)
@@ -472,14 +524,14 @@
 
 (use-package key-chord
   :ensure t
-  :after meow
+  :after evil
   :config
-  (defun my-meow-insert-exit ()
+  (defun my-evil-insert-exit ()
     (interactive)
-    "Exit meow's insert mode and save the buffer if it has a buffer-file-name"
-    (meow-insert-exit)
+    "Exit evil's insert mode and save the buffer if it has a buffer-file-name"
+    (evil-normal-state)
     (when (buffer-file-name) (save-buffer)))
-  (key-chord-define meow-insert-state-keymap "fd" 'my-meow-insert-exit)
+  (key-chord-define evil-insert-state-map "fd" 'my-evil-insert-exit)
   (key-chord-mode 1))
 
 (use-package ledger-mode
@@ -537,105 +589,6 @@
 (use-package markdown-mode
   :ensure t
   :mode ("\\.md\\'" . gfm-mode))
-
-(use-package meow
-  :ensure t
-  :custom
-  (meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
-  (meow-expand-exclude-mode-list ())
-  (meow-keypad-self-insert-undefined nil)
-  (meow-use-clipboard t)
-  (meow-use-dynamic-face-color nil)
-  (meow-cursor-type-region-cursor 'box)
-  (meow-expand-hint-counts '((word . 10)
-                             (line . 10)
-                             (block . 10)
-                             (find . 10)
-                             (till . 10)))
-  :init
-  (defun meow-setup ()
-    (add-to-list 'meow-mode-state-list '(helpful-mode . motion))
-    (add-to-list 'meow-mode-state-list '(eat-mode . insert))
-    (meow-leader-define-key
-     ;; Use SPC (0-9) for digit arguments.
-     '("1" . meow-digit-argument)
-     '("2" . meow-digit-argument)
-     '("3" . meow-digit-argument)
-     '("4" . meow-digit-argument)
-     '("5" . meow-digit-argument)
-     '("6" . meow-digit-argument)
-     '("7" . meow-digit-argument)
-     '("8" . meow-digit-argument)
-     '("9" . meow-digit-argument)
-     '("0" . meow-digit-argument)
-     '("/" . meow-keypad-describe-key))
-    (meow-normal-define-key
-     '("0" . meow-expand-0)
-     '("9" . meow-expand-9)
-     '("8" . meow-expand-8)
-     '("7" . meow-expand-7)
-     '("6" . meow-expand-6)
-     '("5" . meow-expand-5)
-     '("4" . meow-expand-4)
-     '("3" . meow-expand-3)
-     '("2" . meow-expand-2)
-     '("1" . meow-expand-1)
-     '("-" . negative-argument)
-     '(";" . meow-reverse)
-     '("," . meow-inner-of-thing)
-     '("." . meow-bounds-of-thing)
-     '("[" . meow-beginning-of-thing)
-     '("]" . meow-end-of-thing)
-     '("a" . meow-append)
-     '("A" . meow-open-below)
-     '("b" . meow-back-word)
-     '("B" . meow-back-symbol)
-     '("c" . meow-change)
-     '("d" . meow-kill) ; prev meow-delete
-     ;; '("D" . meow-backward-delete) ; prev meow-backward-delete
-     '("e" . meow-next-word)
-     '("E" . meow-next-symbol)
-     '("f" . meow-find)
-     '("g" . meow-cancel-selection)
-     '("G" . meow-grab)
-     '("h" . meow-left)
-     '("H" . meow-left-expand)
-     '("i" . meow-insert)
-     '("I" . meow-open-above)
-     '("j" . meow-next)
-     '("J" . meow-next-expand)
-     '("k" . meow-prev)
-     '("K" . meow-prev-expand)
-     '("l" . meow-right)
-     '("L" . meow-right-expand)
-     '("m" . meow-join)
-     '("n" . meow-search)
-     '("o" . meow-block)
-     '("O" . meow-to-block)
-     '("p" . meow-yank)
-     '("q" . meow-quit)
-     '("Q" . meow-goto-line)
-     '("r" . meow-replace)
-     '("R" . meow-swap-grab)
-     '("s" . meow-visit) ; prev meow-kill
-     '("t" . meow-till)
-     '("u" . meow-undo)
-     '("U" . meow-undo-in-selection)
-     '("v" . meow-line) ; prev meow-visit
-     '("V" . meow-goto-line) ; prev unset
-     '("w" . meow-mark-word)
-     '("W" . meow-mark-symbol)
-     '("x" . meow-delete) ; prev meow-line
-     '("X" . meow-backward-delete); prev meow-goto-line
-     '("y" . meow-save)
-     '("Y" . meow-sync-grab)
-     '("z" . meow-pop-selection)
-     '("'" . repeat)
-     '("=" . indent-region)
-     '("<escape>" . ignore)))
-  :config
-  (meow-setup)
-  (meow-global-mode 1))
 
 (use-package orderless
   :ensure t
