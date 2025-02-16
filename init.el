@@ -154,26 +154,23 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref))
 
-;(use-package corfu
-;  :ensure t
-;  :hook (prog-mode . global-corfu-mode)
-;  :custom
-;  (corfu-on-exact-match 'insert)
-;  (corfu-cycle t)
-;  (corfu-preview-current 'insert)
-;  (corfu-preselect 'prompt)
-;  (corfu-quit-at-boundary 'separator)
-;  (corfu-left-margin-width 0)
-;  :bind (:map evil-insert-state-map
-;        ("C-n" . 'completion-at-point)
-;        ("C-p" . 'completion-at-point)
-;        :map corfu-map
-;        ("C-n" . 'corfu-next)
-;        ("C-p" . 'corfu-previous)
-;        ("C-l" . 'corfu-complete)
-;        ("C-e" . 'corfu-quit)
-;        ("<return>" . 'corfu-insert)
-;        ))
+(use-package corfu
+  :ensure t
+  :hook (prog-mode . global-corfu-mode)
+  :custom
+  (corfu-on-exact-match 'insert)
+  (corfu-cycle t)
+  (corfu-preview-current 'insert)
+  (corfu-preselect 'prompt)
+  (corfu-quit-at-boundary 'separator)
+  (corfu-left-margin-width 0)
+  :bind (:map evil-insert-state-map
+        ("C-n" . 'completion-at-point)
+        ("C-p" . 'completion-at-point)
+        :map corfu-map
+        ("C-l" . 'corfu-complete)
+        ("C-e" . 'corfu-quit)
+        ("<return>" . 'corfu-insert)))
 
 (use-package css-mode
   :defer t
@@ -375,7 +372,6 @@
     (switch-to-buffer (other-buffer)))
 
   :bind (("C-c =" . indent-region)
-         ("C-c f" . my-switch-to-previous-buffer)
          :map minibuffer-local-map
          ("C-w" . backward-kill-word)))
 
@@ -407,7 +403,7 @@
     (setq  unread-command-events (nconc (listify-key-sequence (kbd "C-c")) unread-command-events)))
   :bind (("C-c s c" . 'evil-ex-nohighlight)
          :map evil-normal-state-map
-         ("SPC" . 'my-emulate-ctrl-c))
+         ("SPC" . 'my-emulate-ctrl-c)))
 
 (use-package evil-anzu
   :ensure t
@@ -421,16 +417,6 @@
   (evil-set-initial-state 'Info-mode 'emacs)
   (evil-set-initial-state 'circe-mode 'emacs)
   (evil-set-initial-state 'eat-mode 'emacs))
-
-;(use-package evil-escape
-;  :ensure t
-;  :after evil
-;  :init
-;  (setq evil-escape-inhibit-functions '(evil-emacs-state-p))
-;  (setq evil-escape-key-sequence "fd")
-;  (setq evil-escape-delay 0.5)
-;  :config
-;  (add-hook 'evil-mode-hook (lambda () (evil-escape-mode 1))))
 
 (use-package evil-numbers
   :ensure t
