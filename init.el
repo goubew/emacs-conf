@@ -91,6 +91,9 @@
            (lambda (server) (read-passwd "Enter the SAML password=>")))))
   :commands 'circe)
 
+(use-package completion-preview
+  :hook ((prog-mode text-mode) . completion-preview-mode))
+
 (use-package consult
   :ensure t
   :bind (;; C-c bindings in `mode-specific-map'

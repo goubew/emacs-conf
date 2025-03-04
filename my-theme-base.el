@@ -104,8 +104,8 @@
      (circe-prompt-face             (:weight 'bold :foreground bright-aqua :background bg1))
 
      ;; isearch
-     (isearch        (:background bg3))
-     (lazy-highlight (:background bg2))
+     (isearch        (:background bg1))
+     (lazy-highlight (:background bg0_s))
      (isearch-fail   (:foreground bright-red))
 
      ;; highlight indent guides
