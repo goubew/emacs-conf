@@ -393,7 +393,7 @@
   (evil-ex-search-persistent-highlight nil)
   (evil-symbol-word-search t)
   (evil-shift-width 2)
-  (evil-undo-system 'undo-fu)
+  (evil-undo-system 'undo-redo)
   (evil-want-C-d-scroll t)
   (evil-want-C-i-jump t)
   (evil-want-C-u-delete t)
