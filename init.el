@@ -382,6 +382,7 @@
   :ensure t
   :hook (after-init . evil-mode)
   :custom
+  (evil-default-state 'emacs)
   (evil-insert-state-message nil)
   (evil-normal-state-message nil)
   (evil-motion-state-message nil)
@@ -401,6 +402,8 @@
   (evil-want-C-w-delete t)
   (evil-want-keybinding nil)
   :init
+  (evil-set-initial-state 'prog-mode 'normal)
+  (evil-set-initial-state 'text-mode 'normal)
   (defun my-emulate-ctrl-c ()
     (interactive)
     (setq  unread-command-events (nconc (listify-key-sequence (kbd "C-c")) unread-command-events)))
@@ -411,15 +414,6 @@
 (use-package evil-anzu
   :ensure t
   :after (anzu evil))
-
-(use-package evil-collection
-  :ensure t
-  :after evil
-  :config
-  (evil-collection-init)
-  (evil-set-initial-state 'Info-mode 'emacs)
-  (evil-set-initial-state 'circe-mode 'emacs)
-  (evil-set-initial-state 'eat-mode 'emacs))
 
 (use-package evil-numbers
   :ensure t
@@ -434,13 +428,6 @@
   :after evil
   :config
   (global-evil-surround-mode))
-
-(use-package exec-path-from-shell
-  :if (eq system-type 'darwin)
-  :ensure t
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
 
 (use-package eglot
   :init
@@ -675,7 +662,6 @@
   :hook (visual-line-mode . visual-fill-column-mode))
 
 (use-package which-key
-  :ensure t
   :hook (after-init . which-key-mode))
 
 (use-package ws-butler
