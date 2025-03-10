@@ -401,7 +401,7 @@
   (evil-want-C-u-scroll t)
   (evil-want-C-w-delete t)
   (evil-want-keybinding nil)
-  :init
+  :config
   (evil-set-initial-state 'prog-mode 'normal)
   (evil-set-initial-state 'text-mode 'normal)
   (defun my-emulate-ctrl-c ()
@@ -695,6 +695,3 @@
 
 ;; Load customizations if they exist
 (when (file-exists-p custom-file) (load-file custom-file))
-
-;; Open the init file
-(find-file (concat user-emacs-directory "init.el"))
