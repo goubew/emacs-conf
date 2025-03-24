@@ -15,11 +15,13 @@ function safe_link() {
 }
 
 mkdir -p "$HOME/.emacs.d/packages"
+mkdir -p "$HOME/.emacs.d/funs"
 mkdir -p "$HOME/.saves"
 mkdir -p "$HOME/org"
 
 safe_link "${SCRIPT_DIR}/init.el" "$HOME/.emacs.d/init.el"
 safe_link "${SCRIPT_DIR}/early-init.el" "$HOME/.emacs.d/early-init.el"
+safe_link "${SCRIPT_DIR}/funs" "$HOME/.emacs.d/funs"
 safe_link "${SCRIPT_DIR}/app-launcher.el" "$HOME/.emacs.d/packages/app-launcher.el"
 safe_link "${SCRIPT_DIR}/my-theme-base.el" "$HOME/.emacs.d/packages/my-theme-base.el"
 safe_link "${SCRIPT_DIR}/my-gruvbox-light-theme.el" "$HOME/.emacs.d/my-gruvbox-light-theme.el"

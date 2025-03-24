@@ -1,10 +1,7 @@
 (use-package ansible
   :ensure t
   :init
-  (defun my-should-ansible ()
-    "Check if ansible should be enabled"
-    (when (string-match "/playbooks/.*\.ya?ml\\'" (buffer-file-name))
-      (ansible-mode)))
+  (load-file (concat user-emacs-directory "funs/ansible-funs.el"))
   :hook (yaml-mode . my-should-ansible))
 
 (use-package ansible-doc
@@ -18,22 +15,9 @@
 
 (use-package app-launcher
   :if (daemonp)
-  :init
-  ;; Sourced from https://gitlab.com/dwt1/configuring-emacs/-/blob/main/07-the-final-touches/scripts/app-launchers.el
-  (defun my-emacs-run-launcher ()
-    "Create and select a frame called emacs-run-launcher which consists only of a minibuffer and has specific dimensions. Runs app-launcher-run-app on that frame, which is an emacs command that prompts you to select an app and open it in a dmenu like behaviour. Delete the frame after that command has exited"
-    (interactive)
-    (with-selected-frame
-        (make-frame '((name . "emacs-run-launcher")
-                      (minibuffer . only)
-                      (fullscreen . 0) ; no fullscreen
-                      (undecorated . t) ; remove title bar
-                      (internal-border-width . 10)
-                      (width . 80)
-                      (height . 11)))
-      (unwind-protect
-          (app-launcher-run-app)
-        (delete-frame)))))
+  :config
+  (load-file (concat user-emacs-directory "funs/app-launcher-funs.el"))
+)
 
 (use-package autothemer
   :ensure t
@@ -59,25 +43,8 @@
 (use-package c-ts-mode
   :defer t
   :config
+  (load-file (concat user-emacs-directory "funs/c-funs.el"))
   (c-set-offset 'case-label '+)
-  (require 'project)
-  (defun my-swap-h-c-file ()
-    "Finds the associated .h or .c file in the current project"
-    (interactive)
-    (let ((file-name (file-name-nondirectory (buffer-file-name))))
-      (let ((related-file
-             (cond
-              ((string-match "\\.h\\'" file-name)
-               (concat "^" (regexp-quote (replace-regexp-in-string "\\.h\\'" ".c" file-name)) "$"))
-              ((string-match "\\.c\\'" file-name)
-               (concat "^" (regexp-quote (replace-regexp-in-string "\\.c\\'" ".h" file-name)) "$"))
-              )))
-        (if related-file
-            (let ((found-file-list (directory-files-recursively (project-root (project-current)) related-file nil)))
-              (if (> (length found-file-list) 0)
-                  (find-file (nth 0 found-file-list))
-                (message "Associated file not found in project")))
-          (message "File does not end in .c or .h")))))
   :bind (:map c-ts-mode-map
               ("C-c m o" . my-swap-h-c-file)))
 
@@ -161,7 +128,7 @@
   :ensure t
   :hook (prog-mode . global-corfu-mode)
   :custom
-  (corfu-on-exact-match 'insert)
+  (corfu-on-exact-match 'show)
   (corfu-cycle t)
   (corfu-preview-current 'insert)
   (corfu-preselect 'prompt)
@@ -177,11 +144,8 @@
 
 (use-package css-mode
   :defer t
-  :config
-  (defun my-css-mode ()
-    "My css mode settings"
-    (setq css-indent-offset 2))
-  (add-hook 'css-mode-hook 'my-css-mode))
+  :init
+  (setq css-indent-offset 2))
 
 (use-package diff-hl
   :ensure t
@@ -212,15 +176,8 @@
 (use-package eat
   :ensure t
   :init
-  (setq eat-enable-shell-prompt-annotation nil)
-  (setq eat-kill-buffer-on-exit t)
-  (defun my-eat-new ()
-    (interactive)
-    (let ((current-prefix-arg
-           (gethash "id"
-                    (json-parse-string
-                     (shell-command-to-string "hyprctl activeworkspace -j")))))
-      (call-interactively 'eat)))
+  (setq eat-enable-shell-prompt-annotation nil
+        eat-kill-buffer-on-exit t)
   :bind (("C-c a t" . eat)
          :map eat-semi-char-mode-map
          ("C-u" . eat-self-input)))
@@ -267,113 +224,55 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package emacs
-  :defer t
-  :custom
-  (scroll-margin 2)
-  (use-short-answers t) ; Faster prompts
-  (visible-cursor nil)
-  (ring-bell-function 'ignore) ; SILENCE
-  (help-window-select t) ; Autofocus help windows
-  (inhibit-startup-screen t) ; No splash screen
-  (backup-directory-alist '(("." . "~/.saves"))) ; Backups in different dir
-  (auto-save-file-name-transforms '((".*" "~/.saves/" t))) ; auto saves in different dir
-  (ispell-program-name "aspell") ; Use aspell for flyspell
-  (vc-follow-symlinks t) ; Follow symlinks
-  (enable-recursive-minibuffers t) ; Recommended by vertico
-  (recentf-max-menu-items 25) ; Set recent file limit
-  (recentf-max-saved-items 25) ; Set recent file limit
-  (scroll-conservatively 33); Adjust recent sensitivity
-  (split-width-threshold 200); Only split horizontally for 200 cols
-  (frame-title-format "Emacs")
-  (tab-always-indent 'complete)
-  (x-underline-at-descent-line t)
   :init
-  ;; Set default buffer local vars
-  (setq-default indent-tabs-mode nil); indent with spaces
-  (setq-default tab-width 4) ; Display width of tab char
+  (setq
+   auto-save-file-name-transforms '((".*" "~/.saves/" t))
+   backup-directory-alist '(("." . "~/.saves"))
+   enable-recursive-minibuffers t
+   frame-title-format "Emacs"
+   help-window-select t
+   inhibit-startup-screen t
+   ispell-program-name "aspell"
+   mac-command-modifier 'control
+   recentf-max-menu-items 25
+   recentf-max-saved-items 25
+   ring-bell-function 'ignore
+   scroll-conservatively 33
+   scroll-margin 2
+   split-width-threshold 200
+   tab-always-indent 'complete
+   use-short-answers t
+   vc-follow-symlinks t
+   visible-cursor nil
+   window-divider-default-places t
+   window-divider-default-right-width 1
+   window-divider-default-bottom-width 1
+   x-underline-at-descent-line t)
 
-  (add-to-list 'same-window-buffer-names "*compilation*") ; Run compile commands in current window
+  (setq-default
+   indent-tabs-mode nil
+   tab-width 4)
 
-  (add-hook 'after-init-hook (lambda()
-                               (global-auto-revert-mode nil)
-                               (save-place-mode 1)
-                               (recentf-mode 1)))
-  (add-hook 'prog-mode-hook (lambda()
-                              (display-line-numbers-mode 1)
-                              (flyspell-prog-mode)))
-  (add-hook 'text-mode-hook 'flyspell-mode)
-
-  ;; Terminal mode has a menu-bar too
   (menu-bar-mode -1)
+  (recentf-mode 1)
+  (save-place-mode 1)
+  (window-divider-mode t)
+
+  (add-to-list 'same-window-buffer-names "*compilation*")
+  (load-file (concat user-emacs-directory "funs/emacs-funs.el"))
+
   (when (or (display-graphic-p) (daemonp))
     (blink-cursor-mode 0)
     (tool-bar-mode -1)
     (scroll-bar-mode 0)
 
-    ;; Enable window dividers
-    (setq window-divider-default-places t); Make vertical and horizontal window dividers)
-    (setq window-divider-default-right-width 1)
-    (setq window-divider-default-bottom-width 1)
-    (window-divider-mode t)
-
-    (defun my-set-font ()
-      "Sets the font"
-      (interactive)
-      (if (not (null (x-list-fonts "Iosevka")))
-          (set-frame-font "Iosevka 14" nil t)
-        (if (eq system-type 'darwin)
-            (set-frame-font "SF Mono Light 19" nil t)
-          (progn
-            (when (not (null (x-list-fonts "Droid Sans Mono")))
-              (set-frame-font "Droid Sans Mono 14" nil t))
-            (when (not (null (x-list-fonts "SF Mono")))
-              (set-frame-font "SF Mono Light 13" nil t))))))
-
     (if (daemonp)
         (add-hook 'server-after-make-frame-hook #'my-set-font)
       (my-set-font)))
 
-  (when (eq system-type 'darwin)
-    (setq mac-command-modifier 'control))
-
-  (defun count-paragraphs (start end)
-    "Return number of paragraphs between START and END."
-    (save-excursion
-      (save-restriction
-        (narrow-to-region start end)
-        (goto-char (point-min))
-        (- (buffer-size) (forward-paragraph (buffer-size))))))
-
-  (defun count-paragraphs-region-or-buffer ()
-    "Report number of paragraphs in the region (if it's active) or the entire buffer."
-    (declare (interactive-only count-paragraphs))
-    (interactive)
-    (let ((paragraphs (if (use-region-p)
-                          (count-paragraphs (region-beginning) (region-end))
-                        (count-paragraphs (point-min) (point-max)))))
-      (message "%s has %d paragraph%s"
-               (if (use-region-p) "Region" "Buffer")
-               paragraphs
-               (if (> paragraphs 1) "s" ""))))
-
-  (defun my-current-filename ()
-    "Copy the full path of the current file and write it to the minibuffer"
-    (interactive)
-    (let ((bufname (buffer-file-name (window-buffer (minibuffer-selected-window)))))
-      (kill-new bufname)
-      (message bufname)))
-
-  (defun my-eval-and-run-all-tests-in-buffer ()
-    "Delete all loaded tests from the runtime, evaluate the current buffer and run all loaded tests with ert."
-    (interactive)
-    (ert-delete-all-tests)
-    (eval-buffer)
-    (ert 't))
-
-  (defun my-switch-to-previous-buffer ()
-    (interactive)
-    (switch-to-buffer (other-buffer)))
-
+  (add-hook 'after-init-hook 'my-after-init-settings)
+  (add-hook 'prog-mode-hook 'my-prog-mode-settings)
+  (add-hook 'text-mode-hook 'flyspell-mode)
   :bind (("C-c =" . indent-region)
          :map minibuffer-local-map
          ("C-w" . backward-kill-word)))
@@ -381,32 +280,31 @@
 (use-package evil
   :ensure t
   :hook (after-init . evil-mode)
-  :custom
-  (evil-default-state 'emacs)
-  (evil-insert-state-message nil)
-  (evil-normal-state-message nil)
-  (evil-motion-state-message nil)
-  (evil-visual-state-message nil)
-  (evil-replace-state-message nil)
-  (evil-operator-state-message nil)
-  (evil-respect-visual-line-mode t)
-  (evil-search-module 'evil-search)
-  (evil-ex-search-persistent-highlight nil)
-  (evil-symbol-word-search t)
-  (evil-shift-width 2)
-  (evil-undo-system 'undo-redo)
-  (evil-want-C-d-scroll t)
-  (evil-want-C-i-jump t)
-  (evil-want-C-u-delete t)
-  (evil-want-C-u-scroll t)
-  (evil-want-C-w-delete t)
-  (evil-want-keybinding nil)
+  :init
+  (setq
+   evil-default-state 'emacs
+   evil-insert-state-message nil
+   evil-normal-state-message nil
+   evil-motion-state-message nil
+   evil-visual-state-message nil
+   evil-replace-state-message nil
+   evil-operator-state-message nil
+   evil-respect-visual-line-mode t
+   evil-search-module 'evil-search
+   evil-ex-search-persistent-highlight nil
+   evil-symbol-word-search t
+   evil-shift-width 2
+   evil-undo-system 'undo-redo
+   evil-want-C-d-scroll t
+   evil-want-C-i-jump t
+   evil-want-C-u-delete t
+   evil-want-C-u-scroll t
+   evil-want-C-w-delete t
+   evil-want-keybinding nil)
   :config
   (evil-set-initial-state 'prog-mode 'normal)
   (evil-set-initial-state 'text-mode 'normal)
-  (defun my-emulate-ctrl-c ()
-    (interactive)
-    (setq  unread-command-events (nconc (listify-key-sequence (kbd "C-c")) unread-command-events)))
+  (load-file (concat user-emacs-directory "funs/evil-funs.el"))
   :bind (("C-c s c" . 'evil-ex-nohighlight)
          :map evil-normal-state-map
          ("SPC" . 'my-emulate-ctrl-c)))
@@ -502,12 +400,7 @@
   :ensure t
   :after evil
   :config
-  (defun my-evil-insert-exit ()
-    (interactive)
-    "Exit evil's insert mode and save the buffer if it has a buffer-file-name"
-    (evil-normal-state)
-    (when (buffer-file-name) (save-buffer)))
-  (key-chord-define evil-insert-state-map "fd" 'my-evil-insert-exit)
+  (key-chord-define evil-insert-state-map "fd" 'evil-normal-state)
   (key-chord-mode 1))
 
 (use-package ledger-mode
@@ -516,35 +409,8 @@
   :init
   (setq ledger-binary-path "/usr/local/bin/ledger")
   :config
-  (defun my--find-expense-matches ()
-    "finds want or need Expenses: in the buffer to complete"
-    (delete-dups (save-match-data
-                   (let ((pos 0) (string (buffer-string)) matches)
-                     (while (string-match "Expenses:[WN][^ ]*" string pos)
-                       (push (match-string-no-properties 0 string) matches)
-                       (setq pos (match-end 0)))
-                     matches)))
-    )
-  (defun my-new-ledger-entry ()
-    "Enter a new ledger entry based on the Expenses: keyword of a previous entry"
-    (interactive)
-    (goto-char (point-max))
-    (insert "\n")
-    (let ((cost (read-string "Enter the price =>")))
-      (insert (replace-regexp-in-string "-" "/" (org-read-date)))
-      (insert " ")
-      (insert (read-string "Enter the expense title =>"))
-      (insert "\n    ")
-      (insert (completing-read "Enter the expense: " (my--find-expense-matches)))
-      (insert "  $")
-      (insert cost)
-      (insert "\n    Assets:Checking\n")))
-  (defun my-ledger-mode ()
-    "My ledger mode settings"
-    (setq tab-width 4
-          indent-line-function 'insert-tab
-          electric-indent-local-mode -1))
-  (add-hook 'ledger-mode-hook 'my-ledger-mode))
+  (load-file (concat user-emacs-directory "funs/ledger-funs.el"))
+  (add-hook 'ledger-mode-hook 'my-ledger-mode-settings))
 
 (use-package magit
   :ensure t
@@ -586,22 +452,7 @@
   (visual-fill-column-width 90)
   (visual-fill-column-center-text t)
   :config
-  (defun my-org-header-link ()
-    "Uses org-goto to prompt for a heading and creates a link"
-    (interactive)
-    (let ((org-header
-           (save-excursion
-             (org-goto)
-             (replace-regexp-in-string "\*+" "*"
-                                       (buffer-substring-no-properties
-                                        (line-beginning-position)
-                                        (line-end-position))))))
-    (insert "[[")
-    (insert org-header)
-    (insert "][")
-    (insert
-     (read-string "Enter link description =>" (replace-regexp-in-string "^\* *" "" org-header)))
-    (insert "]]"))))
+  (load-file (concat user-emacs-directory "funs/org-funs.el")))
 
 (use-package ox-ascii
   :defer t
@@ -631,8 +482,8 @@
 
 (use-package sh-script
   :defer t
-  :custom
-  (sh-basic-offset 2))
+  :init
+  (setq sh-basic-offset 2))
 
 (use-package tab-bar
   :defer t
@@ -643,8 +494,8 @@
 
 (use-package treesit-auto
   :ensure t
-  :custom
-  (treesit-auto-install 'prompt)
+  :init
+  (setq treesit-auto-install 'prompt)
   :hook (after-init . global-treesit-auto-mode)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all))
@@ -660,13 +511,6 @@
 (use-package visual-fill-column
   :ensure t
   :hook (visual-line-mode . visual-fill-column-mode))
-
-(use-package which-key
-  :hook (after-init . which-key-mode))
-
-(use-package ws-butler
-  :ensure t
-  :hook (prog-mode . ws-butler-mode))
 
 (use-package wgrep
   :ensure t
@@ -692,6 +536,3 @@
 (use-package zone-nyan
   :ensure t
   :commands 'zone-nyan-preview)
-
-;; Load customizations if they exist
-(when (file-exists-p custom-file) (load-file custom-file))
