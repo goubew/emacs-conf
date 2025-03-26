@@ -44,16 +44,3 @@
           (set-frame-font "Droid Sans Mono 14" nil t))
         (when (not (null (x-list-fonts "SF Mono")))
           (set-frame-font "SF Mono Light 13" nil t))))))
-
-;; Hook functions --------------------------------------------
-
-(defun my-after-init-settings ()
-  "Function to be added to the after-init-hook"
-  (when (file-exists-p custom-file) (load-file custom-file))
-  (find-file (concat user-emacs-directory "init.el"))
-  (font-lock-mode))
-
-(defun my-prog-mode-settings ()
-  "Function to be added to the after-init-hook"
-  (display-line-numbers-mode 1)
-  (flyspell-prog-mode))
