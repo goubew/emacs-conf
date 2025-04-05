@@ -31,7 +31,10 @@
 
 (use-package avy
   :ensure t
-  :bind ("C-c j" . avy-goto-char-timer))
+  :init
+  (setq avy-single-candidate-jump nil)
+  :bind (("C-c j" . avy-goto-char-timer)
+         ("M-n" . avy-goto-char-timer)))
 
 (use-package cape
   :ensure t
@@ -52,46 +55,45 @@
 
 (use-package consult
   :ensure t
-  :bind (;; C-c bindings in `mode-specific-map'
-         ("C-c b" . consult-buffer)
-         ("C-c M-x" . consult-mode-command)
-         ("C-c h" . consult-history)
-         ("C-c y" . consult-yank-pop)
-         ("C-c B" . consult-bookmark)
-         ("C-c o e" . consult-compile-error)
-         ("C-c o f" . consult-flymake)               ;; Alternative: consult-flycheck
-         ("C-c o g" . consult-goto-line)             ;; orig. goto-line
-         ("C-c o k" . consult-kmacro)
-         ("C-c o o" . consult-outline)               ;; Alternative: consult-org-heading
-         ("C-c o m" . consult-mark)
-         ("C-c o k" . consult-global-mark)
-         ("C-c o i" . consult-imenu)
-         ("C-c o I" . consult-imenu-multi)
-         ("C-c i m" . consult-man)
-         ("C-c i r" . consult-recent-file)
-         ("C-c i i" . consult-info)
-         ("C-c R" . consult-register-store)
-         ("C-c M-r" . consult-register)
-         ("C-c r" . consult-register-load)
-         ("C-c s d" . consult-find)                  ;; Alternative: consult-fd
-         ("C-c s e" . consult-isearch-history)
-         ("C-c s c" . consult-locate)
-         ("C-c s g" . consult-grep)
-         ("C-c s G" . consult-git-grep)
-         ("C-c s r" . consult-ripgrep)
-         ("C-c s l" . consult-line)
-         ("C-c s L" . consult-line-multi)
-         ("C-c s k" . consult-keep-lines)
-         ("C-c s u" . consult-focus-lines)
-         ([remap Info-search] . consult-info)
+  :config
+  (setq completion-in-region-function #'consult-completion-in-region)
+  :bind (([remap Info-search] . consult-info)
          ;; C-x bindings in `ctl-x-map'
+         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
          ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
          ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
          ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
          ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
          ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
          ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+         ;; Custom M-# bindings for fast register access
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("C-M-#" . consult-register)
+         ;; Other custom bindings
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ;; M-g bindings in `goto-map'
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ;; M-s bindings in `search-map'
+         ("M-s d" . consult-find)                  ;; Alternative: consult-fd
+         ("M-s c" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
          ;; Isearch integration
+         ("M-s e" . consult-isearch-history)
          :map isearch-mode-map
          ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
          ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
@@ -113,24 +115,6 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref))
 
-(use-package corfu
-  :ensure t
-  :hook (prog-mode . global-corfu-mode)
-  :custom
-  (corfu-on-exact-match 'show)
-  (corfu-cycle t)
-  (corfu-preview-current 'insert)
-  (corfu-preselect 'prompt)
-  (corfu-quit-at-boundary 'separator)
-  (corfu-left-margin-width 0)
-  :bind (:map evil-insert-state-map
-        ("C-n" . 'completion-at-point)
-        ("C-p" . 'completion-at-point)
-        :map corfu-map
-        ("C-l" . 'corfu-complete)
-        ("C-e" . 'corfu-quit)
-        ("<return>" . 'corfu-insert)))
-
 (use-package diff-hl
   :ensure t
   :hook ((prog-mode vc-dir-mode ledger-mode) . diff-hl-mode)
@@ -147,9 +131,9 @@
   :hook (after-init . doom-modeline-mode)
   :init
   (column-number-mode 1)
-  (setq inhibit-compacting-font-caches t)
-  (setq doom-modeline-icon nil)
-  (setq doom-modeline-minor-modes nil))
+  (setq inhibit-compacting-font-caches t
+        doom-modeline-icon nil
+        doom-modeline-minor-modes nil))
 
 (use-package dumb-jump
   :ensure t
@@ -205,7 +189,7 @@
 
 (use-package evil
   :ensure t
-  :hook (after-init . evil-mode)
+  :commands evil-mode
   :init
   (setq
    evil-default-state 'emacs
