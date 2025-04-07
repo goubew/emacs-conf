@@ -96,6 +96,11 @@
   :hook ((prog-mode . flyspell-prog-mode)
          (text-mode . flyspell-mode)))
 
+(use-package go-ts-mode
+  :defer t
+  :config
+  (setq go-ts-mode-indent-offset 4))
+
 (use-package java-ts-mode
   :defer t
   :config

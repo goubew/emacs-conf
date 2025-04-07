@@ -55,8 +55,6 @@
 
 (use-package consult
   :ensure t
-  :config
-  (setq completion-in-region-function #'consult-completion-in-region)
   :bind (([remap Info-search] . consult-info)
          ;; C-x bindings in `ctl-x-map'
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -113,7 +111,9 @@
   (setq register-preview-delay 0.5)
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref))
+        xref-show-definitions-function #'consult-xref)
+  :config
+  (setq completion-in-region-function #'consult-completion-in-region))
 
 (use-package diff-hl
   :ensure t
@@ -257,10 +257,6 @@
 (use-package git-timemachine
   :ensure t
   :commands 'git-timemachine)
-
-(use-package go-mode
-  :ensure t
-  :mode ("\\.go\\'" . go-mode))
 
 (use-package groovy-mode
   :ensure t
