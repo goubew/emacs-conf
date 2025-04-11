@@ -16,8 +16,7 @@
 (use-package app-launcher
   :if (daemonp)
   :config
-  (load-file (concat user-emacs-directory "funs/app-launcher-funs.el"))
-)
+  (load-file (concat user-emacs-directory "funs/app-launcher-funs.el")))
 
 (use-package autothemer
   :ensure t
@@ -26,7 +25,8 @@
 
 (use-package ace-window
   :ensure t
-  :bind (("C-x o" . ace-window)
+  :bind (("M-o" . ace-window)
+         ("C-x o" . ace-window)
          ("C-c w" . ace-window)))
 
 (use-package avy
