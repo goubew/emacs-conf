@@ -137,7 +137,6 @@
 
 (use-package dumb-jump
   :ensure t
-  :after evil
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
