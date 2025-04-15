@@ -101,6 +101,10 @@
   :config
   (setq go-ts-mode-indent-offset 4))
 
+(use-package hippie-exp
+  :defer t
+  :bind ("M-/" . hippie-expand))
+
 (use-package java-ts-mode
   :defer t
   :config
