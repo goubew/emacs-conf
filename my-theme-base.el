@@ -9,6 +9,11 @@
     (;; basics
      (default (:background bg :foreground fg))
 
+     (fixed-pitch (:family nil))
+     (fixed-pitch-serif (:family nil))
+     (variable-pitch (:family nil))
+     (variable-pith-text (:family nil :inherit))
+
      (cursor              (:background fg0))
      (fringe              (:background bg0_s))
      (highlight           (:background bg1))
