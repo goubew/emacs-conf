@@ -120,9 +120,11 @@
    org-goto-interface 'outline-path-completion
    org-indent-mode-turns-on-hiding-stars nil
    org-outline-path-complete-in-steps nil
+   org-startup-indented t
    org-src-window-setup t)
   :config
-  (load-file (concat user-emacs-directory "funs/org-funs.el")))
+  (load-file (concat user-emacs-directory "funs/org-funs.el"))
+  :hook (org-mode . visual-line-mode))
 
 (use-package ox-ascii
   :defer t
