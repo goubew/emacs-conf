@@ -8,10 +8,6 @@
   :ensure t
   :hook (ansible-mode . ansible-doc-mode))
 
-(use-package anzu
-  :ensure t
-  :after evil
-  :config (global-anzu-mode))
 
 (use-package app-launcher
   :if (daemonp)
@@ -321,6 +317,14 @@
 (use-package markdown-mode
   :ensure t
   :mode ("\\.md\\'" . gfm-mode))
+
+(use-package meow
+  :ensure t
+  :init
+  (load-file (concat user-emacs-directory "funs/meow-funs.el"))
+  :config
+  (meow-setup)
+  (meow-global-mode))
 
 (use-package orderless
   :ensure t
