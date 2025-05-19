@@ -1,3 +1,7 @@
+(use-package aggressive-indent
+  :ensure t
+  :commands 'aggressive-indent-mode)
+
 (use-package ansible
   :ensure t
   :init
