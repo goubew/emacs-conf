@@ -229,7 +229,7 @@
   :after meow
   :config
   (key-chord-mode 1)
-  (key-chord-define meow-insert-state-keymap "fd" 'meow-insert-exit))
+  (key-chord-define meow-insert-state-keymap "pf" 'meow-insert-exit))
 
 (use-package ledger-mode
   :ensure t
@@ -265,6 +265,7 @@
   :init
   (load-file (concat user-emacs-directory "funs/meow-funs.el"))
   :config
+  (add-to-list 'meow-mode-state-list '(eat-mode . motion))
   (meow-setup)
   (meow-global-mode))
 
