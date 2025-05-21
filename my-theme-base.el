@@ -405,6 +405,28 @@
      (meow-position-highlight-reverse-number-2 (:inherit 'meow-position-highlight-number-2))
      (meow-position-highlight-reverse-number-1 (:inherit 'meow-position-highlight-number-1))
 
+     ;; neo-tree
+     (neo-banner-face              (:foreground bright-purple))
+     (neo-button-face              (:underline nil))
+     (neo-dir-link-face            (:foreground bright-blue))
+     (neo-expand-btn-face          (:foreground bright-aqua))
+     (neo-file-link-face           (:foreground fg0))
+     (neo-header-face              (:foreground bright-purple))
+     (neo-root-dir-face            (:foreground bright-purple))
+     (neo-vc-added-face            (:foreground bright-aqua))
+     (neo-vc-conflict-face         (:foreground bright-red))
+     (neo-vc-default-face          (:foreground fg0))
+     (neo-vc-edited-face           (:foreground bright-purple))
+     (neo-vc-ignored-face          (:foreground fg4))
+     (neo-vc-missing-face          (:foreground bright-red))
+     (neo-vc-needs-merge-face      (:foreground bright-red))
+     (neo-vc-needs-update-face     (:underline t))
+     (neo-vc-removed-face          (:strike-through t))
+     (neo-vc-unlocked-changes-face (:foreground bright-orange))
+     (neo-vc-unregistered-face     nil)
+     (neo-vc-up-to-date-face       (:foreground fg4))
+     (neo-vc-user-face             (:slant 'italic :foreground bright-orange))
+
      )))
 
 (provide 'my-theme-base)

@@ -273,6 +273,12 @@
   (meow-setup)
   (meow-global-mode))
 
+(use-package neotree
+  :ensure t
+  :init
+  (setq neo-theme 'ascii)
+  :commands 'neotree-toggle)
+
 (use-package orderless
   :ensure t
   :after vertico
