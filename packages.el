@@ -269,7 +269,16 @@
   :init
   (load-file (concat user-emacs-directory "funs/meow-funs.el"))
   :config
-  (add-to-list 'meow-mode-state-list '(eat-mode . motion))
+  (setq meow-empty-keymap (make-keymap))
+  (setq meow-mode-state-list '())
+  (meow-define-state emacs
+    "meow state with no special keybindings"
+    :lighter "EMACS"
+    :keymap meow-empty-keymap)
+  (defun my-meow-set-default-state ()
+    (when (not (derived-mode-p 'prog-mode 'text-mode))
+      (meow--switch-state 'emacs)))
+  (add-hook 'meow-mode-hook #'my-meow-set-default-state)
   (meow-setup)
   (meow-global-mode))
 
