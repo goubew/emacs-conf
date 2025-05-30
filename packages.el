@@ -268,6 +268,9 @@
   :ensure t
   :init
   (load-file (concat user-emacs-directory "funs/meow-funs.el"))
+  (setq meow-keypad-self-insert-undefined nil
+        meow-use-clipboard t
+        meow-use-dynamic-face-color nil)
   :config
   (setq meow-empty-keymap (make-keymap))
   (setq meow-mode-state-list '())

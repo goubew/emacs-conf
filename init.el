@@ -134,6 +134,9 @@
    org-ascii-inner-margin 0
    org-ascii-text-width 65))
 
+(use-package prog-mode
+  :hook (prog-mode . (lambda () (setq show-trailing-whitespace t))))
+
 (use-package project
   :defer t
   :init
