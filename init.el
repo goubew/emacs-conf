@@ -15,7 +15,7 @@
   (setq css-indent-offset 2))
 
 (use-package display-line-numbers
-  :hook ((prog-mode text-mode) . display-line-numbers-mode))
+  :hook (prog-mode . display-line-numbers-mode))
 
 (use-package eglot
   :init
