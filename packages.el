@@ -12,6 +12,11 @@
   :ensure t
   :hook (ansible-mode . ansible-doc-mode))
 
+(use-package anzu
+  :ensure t
+  :after evil
+  :config (global-anzu-mode))
+
 (use-package app-launcher
   :if (daemonp)
   :config
@@ -185,11 +190,68 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+(use-package evil
+  :ensure t
+  :init
+  (setq
+   evil-default-state 'emacs
+   evil-disable-insert-state-bindings t
+   evil-insert-state-message nil
+   evil-normal-state-message nil
+   evil-motion-state-message nil
+   evil-visual-state-message nil
+   evil-replace-state-message nil
+   evil-operator-state-message nil
+   evil-respect-visual-line-mode t
+   evil-search-module 'evil-search
+   evil-ex-search-persistent-highlight nil
+   evil-symbol-word-search t
+   evil-shift-width 2
+   evil-undo-system 'undo-redo
+   evil-want-C-d-scroll t
+   evil-want-C-i-jump t
+   evil-want-C-u-delete t
+   evil-want-C-u-scroll t
+   evil-want-C-w-delete t
+   evil-want-keybinding nil)
+  :config
+  (evil-set-initial-state 'prog-mode 'normal)
+  (evil-set-initial-state 'text-mode 'normal)
+  (load-file (concat user-emacs-directory "funs/evil-funs.el"))
+  :bind (("C-c s c" . 'evil-ex-nohighlight)
+         :map evil-normal-state-map
+         ("SPC" . 'my-emulate-ctrl-c)))
+
+(use-package evil-anzu
+  :ensure t
+  :after (anzu evil))
+
+(use-package evil-numbers
+  :ensure t
+  :after evil
+  :config
+  ;; Avoid using C-a C-x to keep the default C-x bindings
+  (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
+  (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
+
+(use-package evil-surround
+  :ensure t
+  :after evil
+  :config
+  (global-evil-surround-mode))
+
 (use-package exec-path-from-shell
   :if (eq system-type 'darwin)
   :ensure t
   :config
   (exec-path-from-shell-initialize))
+
+(use-package expand-region
+  :ensure t
+  :after evil
+  :bind (:map evil-visual-state-map
+         ("," . er/contract-region)
+         ("." . er/expand-region)))
 
 (use-package flyspell-correct
   :ensure t
@@ -230,10 +292,10 @@
 
 (use-package key-chord
   :ensure t
-  :after meow
+  :after evil
   :config
   (key-chord-mode 1)
-  (key-chord-define meow-insert-state-keymap "pf" 'meow-insert-exit))
+  (key-chord-define evil-insert-state-map "fd" 'evil-normal-state))
 
 (use-package ledger-mode
   :ensure t
@@ -271,6 +333,7 @@
   (setq meow-keypad-self-insert-undefined nil
         meow-use-clipboard t
         meow-use-dynamic-face-color nil)
+  :commands 'meow-global-mode
   :config
   (setq meow-empty-keymap (make-keymap))
   (setq meow-mode-state-list '())
@@ -282,8 +345,7 @@
     (when (not (derived-mode-p 'prog-mode 'text-mode))
       (meow--switch-state 'emacs)))
   (add-hook 'meow-mode-hook #'my-meow-set-default-state)
-  (meow-setup)
-  (meow-global-mode))
+  (meow-setup))
 
 (use-package neotree
   :ensure t
