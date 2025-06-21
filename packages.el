@@ -217,6 +217,7 @@
   :config
   (evil-set-initial-state 'prog-mode 'normal)
   (evil-set-initial-state 'text-mode 'normal)
+  (evil-set-initial-state 'help-mode 'emacs)
   (load-file (concat user-emacs-directory "funs/evil-funs.el"))
   :bind (("C-c s c" . 'evil-ex-nohighlight)
          :map evil-normal-state-map
