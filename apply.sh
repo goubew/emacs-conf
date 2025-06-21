@@ -27,3 +27,4 @@ safe_link "${SCRIPT_DIR}/app-launcher.el" "$HOME/.emacs.d/packages/app-launcher.
 safe_link "${SCRIPT_DIR}/my-theme-base.el" "$HOME/.emacs.d/packages/my-theme-base.el"
 safe_link "${SCRIPT_DIR}/my-gruvbox-light-theme.el" "$HOME/.emacs.d/my-gruvbox-light-theme.el"
 safe_link "${SCRIPT_DIR}/my-gruvbox-dark-theme.el" "$HOME/.emacs.d/my-gruvbox-dark-theme.el"
+safe_link "${SCRIPT_DIR}/snw-mode.el" "$HOME/.emacs.d/packages/snw-mode.el"

@@ -219,6 +219,7 @@
   (evil-set-initial-state 'text-mode 'normal)
   (evil-set-initial-state 'help-mode 'emacs)
   (load-file (concat user-emacs-directory "funs/evil-funs.el"))
+  (evil-mode)
   :bind (("C-c s c" . 'evil-ex-nohighlight)
          :map evil-normal-state-map
          ("SPC" . 'my-emulate-ctrl-c)))
@@ -368,6 +369,9 @@
 (use-package rainbow-mode
   :ensure t
   :commands 'rainbow-mode)
+
+(use-package snw-mode
+  :mode (("\\.snw\\'" . snw-mode)))
 
 (use-package treesit-auto
   :ensure t
