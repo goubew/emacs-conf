@@ -77,8 +77,8 @@
      (rainbow-delimiters-unmatched-face (:background bright-red :foreground bg0))
 
      ;; line numbers
-     (line-number              (:background bg0_s :foreground fg2))
-     (line-number-current-line (:background bg0_s :foreground fg :bold 't))
+     (line-number              (:foreground fg4))
+     (line-number-current-line (:foreground fg :bold 't))
 
      ;; show-paren
      (show-paren-match    (:underline t))

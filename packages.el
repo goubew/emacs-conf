@@ -391,7 +391,12 @@
 
 (use-package visual-fill-column
   :ensure t
-  :hook (visual-line-mode . visual-fill-column-mode))
+  :init
+  (setq visual-fill-column-center-text t
+        visual-fill-column-width 80)
+  :hook ((visual-line-mode . visual-fill-column-mode)
+         (text-mode . visual-fill-column-mode)
+         (prog-mode . visual-fill-column-mode)))
 
 (use-package wgrep
   :ensure t

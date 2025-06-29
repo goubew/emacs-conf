@@ -14,9 +14,6 @@
   :init
   (setq css-indent-offset 2))
 
-(use-package display-line-numbers
-  :hook (prog-mode . display-line-numbers-mode))
-
 (use-package eglot
   :init
   (setq eldoc-echo-area-use-multiline-p nil)
@@ -58,11 +55,10 @@
    window-divider-default-places t
    window-divider-default-right-width 1
    window-divider-default-bottom-width 1
-   visual-fill-column-width 90
-   visual-fill-column-center-text t
    x-underline-at-descent-line t)
 
   (setq-default
+   fill-column 80
    indent-tabs-mode nil
    tab-width 4)
 
