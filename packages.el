@@ -213,7 +213,14 @@
    evil-want-C-u-delete t
    evil-want-C-u-scroll t
    evil-want-C-w-delete t
-   evil-want-keybinding nil)
+   evil-want-keybinding nil
+   evil-emacs-state-tag "EMACS"
+   evil-insert-state-tag "INSERT"
+   evil-motion-state-tag "MOTION"
+   evil-normal-state-tag "NORMAL"
+   evil-visual-state-tag "VISUAL"
+   evil-replace-state-tag "REPLACE"
+   evil-operator-state-tag "OPERATOR")
   :config
   (evil-set-initial-state 'prog-mode 'normal)
   (evil-set-initial-state 'text-mode 'normal)
