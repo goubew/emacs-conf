@@ -12,5 +12,6 @@
     (insert org-header)
     (insert "][")
     (insert
-     (read-string "Enter link description =>" (replace-regexp-in-string "^\* *" "" org-header)))
+     (read-string "Enter link description =>"
+                  (replace-regexp-in-string "^\* *" "" org-header)))
     (insert "]]")))

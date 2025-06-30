@@ -74,7 +74,8 @@
      (rainbow-delimiters-depth-10-face  (:foreground bright-purple))
      (rainbow-delimiters-depth-11-face  (:foreground bright-orange))
      (rainbow-delimiters-depth-12-face  (:foreground bright-yellow))
-     (rainbow-delimiters-unmatched-face (:background bright-red :foreground bg0))
+     (rainbow-delimiters-unmatched-face
+      (:background bright-red :foreground bg0))
 
      ;; line numbers
      (line-number              (:foreground fg4))
@@ -89,7 +90,8 @@
      (aw-mode-line-face               (:inherit 'mode-line-buffer-id))
      (aw-background-face              (:foreground bg))
      (aw-minibuffer-leading-char-face (:inherit 'aw-leading-char-face))
-     (aw-leading-char-face            (:background bg4 :foreground bright-orange))
+     (aw-leading-char-face
+      (:background bg4 :foreground bright-orange))
 
      ;; avy
      (avy-background-face (:foreground bg))
@@ -106,7 +108,8 @@
      (circe-my-message-face         nil)
      (circe-highlight-nick-face     (:weight 'bold :foreground bright-purple))
      (circe-server-face             (:foreground bright-blue))
-     (circe-prompt-face             (:weight 'bold :foreground bright-aqua :background bg1))
+     (circe-prompt-face
+      (:weight 'bold :foreground bright-aqua :background bg1))
 
      ;; isearch
      (isearch        (:background bg1))
@@ -170,7 +173,8 @@
      (lui-irc-colors-monospace-face nil)
 
      ;; magit
-     (magit-blame-highlight             (:extend t :foreground fg2 :background bg2))
+     (magit-blame-highlight
+      (:extend t :foreground fg2 :background bg2))
      (magit-reflog-other                (:foreground bright-aqua))
      (magit-reflog-remote               (:foreground bright-aqua))
      (magit-reflog-cherry-pick          (:foreground bright-green))
@@ -191,7 +195,7 @@
      (magit-cherry-unmatched            (:foreground bright-aqua))
      (magit-signature-error             (:foreground bright-blue))
      (magit-signature-revoked           (:foreground bright-purple))
-     (magit-signature-expibright-red           (:foreground bright-yellow))
+     (magit-signature-expired           (:foreground bright-yellow))
      (magit-signature-untrusted         (:foreground bright-aqua))
      (magit-signature-bad               (:weight 'bold :foreground bright-red))
      (magit-signature-good              (:foreground bright-green))
@@ -209,14 +213,22 @@
      (magit-diffstat-added              (:foreground bright-green))
      (magit-diff-context                (:foreground fg2))
      (magit-diff-context-highlight      (:background bg1 :foreground fg))
-     (magit-diff-base                   (:background bright-yellow :foreground bg0))
-     (magit-diff-base-highlight         (:background bright-yellow :foreground bg0))
-     (magit-diff-removed                (:background bg0 :foreground bright-red))
-     (magit-diff-removed-highlight      (:background bg1 :foreground bright-red))
-     (magit-diff-added                  (:background bg0 :foreground bright-green))
-     (magit-diff-added-highlight        (:background bg1 :foreground bright-green))
-     (magit-diff-hunk-heading           (:background bg3 :foreground fg2 :weight 'bold))
-     (magit-diff-hunk-heading-highlight (:background bg3 :foreground fg :weight 'bold))
+     (magit-diff-base
+      (:background bright-yellow :foreground bg0))
+     (magit-diff-base-highlight
+      (:background bright-yellow :foreground bg0))
+     (magit-diff-removed
+      (:background bg0 :foreground bright-red))
+     (magit-diff-removed-highlight
+      (:background bg1 :foreground bright-red))
+     (magit-diff-added
+      (:background bg0 :foreground bright-green))
+     (magit-diff-added-highlight
+      (:background bg1 :foreground bright-green))
+     (magit-diff-hunk-heading
+      (:background bg3 :foreground fg2 :weight 'bold))
+     (magit-diff-hunk-heading-highlight
+      (:background bg3 :foreground fg :weight 'bold))
      (magit-section-heading-selection   (:foreground bright-red))
      (magit-section-heading             (:weight 'bold :foreground bright-red))
      (magit-section-highlight           (:background bg1))
@@ -231,20 +243,31 @@
      ;; ansi
      (ansi-color-black          (:foreground gray :background gray))
      (ansi-color-red            (:foreground bright-red :background bright-red))
-     (ansi-color-green          (:foreground bright-green :background bright-green))
-     (ansi-color-yellow         (:foreground bright-yellow :background bright-yellow))
-     (ansi-color-blue           (:foreground bright-blue :background bright-blue))
-     (ansi-color-magenta        (:foreground bright-purple :background bright-purple))
-     (ansi-color-cyan           (:foreground bright-aqua :background bright-aqua))
+     (ansi-color-green
+      (:foreground bright-green :background bright-green))
+     (ansi-color-yellow
+      (:foreground bright-yellow :background bright-yellow))
+     (ansi-color-blue
+      (:foreground bright-blue :background bright-blue))
+     (ansi-color-magenta
+      (:foreground bright-purple :background bright-purple))
+     (ansi-color-cyan
+      (:foreground bright-aqua :background bright-aqua))
      (ansi-color-white          (:foreground bg :background bg))
      (ansi-color-bright-black   (:foreground fg :background fg))
      (ansi-color-bright-red     (:foreground bright-red :background bright-red))
-     (ansi-color-bright-green   (:foreground bright-green :background bright-green))
-     (ansi-color-bright-yellow  (:foreground bright-yellow :background bright-yellow))
-     (ansi-color-bright-blue    (:foreground bright-blue :background bright-blue))
-     (ansi-color-bright-magenta (:foreground bright-purple :background bright-purple))
-     (ansi-color-bright-cyan    (:foreground bright-aqua :background bright-aqua))
-     (ansi-color-bright-white   (:foreground bright-gray :background bright-gray))
+     (ansi-color-bright-green
+      (:foreground bright-green :background bright-green))
+     (ansi-color-bright-yellow
+      (:foreground bright-yellow :background bright-yellow))
+     (ansi-color-bright-blue
+      (:foreground bright-blue :background bright-blue))
+     (ansi-color-bright-magenta
+      (:foreground bright-purple :background bright-purple))
+     (ansi-color-bright-cyan
+      (:foreground bright-aqua :background bright-aqua))
+     (ansi-color-bright-white
+      (:foreground bright-gray :background bright-gray))
 
      ;; org
      (org-agenda-calendar-event      (:inherit 'default))
@@ -253,7 +276,8 @@
      (org-agenda-column-dateline     (:inherit 'org-column))
      (org-agenda-current-time        (:inherit 'org-time-grid))
      (org-agenda-date                (:inherit 'org-agenda-structure))
-     (org-agenda-date-today          (:weight 'bold :slant 'italic :inherit 'org-agenda-date))
+     (org-agenda-date-today
+      (:weight 'bold :slant 'italic :inherit 'org-agenda-date))
      (org-agenda-date-weekend-today  (:inherit 'org-agenda-date-today))
      (org-agenda-date-weekend        (:weight 'bold :inherit 'org-agenda-date))
      (org-agenda-diary               (:inherit 'default))
@@ -264,7 +288,8 @@
      (org-agenda-filter-regexp       (:inherit 'mode-line))
      (org-agenda-filter-tags         (:inherit 'mode-line))
      (org-agenda-restriction-lock    (:background bright-aqua :foreground bg0))
-     (org-agenda-structure-filter    (:inherit  ('org-warning 'org-agenda-structure)))
+     (org-agenda-structure-filter
+      (:inherit  ('org-warning 'org-agenda-structure)))
      (org-agenda-structure           (:foreground bright-blue))
      (org-agenda-structure-secondary (:inherit 'org-agenda-structure))
      (org-archived                   (:inherit 'shadow))
@@ -278,12 +303,16 @@
      (org-cite-key                   (:inherit 'link))
      (org-clock-overlay              (:background bg1))
      (org-code                       (:foreground bright-green))
-     (org-column-title               (:weight 'bold :underline t :background bg1))
-     (org-column                     (:weight 'normal :slant 'normal :underline nil :strike-through nil :background bg1))
+     (org-column-title
+      (:weight 'bold :underline t :background bg1))
+     (org-column
+      (:weight 'normal :slant 'normal :underline nil
+               :strike-through nil :background bg1))
      (org-date-selected              (:inverse-video t :foreground bright-red))
      (org-date                       (:underline t :foreground bright-purple))
      (org-default                    (:inherit 'default))
-     (org-dispatcher-highlight       (:weight 'bold :foreground bg0 :background bright-blue))
+     (org-dispatcher-highlight
+      (:weight 'bold :foreground bg0 :background bright-blue))
      (org-document-info              (:foreground fg2))
      (org-document-info-keyword      (:inherit 'shadow))
      (org-document-title             (:weight 'bold :foreground bright-blue))
@@ -311,7 +340,8 @@
      (org-macro                      (:inherit 'org-latex-and-related))
      (org-meta-line                  (:inherit 'font-lock-comment-face))
      (org-mode-line-clock            (:inherit 'mode-line))
-     (org-mode-line-clock-overrun    (:background bright-red :inherit 'mode-line))
+     (org-mode-line-clock-overrun
+      (:background bright-red :inherit 'mode-line))
      (org-priority                   (:inherit 'font-lock-keyword-face))
      (org-property-value             nil)
      (org-quote                      (:inherit 'org-block))
@@ -321,7 +351,8 @@
      (org-sexp-date                  (:foreground bright-purple))
      (org-special-keyword            (:inherit 'font-lock-keyword-face))
      (org-table                      (:foreground bright-blue))
-     (org-table-header               (:foreground bright-blue :background bg1 :inherit 'org-table))
+     (org-table-header
+      (:foreground bright-blue :background bg1 :inherit 'org-table))
      (org-tag-group                  (:inherit 'org-tag))
      (org-tag                        (:weight 'bold))
      (org-target                     (:underline t))
@@ -360,14 +391,22 @@
 
      ;; imenu-list
      (imenu-list-entry-face nil)
-     (imenu-list-entry-face-0 (:foreground bright-purple :inherit 'imenu-list-entry-face))
-     (imenu-list-entry-face-1 (:foreground bright-green :inherit 'imenu-list-entry-face))
-     (imenu-list-entry-face-2 (:foreground bright-blue :inherit 'imenu-list-entry-face))
-     (imenu-list-entry-face-3 (:foreground bright-orange :inherit 'imenu-list-entry-face))
-     (imenu-list-entry-subalist-face-0 (:weight 'bold :underline t :inherit 'imenu-list-entry-face-0))
-     (imenu-list-entry-subalist-face-1 (:weight 'bold :underline t :inherit 'imenu-list-entry-face-1))
-     (imenu-list-entry-subalist-face-2 (:weight 'bold :underline t :inherit 'imenu-list-entry-face-2))
-     (imenu-list-entry-subalist-face-3 (:weight 'bold :underline t :inherit 'imenu-list-entry-face-3))
+     (imenu-list-entry-face-0
+      (:foreground bright-purple :inherit 'imenu-list-entry-face))
+     (imenu-list-entry-face-1
+      (:foreground bright-green :inherit 'imenu-list-entry-face))
+     (imenu-list-entry-face-2
+      (:foreground bright-blue :inherit 'imenu-list-entry-face))
+     (imenu-list-entry-face-3
+      (:foreground bright-orange :inherit 'imenu-list-entry-face))
+     (imenu-list-entry-subalist-face-0
+      (:weight 'bold :underline t :inherit 'imenu-list-entry-face-0))
+     (imenu-list-entry-subalist-face-1
+      (:weight 'bold :underline t :inherit 'imenu-list-entry-face-1))
+     (imenu-list-entry-subalist-face-2
+      (:weight 'bold :underline t :inherit 'imenu-list-entry-face-2))
+     (imenu-list-entry-subalist-face-3
+      (:weight 'bold :underline t :inherit 'imenu-list-entry-face-3))
 
      ;; diff-refine
      (diff-refine-added    (:background bg2 :foreground bright-green))
@@ -392,18 +431,25 @@
      (transient-key (:inherit 'font-lock-builtin-face))
 
      ;; meow
-     (meow-cheatsheet-highlight (:foreground fg0 :inherit 'meow-cheatsheet-command))
+     (meow-cheatsheet-highlight
+      (:foreground fg0 :inherit 'meow-cheatsheet-command))
      (meow-cheatsheet-command (:inherit 'default))
      (meow-search-indicator (:foreground fg4))
      (meow-kmacro-cursor (:underline t))
      (meow-keypad-cannot-display (:height 0.7 :foreground fg0))
      (meow-position-highlight-number (:background bright-blue :foreground bg0))
-     (meow-position-highlight-number-3 (:background bright-blue :foreground bg0))
-     (meow-position-highlight-number-2 (:background bright-purple :foreground bg0))
-     (meow-position-highlight-number-1 (:background bright-aqua :foreground bg0))
-     (meow-position-highlight-reverse-number-3 (:inherit 'meow-position-highlight-number-3))
-     (meow-position-highlight-reverse-number-2 (:inherit 'meow-position-highlight-number-2))
-     (meow-position-highlight-reverse-number-1 (:inherit 'meow-position-highlight-number-1))
+     (meow-position-highlight-number-3
+      (:background bright-blue :foreground bg0))
+     (meow-position-highlight-number-2
+      (:background bright-purple :foreground bg0))
+     (meow-position-highlight-number-1
+      (:background bright-aqua :foreground bg0))
+     (meow-position-highlight-reverse-number-3
+      (:inherit 'meow-position-highlight-number-3))
+     (meow-position-highlight-reverse-number-2
+      (:inherit 'meow-position-highlight-number-2))
+     (meow-position-highlight-reverse-number-1
+      (:inherit 'meow-position-highlight-number-1))
 
      ;; neo-tree
      (neo-banner-face              (:foreground bright-purple))

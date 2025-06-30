@@ -7,7 +7,7 @@
       (- (buffer-size) (forward-paragraph (buffer-size))))))
 
 (defun my-count-paragraphs-region-or-buffer ()
-  "Report number of paragraphs in the region (if it's active) or the entire buffer."
+  "Report number of paragraphs in the region or the entire buffer."
   (declare (interactive-only count-paragraphs))
   (interactive)
   (let ((paragraphs (if (use-region-p)
@@ -21,12 +21,13 @@
 (defun my-current-filename ()
   "Copy the full path of the current file and write it to the minibuffer"
   (interactive)
-  (let ((bufname (buffer-file-name (window-buffer (minibuffer-selected-window)))))
+  (let ((bufname
+         (buffer-file-name (window-buffer (minibuffer-selected-window)))))
     (kill-new bufname)
     (message bufname)))
 
 (defun my-eval-and-run-all-tests-in-buffer ()
-  "Delete all loaded tests from the runtime, evaluate the current buffer and run all loaded tests with ert."
+  "Clear ert tests, reload the buffer, then rerun all tests"
   (interactive)
   (ert-delete-all-tests)
   (eval-buffer)

@@ -69,7 +69,8 @@
 
   (add-to-list 'same-window-buffer-names "*compilation*")
   (load-file (concat user-emacs-directory "funs/emacs-funs.el"))
-  (when enable-third-party-packages (load-file (concat user-emacs-directory "packages.el")))
+  (when enable-third-party-packages
+    (load-file (concat user-emacs-directory "packages.el")))
 
   (when (or (display-graphic-p) (daemonp))
     (blink-cursor-mode 0)
