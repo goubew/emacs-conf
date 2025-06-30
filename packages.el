@@ -96,6 +96,8 @@
          ("M-s u" . consult-focus-lines)
          ;; Isearch integration
          ("M-s e" . consult-isearch-history)
+         ;; Personal bindings
+         ("C-c SPC" . consult-buffer)
          :map isearch-mode-map
          ("M-e" . consult-isearch-history)
          ("M-s e" . consult-isearch-history)
@@ -117,6 +119,10 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   :config
+  (consult-customize
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   :preview-key "M-.")
   (setq completion-in-region-function #'consult-completion-in-region))
 
 (use-package diff-hl
@@ -334,27 +340,6 @@
 (use-package markdown-mode
   :ensure t
   :mode ("\\.md\\'" . gfm-mode))
-
-(use-package meow
-  :ensure t
-  :init
-  (load-file (concat user-emacs-directory "funs/meow-funs.el"))
-  (setq meow-keypad-self-insert-undefined nil
-        meow-use-clipboard t
-        meow-use-dynamic-face-color nil)
-  :commands 'meow-global-mode
-  :config
-  (setq meow-empty-keymap (make-keymap))
-  (setq meow-mode-state-list '())
-  (meow-define-state emacs
-    "meow state with no special keybindings"
-    :lighter "EMACS"
-    :keymap meow-empty-keymap)
-  (defun my-meow-set-default-state ()
-    (when (not (derived-mode-p 'prog-mode 'text-mode))
-      (meow--switch-state 'emacs)))
-  (add-hook 'meow-mode-hook #'my-meow-set-default-state)
-  (meow-setup))
 
 (use-package neotree
   :ensure t
