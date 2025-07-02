@@ -237,7 +237,7 @@
   (evil-set-initial-state 'help-mode 'emacs)
   (load-file (concat user-emacs-directory "funs/evil-funs.el"))
   (evil-mode)
-  :bind (("C-c s c" . evil-ex-nohighlight)
+  :bind (("C-c c" . evil-ex-nohighlight)
          :map evil-normal-state-map
          ("SPC" . my-emulate-ctrl-c)))
 

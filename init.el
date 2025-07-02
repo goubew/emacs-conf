@@ -81,7 +81,8 @@
         (add-hook 'server-after-make-frame-hook #'my-set-font)
       (my-set-font)))
 
-  :bind (("C-c =" . indent-region)
+  :bind (("C-c s" . save-buffer)
+         ("C-c =" . indent-region)
          :map minibuffer-local-map
          ("C-w" . backward-kill-word)))
 
