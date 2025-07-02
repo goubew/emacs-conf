@@ -128,6 +128,7 @@
 (use-package diff-hl
   :ensure t
   :hook ((prog-mode vc-dir-mode ledger-mode) . diff-hl-mode)
+  :bind ("C-c g" . magit-status)
   :config
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
