@@ -179,9 +179,6 @@
 
 (use-package embark
   :ensure t
-  :bind (("C-." . embark-act)
-         ("C-;" . embark-dwim)
-         ("C-h B" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
@@ -189,7 +186,12 @@
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
-                 (window-parameters (mode-line-format . none)))))
+                 (window-parameters (mode-line-format . none))))
+  :bind (("C-." . embark-act)
+         ("C-c ." . embark-act)
+         ("C-;" . embark-dwim)
+         ("C-c ;" . embark-dwim)
+         ("C-h B" . embark-bindings)))
 
 (use-package embark-consult
   :ensure t
@@ -198,6 +200,7 @@
 
 (use-package evil
   :ensure t
+  :demand t
   :init
   (setq
    evil-default-state 'emacs
@@ -233,9 +236,9 @@
   (evil-set-initial-state 'help-mode 'emacs)
   (load-file (concat user-emacs-directory "funs/evil-funs.el"))
   (evil-mode)
-  :bind (("C-c s c" . 'evil-ex-nohighlight)
+  :bind (("C-c s c" . evil-ex-nohighlight)
          :map evil-normal-state-map
-         ("SPC" . 'my-emulate-ctrl-c)))
+         ("SPC" . my-emulate-ctrl-c)))
 
 (use-package evil-anzu
   :ensure t

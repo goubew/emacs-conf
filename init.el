@@ -90,6 +90,10 @@
          ("C-c e p" . flymake-goto-prev-error)))
 
 (use-package flyspell
+  :config
+  ;; Unmask the embark key bindings
+  (define-key flyspell-mode-map (kbd "C-.") nil)
+  (define-key flyspell-mode-map (kbd "C-;") nil)
   :hook ((prog-mode . flyspell-prog-mode)
          (text-mode . flyspell-mode)))
 
