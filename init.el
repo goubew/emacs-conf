@@ -41,6 +41,7 @@
    inhibit-startup-screen t
    ispell-program-name "aspell"
    mac-command-modifier 'control
+   overflow-newline-into-fringe nil
    recentf-max-menu-items 25
    recentf-max-saved-items 25
    ring-bell-function 'ignore
