@@ -59,7 +59,7 @@
    x-underline-at-descent-line t)
 
   (setq-default
-   fill-column 80
+   fill-column 79
    indent-tabs-mode nil
    tab-width 4)
 
