@@ -201,7 +201,7 @@
 
 (use-package evil
   :ensure t
-  :demand t
+  :defer t
   :init
   (setq
    evil-default-state 'emacs
@@ -330,8 +330,9 @@
   :bind (("C-x g" . magit-status)
          ("C-c v" . magit-status))
   :init
-  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
-        magit-diff-refine-hunk t))
+  (setq
+   magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
+   magit-diff-refine-hunk t))
 
 (use-package marginalia
   :ensure t
@@ -388,11 +389,13 @@
 (use-package visual-fill-column
   :ensure t
   :init
-  (setq visual-fill-column-center-text t
-        visual-fill-column-width 80)
-  :hook ((visual-line-mode . visual-fill-column-mode)
-         (text-mode . visual-fill-column-mode)
-         (prog-mode . visual-fill-column-mode)))
+  (setq-default visual-fill-column-center-text t
+                visual-fill-column-width 80)
+  (load-file (concat user-emacs-directory "funs/visual-fill-column-funs.el"))
+  ;; hooks are appended to run after line number mode for width calculations
+  (add-hook 'visual-line-mode-hook #'my-visual-fill-column-mode t)
+  (add-hook 'text-mode-hook #'my-visual-fill-column-mode t)
+  (add-hook 'prog-mode-hook #'my-visual-fill-column-mode t))
 
 (use-package wgrep
   :ensure t

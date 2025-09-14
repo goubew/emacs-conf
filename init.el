@@ -14,6 +14,11 @@
   :init
   (setq css-indent-offset 2))
 
+(use-package display-line-numbers
+  :init
+  (setq-default display-line-numbers-width 4)
+  :hook (prog-mode . display-line-numbers-mode))
+
 (use-package eglot
   :init
   (setq eldoc-echo-area-use-multiline-p nil)
