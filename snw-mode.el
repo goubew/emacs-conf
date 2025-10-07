@@ -74,11 +74,65 @@
 ;;;###autoload
 (define-derived-mode snw-mode text-mode "snw"
   "Major mode for snw budget files."
-  (setq font-lock-defaults '(snw-font-lock-keywords))
-)
+  (setq font-lock-defaults '(snw-font-lock-keywords)))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.snw\\'" . snw-mode))
+
+(defun snw--find-expense-paths ()
+  "Finds expense paths to complete"
+  (delete-dups (save-match-data
+                 (let ((pos 0) (string (buffer-string)) matches)
+                   (while (string-match
+                           "-> \\([:[:alpha:]]+\\)"
+                           string
+                           pos)
+                     (push (match-string-no-properties 1 string) matches)
+                     (setq pos (match-end 0)))
+                   matches))))
+
+(transient-define-infix snw--transient-date-infix ()
+  :class 'transient-option
+  :argument "--date="
+  :shortarg "d"
+  :description "date"
+  :always-read t
+  :init-value (lambda (obj) (oset obj value (format-time-string "%Y/%m/%d")))
+  :reader (lambda (_ _ _)
+            (let ((org-read-date-prefer-future nil))
+              (replace-regexp-in-string "-" "/" (org-read-date)))))
+
+(transient-define-infix snw--transient-path-infix ()
+  :class 'transient-option
+  :argument "--path="
+  :shortarg "p"
+  :description "path"
+  :always-read t
+  :reader (lambda (_ _ _)
+            (completing-read "Enter path: " (snw--find-expense-paths))))
+
+(transient-define-suffix snw--transient-expense-suffix (&optional args)
+  "Adds a new expense to the end of the file"
+  :key "n"
+  :description "Add new expense"
+  (interactive (list (transient-args transient-current-command)))
+  (let* ((type (transient-arg-value "--type=" args))
+         (date (transient-arg-value "--date=" args))
+         (amount (transient-arg-value "--amount=" args))
+         (fmtamount (format "%-9s" amount))
+         (txnpath (transient-arg-value "--path=" args)))
+    (goto-char (point-max))
+    (insert date " -$" fmtamount type " -> " txnpath)))
+
+(transient-define-prefix snw-transient-expense ()
+  "Prompt for information to create a new snw expense"
+  ["Transaction components"
+   (snw--transient-date-infix)
+   ("a" "amount" "--amount=" :always-read t)
+   ("t" "type" "--type=" :choices ("Want" "Need") :always-read t)
+   (snw--transient-path-infix)]
+  ["Execute"
+   (snw--transient-expense-suffix)])
 
 ;; add the mode to the `features' list
 (provide 'snw-mode)
