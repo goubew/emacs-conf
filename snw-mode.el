@@ -134,6 +134,12 @@
   ["Execute"
    (snw--transient-expense-suffix)])
 
+(defvar snw-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-e") #'snw-transient-expense)
+    map)
+  "Keymap for snw mode")
+
 ;; add the mode to the `features' list
 (provide 'snw-mode)
 
