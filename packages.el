@@ -98,6 +98,7 @@
          ("M-s e" . consult-isearch-history)
          ;; Personal bindings
          ("C-c SPC" . consult-buffer)
+         ("C-c b" . consult-buffer)
          :map isearch-mode-map
          ("M-e" . consult-isearch-history)
          ("M-s e" . consult-isearch-history)
