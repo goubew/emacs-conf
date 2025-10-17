@@ -50,6 +50,7 @@
    recentf-max-menu-items 25
    recentf-max-saved-items 25
    ring-bell-function 'ignore
+   sentence-end-double-space nil
    scroll-conservatively 33
    scroll-margin 2
    show-trailing-whitespace t
@@ -102,7 +103,7 @@
   (define-key flyspell-mode-map (kbd "C-.") nil)
   (define-key flyspell-mode-map (kbd "C-;") nil)
   :hook ((prog-mode . flyspell-prog-mode)
-         (text-mode . flyspell-mode)))
+         (yaml-mode . flyspell-prog-mode)))
 
 (use-package go-ts-mode
   :defer t

@@ -371,7 +371,7 @@
      ;; sh-mode
      (sh-escaped-newline (:inherit 'font-lock-string-face))
      (sh-quoted-exec     (:foreground bright-purple))
-     (sh-hebright-redoc         (:foreground bright-yellow))
+     (sh-heredoc         (:foreground bright-yellow))
 
      ;; Window dividers
      (window-divider             (:foreground bg4))

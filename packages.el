@@ -128,8 +128,7 @@
 
 (use-package diff-hl
   :ensure t
-  :hook ((prog-mode vc-dir-mode ledger-mode) . diff-hl-mode)
-  :bind ("C-c g" . magit-status)
+  :hook ((prog-mode vc-dir-mode ledger-mode yaml-mode) . diff-hl-mode)
   :config
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
@@ -236,6 +235,7 @@
   (evil-set-initial-state 'prog-mode 'normal)
   (evil-set-initial-state 'text-mode 'normal)
   (evil-set-initial-state 'help-mode 'emacs)
+  (evil-set-initial-state 'grep-mode 'emacs)
   (load-file (concat user-emacs-directory "funs/evil-funs.el"))
   (evil-mode)
   :bind (("C-c c" . evil-ex-nohighlight)
@@ -300,10 +300,6 @@
          ("C-c C-d" . helpful-at-point)
          ("C-h F" . helpful-function)
          ("C-h C" . helpful-command)))
-
-(use-package jinja2-mode
-  :ensure t
-  :mode ("\\.j2\\'" . jinja2-mode))
 
 (use-package js
   :defer t
