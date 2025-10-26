@@ -21,6 +21,9 @@
 
 ;;; Code:
 
+(require 'transient)
+(require 'org)
+
 ;; create the list for font-lock.
 ;; each category of keyword is given a particular face
 (defvar snw-font-lock-keywords)
@@ -71,10 +74,15 @@
             (cons snw--qual-ice-re 'font-lock-type-face)
             (cons snw--unqual-ice-re 'font-lock-type-face)))
 
+(defvar-keymap snw-mode-map
+  :doc "Keymap for snw mode"
+    "C-c C-e" #'snw-transient-expense)
+
 ;;;###autoload
 (define-derived-mode snw-mode text-mode "snw"
   "Major mode for snw budget files."
-  (setq font-lock-defaults '(snw-font-lock-keywords)))
+  (setq font-lock-defaults '(snw-font-lock-keywords))
+  (use-local-map snw-mode-map))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.snw\\'" . snw-mode))
@@ -133,12 +141,6 @@
    (snw--transient-path-infix)]
   ["Execute"
    (snw--transient-expense-suffix)])
-
-(defvar snw-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c C-e") #'snw-transient-expense)
-    map)
-  "Keymap for snw mode")
 
 ;; add the mode to the `features' list
 (provide 'snw-mode)
