@@ -103,7 +103,8 @@
   (define-key flyspell-mode-map (kbd "C-.") nil)
   (define-key flyspell-mode-map (kbd "C-;") nil)
   :hook ((prog-mode . flyspell-prog-mode)
-         (yaml-mode . flyspell-prog-mode)))
+         (yaml-mode . flyspell-prog-mode)
+         (org-mode . flyspell-mode)))
 
 (use-package go-ts-mode
   :defer t
