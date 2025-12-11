@@ -295,6 +295,11 @@
          ("," . er/contract-region)
          ("." . er/expand-region)))
 
+(use-package vc-fossil
+  :ensure t
+  :defer t
+  :init (add-to-list 'vc-handled-backends 'Fossil t))
+
 (use-package flyspell-correct
   :ensure t
   :bind ("C-C e s" . flyspell-correct-wrapper))
