@@ -50,15 +50,15 @@
      (match               (:foreground bright-green))
 
      ;; whitespace-mode
-     (whitespace-empty            (:inherit 'default))
-     (whitespace-hspace           (:inherit 'default))
-     (whitespace-indentation      (:inherit 'default))
-     (whitespace-line             (:inherit 'default))
-     (whitespace-newline          (:inherit 'default))
-     (whitespace-space            (:inherit 'default))
+     (whitespace-empty            (:foreground fg3))
+     (whitespace-hspace           (:foreground fg3))
+     (whitespace-indentation      (:foreground fg3))
+     (whitespace-line             (:foreground fg3))
+     (whitespace-newline          (:foreground fg3))
+     (whitespace-space            (:foreground fg3))
      (whitespace-space-after-tab  (:background bright-red :foreground bg0))
      (whitespace-space-before-tab (:background bright-red :foreground bg0))
-     (whitespace-tab              (:inherit 'default))
+     (whitespace-tab              (:foreground fg3))
      (whitespace-trailing         (:background bright-red :foreground bg0))
 
      ;; RainbowDelimiters
