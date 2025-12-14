@@ -14,11 +14,6 @@
   :init
   (setq css-indent-offset 2))
 
-(use-package display-line-numbers
-  :init
-  (setq-default display-line-numbers-width 4)
-  :hook (prog-mode . display-line-numbers-mode))
-
 (use-package eglot
   :init
   (setq eldoc-echo-area-use-multiline-p nil)
@@ -59,9 +54,6 @@
    use-short-answers t
    vc-follow-symlinks t
    visible-cursor nil
-   window-divider-default-places t
-   window-divider-default-right-width 1
-   window-divider-default-bottom-width 1
    x-underline-at-descent-line t)
 
   (setq-default
@@ -72,7 +64,6 @@
   (menu-bar-mode -1)
   (recentf-mode 1)
   (save-place-mode 1)
-  (window-divider-mode t)
 
   (add-to-list 'same-window-buffer-names "*compilation*")
   (load-file (concat user-emacs-directory "funs/emacs-funs.el"))

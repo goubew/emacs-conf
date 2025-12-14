@@ -376,6 +376,12 @@
   (setq neo-theme 'ascii)
   :commands 'neotree-toggle)
 
+(use-package olivetti
+  :ensure t
+  :init
+  (fringe-mode '(8 . 0))
+  :hook (((text-mode prog-mode conf-mode) . olivetti-mode)))
+
 (use-package orderless
   :ensure t
   :after vertico
@@ -409,17 +415,6 @@
               ("C-k" . vertico-previous)
               ("C-u" . kill-whole-line))
   :hook (after-init . vertico-mode))
-
-(use-package visual-fill-column
-  :ensure t
-  :init
-  (setq-default visual-fill-column-center-text t
-                visual-fill-column-width 80)
-  (load-file (concat user-emacs-directory "funs/visual-fill-column-funs.el"))
-  ;; hooks are appended to run after line number mode for width calculations
-  (add-hook 'visual-line-mode-hook #'my-visual-fill-column-mode t)
-  (add-hook 'text-mode-hook #'my-visual-fill-column-mode t)
-  (add-hook 'prog-mode-hook #'my-visual-fill-column-mode t))
 
 (use-package wgrep
   :ensure t

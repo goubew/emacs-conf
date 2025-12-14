@@ -473,6 +473,8 @@
      (neo-vc-up-to-date-face       (:foreground fg4))
      (neo-vc-user-face             (:slant 'italic :foreground bright-orange))
 
+     (vertical-border (:foreground bg0_s))
+
      )))
 
 (provide 'my-theme-base)
