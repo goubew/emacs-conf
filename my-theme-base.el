@@ -128,8 +128,8 @@
      (diff-hl-delete (:foreground bright-red :background bright-red))
      (diff-hl-insert (:foreground bright-green :background bright-green))
 
-     ;; dibright-red
-     (dibright-red-broken-symlink (:background bright-red :foreground bg0))
+     ;; dired
+     (dired-broken-symlink (:background bright-red :foreground bg0))
 
      ;; eshell
      (eshell-prompt        (:foreground bright-aqua))
