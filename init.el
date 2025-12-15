@@ -59,7 +59,17 @@
   (setq-default
    fill-column 79
    indent-tabs-mode nil
-   tab-width 4)
+   tab-width 4
+   mode-line-format '("%e"
+                      mode-line-front-space
+                      mode-line-mule-info
+                      mode-line-client
+                      mode-line-modified
+                      mode-line-remote
+                      " %b %l:%C "
+                      mode-line-format-right-align
+                      mode-line-misc-info
+                      "%p (" mode-name ") "))
 
   (menu-bar-mode -1)
   (recentf-mode 1)

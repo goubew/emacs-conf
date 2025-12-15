@@ -158,15 +158,6 @@
   :ensure t
   :mode (("Dockerfile\\'" . dockerfile-mode)))
 
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode)
-  :init
-  (column-number-mode 1)
-  (setq inhibit-compacting-font-caches t
-        doom-modeline-icon nil
-        doom-modeline-minor-modes nil))
-
 (use-package dumb-jump
   :ensure t
   :config
