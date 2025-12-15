@@ -380,6 +380,9 @@
   :ensure t
   :init
   (fringe-mode '(8 . 0))
+  :config
+  ;; prevent olivetti from enabling visual-line-mode automatically
+  (setq olivetti-mode-on-hook (remove 'visual-line-mode olivetti-mode-on-hook))
   :hook (((text-mode prog-mode conf-mode) . olivetti-mode)))
 
 (use-package orderless
