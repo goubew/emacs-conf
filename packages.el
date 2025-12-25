@@ -25,7 +25,7 @@
 (use-package autothemer
   :ensure t
   :config
-  (add-hook 'after-init-hook (lambda () (load-theme 'my-gruvbox-light t))))
+  (add-hook 'after-init-hook (lambda () (load-theme 'my-charcoal-light t))))
 
 (use-package ace-window
   :ensure t
