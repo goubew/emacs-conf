@@ -14,7 +14,7 @@
      (variable-pitch (:family nil))
      (variable-pitch-text (:family nil))
 
-     (cursor              (:background fg2))
+     (cursor              (:background fg2 :foreground bg))
      (fringe              (:background bg1))
      (highlight           (:background bg1))
      (hl-line             (:background bg1))
@@ -37,7 +37,7 @@
      (font-lock-number-face        (:foreground fg1))
      (font-lock-variable-name-face (:foreground fg2))
      (font-lock-type-face          (:foreground fg2))
-     (font-lock-warning-face       (:foreground bg :background fg0))
+     (font-lock-warning-face       (:inherit 'error))
 
      ;; Basic faces
      (error               (:underline (:color fg2 :style 'wave)))
@@ -173,7 +173,7 @@
      ;; TODO: Fix magit diff section
      ;; magit
      (magit-blame-highlight
-      (:extend t :foreground bg :background fg))
+      (:extend t :foreground fg2 :background bg2))
      (magit-reflog-other                (:foreground fg1))
      (magit-reflog-remote               (:foreground fg1))
      (magit-reflog-cherry-pick          (:foreground fg1))
@@ -212,18 +212,18 @@
      (magit-diffstat-added              (:foreground fg2))
      (magit-diff-context                (:foreground fg))
      (magit-diff-context-highlight      (:background bg1 :foreground fg))
-     (magit-diff-base                   (:background fg1 :foreground bg))
-     (magit-diff-base-highlight         (:inherit 'default))
+     (magit-diff-base                   (:inherit 'default))
+     (magit-diff-base-highlight         (:background bg1 :foreground fg0))
      (magit-diff-file-heading           (:inherit 'default))
      (magit-diff-removed                (:foreground fg0))
-     (magit-diff-removed-highlight      (:background bg1 :foreground fg0 ))
+     (magit-diff-removed-highlight      (:background bg1 :foreground fg0))
      (magit-diff-added                  (:foreground fg2))
      (magit-diff-added-highlight        (:background bg1 :foreground fg2))
      (magit-diff-hunk-heading           (:background bg2 :foreground fg1))
      (magit-diff-hunk-heading-highlight
       (:background bg2 :foreground fg1 :weight 'bold))
-     (magit-section-heading-selection   (:foreground fg1))
-     (magit-section-heading             (:foreground fg1))
+     (magit-section-heading-selection   (:background bg1 :foreground fg1))
+     (magit-section-heading             (:background bg1 :foreground fg1))
      (magit-section-highlight           (:weight 'bold))
      (magit-dimmed                      (:inherit 'shadow))
 
