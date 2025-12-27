@@ -53,8 +53,9 @@
   (setq circe-network-options
         '(("Libera Chat"
            :nick "wag"
-           :nickserv-password
-           (lambda (server) (read-passwd "Enter the SAML password=>")))))
+           :sasl-username "wag"
+           :sasl-password
+           (lambda (server) (read-passwd "Enter the SASL password=>")))))
   :commands 'circe)
 
 (use-package consult
