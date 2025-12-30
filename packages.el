@@ -374,8 +374,14 @@
   (fringe-mode '(8 . 0))
   :config
   ;; prevent olivetti from enabling visual-line-mode automatically
-  (setq olivetti-mode-on-hook (remove 'visual-line-mode olivetti-mode-on-hook))
-  :hook (((text-mode prog-mode conf-mode) . olivetti-mode)))
+  (remove 'visual-line-mode olivetti-mode-on-hook)
+  (defun my-olivetti-window-hook ()
+    "Enable olivetti based on mode and window configuration"
+    (if (and (derived-mode-p 'text-mode 'prog-mode 'conf-mode)
+             (window-full-width-p (selected-window)))
+        (olivetti-mode 1)
+      (olivetti-mode -1)))
+  (add-hook 'window-configuration-change-hook 'my-olivetti-window-hook))
 
 (use-package orderless
   :ensure t
