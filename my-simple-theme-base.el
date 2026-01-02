@@ -18,8 +18,8 @@
      (fringe              (:background bg1))
      (highlight           (:background bg1))
      (hl-line             (:background bg1))
-     (link                (:foreground fg1 :underline t))
-     (link-visited        (:foreground fg1 :underline t))
+     (link                (:foreground fg :underline t))
+     (link-visited        (:foreground fg :underline t))
      (minibuffer-prompt   (:foreground fg0))
      (mode-line           (:background fg :foreground bg))
      (mode-line-inactive  (:background bg1))
@@ -37,12 +37,15 @@
      (font-lock-number-face        (:foreground fg1))
      (font-lock-variable-name-face (:foreground fg2))
      (font-lock-type-face          (:foreground fg2))
-     (font-lock-warning-face       (:inherit 'error))
+     (font-lock-warning-face       (:underline (:color fg0 :style 'line)))
 
      ;; Basic faces
-     (error               (:underline (:color fg2 :style 'wave)))
+     (blink-matching-paren-offscreen (:foreground fg2))
+     (bookmark-face (:foreground fg))
+     (confusingly-reordered (:inherit 'warning))
+     (error               (:underline (:color fg2 :style 'line)))
      (success             (:inherit 'default))
-     (warning             (:underline (:color fg1 :style 'wave)))
+     (warning             (:underline (:color fg :style 'line)))
      (trailing-whitespace (:background fg :foreground bg))
      (escape-glyph        (:foreground fg1))
      (header-line         (:inherit 'mode-line))
@@ -74,15 +77,15 @@
      (rainbow-delimiters-depth-10-face  (:foreground fg2))
      (rainbow-delimiters-depth-11-face  (:foreground fg0))
      (rainbow-delimiters-depth-12-face  (:foreground fg2))
-     (rainbow-delimiters-unmatched-face (:underline (:color fg1 :style 'wave)))
+     (rainbow-delimiters-unmatched-face (:underline (:color fg1 :style 'line)))
 
      ;; line numbers
      (line-number              (:foreground fg0))
      (line-number-current-line (:foreground fg0 :bold 't))
 
      ;; show-paren
-     (show-paren-match    (:underline t))
-     (show-paren-mismatch (:underline (:color fg2 :style 'wave)))
+     (show-paren-match    (:underline (:color fg0 :style 'line)))
+     (show-paren-mismatch (:underline (:color fg2 :style 'line)))
 
      ;; ace-window
      (aw-key-face                     (:inherit 'font-lock-builtin-face))
@@ -109,36 +112,74 @@
      (circe-server-face             (:foreground fg1))
      (circe-prompt-face             (:weight 'bold))
 
+     ;; consult
+     (consult-async-running (:foreground fg1))
+     (consult-separator (:foreground bg))
+
+     ;; completion-preview
+     (completion-preview-common (:foreground fg0))
+     (completion-preview-exact (:foreground fg0 (:underline (:color fg0 :style 'line))))
+
+     ;; custom
+     (custom-button
+      (:box (:line-width 2 :style 'released-button) :foreground fg2 :background bg))
+     (custom-button-mouse
+      (:box (:line-width 2 :style 'released-button) :foreground fg2 :background bg))
+     (custom-button-pressed
+      (:box (:line-width 2 :style 'pressed-button) :foreground fg2 :background bg))
+     (custom-button-pressed-unraised (:foreground fg2 :inherit 'custom-button-unraised))
+     (custom-button-unraised (:inherit 'underline))
+     (custom-changed (:foreground fg2))
+     (custom-comment (:inherit 'default))
+     (custom-comment-tag (:foreground fg2))
+     (custom-documentation nil)
+     (custom-face-tag (:inherit 'custom-variable-tag))
+     (custom-group-subtitle (:weight 'bold))
+     (custom-group-tag (:weight 'bold :foreground fg2))
+     (custom-group-tag-1 (:weight 'bold :foreground fg))
+     (custom-invalid (:inherit 'underline ))
+     (custom-link (:inherit 'link))
+     (custom-modified (:foreground fg :background bg1))
+     (custom-rogue (:foreground fg2 :background bg1))
+     (custom-saved (:underline t))
+     (custom-set (:foreground fg2 :background bg))
+     (custom-state (:foreground fg0))
+     (custom-themed (:foreground fg :background bg1))
+     (custom-variable-button (:weight 'bold :underline t))
+     (custom-variable-obsolete (:foreground fg2))
+     (custom-variable-tag (:weight 'bold :foreground fg2))
+     (custom-visibility (:inherit 'link))
+
      ;; isearch
      (isearch        (:background bg2))
      (lazy-highlight (:background bg1))
-     (isearch-fail   (:underline (:color fg2 :style 'wave)))
+     (isearch-fail   (:underline (:color fg2 :style 'line)))
 
      ;; highlight indent guides
      (highlight-indent-guides-character-face (:foreground fg0))
 
      ;; flyspell
-     (flyspell-duplicate (:underline (:color fg2 :style 'wave)))
-     (flyspell-incorrect (:underline (:color fg1 :style 'wave)))
+     (flyspell-duplicate (:underline (:color fg0 :style 'line)))
+     (flyspell-incorrect (:underline (:color fg0 :style 'line)))
 
      ;; diff-hl
-     (diff-hl-change (:foreground fg2 :background fg2))
+     (diff-hl-change (:foreground fg :background fg))
      (diff-hl-delete (:foreground fg0 :background fg0))
      (diff-hl-insert (:foreground fg2 :background fg2))
 
      ;; dired
-     (dired-broken-symlink (:underline (:color fg2 :style 'wave)))
+     (dired-broken-symlink (:underline (:color fg2 :style 'line)))
 
      ;; eshell
      (eshell-prompt        (:weight 'bold))
      (eshell-ls-archive    (:inherit 'default))
      (eshell-ls-backup     (:inherit 'default))
-     (eshell-ls-clutter    (:underline (:color fg2 :style 'wave)))
+     (eshell-ls-clutter    (:underline (:color fg2 :style 'line)))
      (eshell-ls-directory  (:foreground fg1))
      (eshell-ls-executable (:underline t))
-     (eshell-ls-missing    (:underline (:color fg2 :style 'wave)))
+     (eshell-ls-missing    (:underline (:color fg2 :style 'line)))
      (eshell-ls-product    (:inherit 'default))
-     (eshell-ls-readonly   (:underline (:color fg2 :style 'wave)))
+     (eshell-ls-readonly   (:underline (:color fg2 :style 'line)))
      (eshell-ls-special    (:inherit 'default))
      (eshell-ls-symlink    (:foreground fg0))
      (eshell-ls-unreadable (:foreground fg0))
@@ -152,11 +193,11 @@
      (tab-bar-tab-group-inactive (:inherit 'tab-bar))
 
      ;; wgrep
-     (wgrep-reject-face (:underline (:color fg2 :style 'wave)))
+     (wgrep-reject-face (:underline (:color fg2 :style 'line)))
      (wgrep-face        (:inherit 'default))
      (wgrep-done-face   (:inherit 'default))
      (wgrep-file-face   (:inherit 'default))
-     (wgrep-delete-face (:underline (:color fg2 :style 'wave)))
+     (wgrep-delete-face (:underline (:color fg2 :style 'line)))
 
      ;; hydra
      (hydra-face-bright-red      (:foreground fg2))
@@ -222,8 +263,8 @@
      (magit-diff-hunk-heading           (:background bg2 :foreground fg1))
      (magit-diff-hunk-heading-highlight
       (:background bg2 :foreground fg1 :weight 'bold))
-     (magit-section-heading-selection   (:background bg1 :foreground fg1))
-     (magit-section-heading             (:background bg1 :foreground fg1))
+     (magit-section-heading-selection   (:background bg :foreground fg1))
+     (magit-section-heading             (:background bg :foreground fg1))
      (magit-section-highlight           (:weight 'bold))
      (magit-dimmed                      (:inherit 'shadow))
 
@@ -456,6 +497,11 @@
      ;; vertical border
      (vertical-border (:foreground bg3))
 
+     ;; compilation-mode
+     (compilation-mode-line-exit (:foreground fg))
+     (compilation-mode-line-fail (:foreground fg2))
+
      )))
 
 (provide 'my-simple-theme-base)
+;;; my-simple-theme-base.el ends here
