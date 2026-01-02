@@ -43,6 +43,8 @@
      (blink-matching-paren-offscreen (:foreground fg2))
      (bookmark-face (:foreground fg))
      (confusingly-reordered (:inherit 'warning))
+     (edmacro-label (:foreground fg1))
+     (elisp-shorthand-font-lock-face (:foreground fg1))
      (error               (:underline (:color fg2 :style 'line)))
      (success             (:inherit 'default))
      (warning             (:underline (:color fg :style 'line)))
@@ -115,6 +117,7 @@
      ;; consult
      (consult-async-running (:foreground fg1))
      (consult-separator (:foreground bg))
+     (consult-narrow-indicator (:foreground fg1))
 
      ;; completion-preview
      (completion-preview-common (:foreground fg0))
@@ -162,6 +165,25 @@
      (flyspell-duplicate (:underline (:color fg0 :style 'line)))
      (flyspell-incorrect (:underline (:color fg0 :style 'line)))
 
+     ;; diff
+     (diff-added (:foreground fg2))
+     (diff-changed (:foreground fg1))
+     (diff-changed-unspecified (:foreground fg1))
+     (diff-context (:foreground fg))
+     (diff-error (:inherit 'error))
+     (diff-file-header (:foreground fg1))
+     (diff-function (:foreground fg))
+     (diff-header (:foreground fg1 :weight 'bold))
+     (diff-hunk-header (:background bg2 :inherit 'diff-header))
+     (diff-index (:foreground fg))
+     (diff-indicator-added (:inherit 'diff-added))
+     (diff-indicator-changed (:inherit 'diff-changed))
+     (diff-indicator-removed (:inherit 'diff-removed))
+     (diff-refine-added    (:background bg2 :foreground fg2))
+     (diff-refine-changed  (:background bg2 :foreground fg))
+     (diff-refine-removed  (:background bg2 :foreground fg0))
+     (diff-removed (:foreground fg0))
+
      ;; diff-hl
      (diff-hl-change (:foreground fg :background fg))
      (diff-hl-delete (:foreground fg0 :background fg0))
@@ -183,6 +205,37 @@
      (eshell-ls-special    (:inherit 'default))
      (eshell-ls-symlink    (:foreground fg0))
      (eshell-ls-unreadable (:foreground fg0))
+
+     ;; Go
+     (go-coverage-0 (:foreground fg0))
+     (go-coverage-1 (:foreground fg0))
+     (go-coverage-2 (:foreground fg0))
+     (go-coverage-3 (:foreground fg))
+     (go-coverage-4 (:foreground fg))
+     (go-coverage-5 (:foreground fg))
+     (go-coverage-6 (:foreground fg1))
+     (go-coverage-7 (:foreground fg1))
+     (go-coverage-8 (:foreground fg1))
+     (go-coverage-9 (:foreground fg2))
+     (go-coverage-10 (:foreground fg2))
+     (go-coverage-covered (:foreground fg2))
+     (go-coverage-untracked (:foreground fg))
+
+     ;; help
+     (help-for-help-header (:foreground fg2))
+     (help-key-binding (:box (:color fg2) :foreground fg2 :background bg1))
+
+     ;; icon
+     (icon-button (:box (:color fg2) :foreground fg2 :background bg2))
+
+     ;; info
+     (info-header-node (:foreground fg2))
+     (info-menu-star (:foreground fg2))
+     (info-node (:foreground fg2))
+
+     ;; isearch
+     (isearch-group-1 (:background bg2 :foreground fg2))
+     (isearch-group-2 (:background bg2 :foreground fg2))
 
      ;; tab bar
      (tab-bar                    (:background bg1 :foreground fg))
@@ -428,11 +481,6 @@
       (:weight 'bold :underline t :inherit 'imenu-list-entry-face-2))
      (imenu-list-entry-subalist-face-3
       (:weight 'bold :underline t :inherit 'imenu-list-entry-face-3))
-
-     ;; diff-refine
-     (diff-refine-added    (:background bg2 :foreground fg2))
-     (diff-refine-changed  (:background bg2 :foreground fg))
-     (diff-refine-removed  (:background bg2 :foreground fg0))
 
      ;; markdown
      (markdown-pre-face (:inherit 'shadow))
