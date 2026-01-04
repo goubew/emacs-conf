@@ -40,19 +40,23 @@
      (font-lock-warning-face       (:underline (:color fg0 :style 'line)))
 
      ;; Basic faces
-     (blink-matching-paren-offscreen (:foreground fg2))
-     (bookmark-face (:foreground fg))
-     (confusingly-reordered (:inherit 'warning))
-     (edmacro-label (:foreground fg1))
-     (elisp-shorthand-font-lock-face (:foreground fg1))
-     (error               (:underline (:color fg2 :style 'line)))
-     (success             (:inherit 'default))
-     (warning             (:underline (:color fg :style 'line)))
-     (trailing-whitespace (:background fg :foreground bg))
-     (escape-glyph        (:foreground fg1))
-     (header-line         (:inherit 'mode-line))
-     (homoglyph           (:foreground fg1))
-     (match               (:foreground fg1))
+     (blink-matching-paren-offscreen  (:foreground fg2))
+     (bookmark-face                   (:foreground fg))
+     (confusingly-reordered           (:inherit 'warning))
+     (edmacro-label                   (:foreground fg1))
+     (elisp-shorthand-font-lock-face  (:foreground fg1))
+     (error                           (:underline (:color fg2 :style 'line)))
+     (separator-line                  (:height 0.1 :background bg1))
+     (success                         (:inherit 'default))
+     (warning                         (:underline (:color fg :style 'line)))
+     (tool-bar                        (:inherit 'tab-bar))
+     (tooltip                         (:inherit 'hl-line))
+     (trailing-whitespace             (:background fg :foreground bg))
+     (escape-glyph                    (:foreground fg1))
+     (header-line                     (:inherit 'mode-line))
+     (homoglyph                       (:foreground fg1))
+     (match                           (:foreground fg1))
+     (vertical-border                 (:foreground bg1))
 
      ;; whitespace-mode
      (whitespace-empty            (:inherit 'shadow))
@@ -67,6 +71,7 @@
      (whitespace-trailing         (:inherit 'shadow))
 
      ;; RainbowDelimiters
+     (rainbow-delimiters-base-error-face (:inherit 'error))
      (rainbow-delimiters-depth-1-face   (:foreground fg0))
      (rainbow-delimiters-depth-2-face   (:foreground fg2))
      (rainbow-delimiters-depth-3-face   (:foreground fg0))
@@ -237,6 +242,29 @@
      (isearch-group-1 (:background bg2 :foreground fg2))
      (isearch-group-2 (:background bg2 :foreground fg2))
 
+     ;; line-number
+     (line-number-major-tick (:background bg1))
+     (line-number-minor-tick (:foreground bg2))
+
+     ;; log-view
+     (log-view-file (:foreground fg1))
+     (log-view-message (:foreground fg1))
+
+     ;; nobreak
+     (nobreak-hyphen (:inherit 'error))
+
+     ;; popup
+     (popup-face (:inherit 'highlight))
+     (popup-isearch-match (:inherit 'region))
+     (popup-menu-face (:inherit 'highlight))
+     (popup-menu-mouse-face (:inherit 'highlight))
+     (popup-menu-selection-face (:inherit 'region))
+     (popup-menu-summary-face (:inherit 'highlight))
+     (popup-scroll-bar-background-face (:inherit 'region))
+     (popup-scroll-bar-foreground-face (:inherit 'region))
+     (popup-summary-face (:inherit 'highlight))
+     (popup-tip-face (:inherit 'highlight))
+
      ;; tab bar
      (tab-bar                    (:background bg1 :foreground fg))
      (tab-bar-tab                (:weight 'bold :inherit 'tab-bar))
@@ -244,6 +272,25 @@
      (tab-bar-tab-ungrouped      (:inherit 'tab-bar))
      (tab-bar-tab-group-current  (:inherit 'tab-bar-tab))
      (tab-bar-tab-group-inactive (:inherit 'tab-bar))
+
+     ;; tab-line
+     (tab-line (:inherit 'tab-bar))
+     (tab-line-close-highlight (:inherit 'error))
+     (tab-line-highlight (:inherit 'tab-bar-tab))
+     (tab-line-tab-current (:foreground fg2 :inherit 'tab-line-tab))
+     (tab-line-tab-inactive (:inherit 'tab-line-tab))
+     (tab-line-tab-inactive-alternate (:inherit 'tab-line-tab))
+
+     ;; tty-menu
+     (tty-menu-disabled-face (:inherit 'font-lock-comment-face))
+     (tty-menu-enabled-face (:background bg1 :foreground fg))
+     (tty-menu-selected-face (:background bg1 :foreground fg2))
+
+     ;; widget
+     (widget-button-pressed (:inherit 'error))
+     (widget-documentation (:foreground fg2))
+     (widget-field (:background bg1 :foreground fg))
+     (widget-single-line-field (:background bg1 :foreground fg))
 
      ;; wgrep
      (wgrep-reject-face (:underline (:color fg2 :style 'line)))
@@ -541,9 +588,6 @@
      (neo-vc-unregistered-face     nil)
      (neo-vc-up-to-date-face       (:foreground fg2))
      (neo-vc-user-face             (:slant 'italic :foreground fg2))
-
-     ;; vertical border
-     (vertical-border (:foreground bg3))
 
      ;; compilation-mode
      (compilation-mode-line-exit (:foreground fg))

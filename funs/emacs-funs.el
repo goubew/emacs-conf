@@ -37,7 +37,7 @@
   "Sets the font"
   (interactive)
   (if (not (null (x-list-fonts "Iosevka")))
-      (set-frame-font "Iosevka 14" nil t)
+      (set-frame-font "Iosevka 30" nil t)
     (if (eq system-type 'darwin)
         (set-frame-font "SF Mono Light 19" nil t)
       (progn
