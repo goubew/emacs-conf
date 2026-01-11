@@ -281,6 +281,15 @@
      (tab-line-tab-inactive (:inherit 'tab-line-tab))
      (tab-line-tab-inactive-alternate (:inherit 'tab-line-tab))
 
+     ;; transient
+     (transient-disabled-suffix (:underline (:color fg2 :style 'line)))
+     (transient-enabled-suffix (:underline (:color fg :style 'line)))
+     (transient-higher-level (:box (:color fg)))
+     (transient-key-recurse (:foreground fg1))
+     (transient-key-stack (:inherit 'default))
+     (transient-mismatched-key (:box (:color fg0)))
+     (transient-nonstandard-key (:box (:color bg1)))
+
      ;; tty-menu
      (tty-menu-disabled-face (:inherit 'font-lock-comment-face))
      (tty-menu-enabled-face (:background bg1 :foreground fg))
