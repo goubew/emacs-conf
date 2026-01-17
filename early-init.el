@@ -10,6 +10,7 @@
 (when enable-third-party-packages
   ;; Add non-packages files to the load path
   (add-to-list 'load-path (concat user-emacs-directory "packages/"))
+  (add-to-list 'load-path (concat user-emacs-directory "lilypond/"))
 
   ;; Add MELPA archive
   (with-eval-after-load 'package

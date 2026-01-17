@@ -22,6 +22,7 @@ mkdir -p "$HOME/org"
 safe_link "${SCRIPT_DIR}/init.el" "$HOME/.emacs.d/init.el"
 safe_link "${SCRIPT_DIR}/early-init.el" "$HOME/.emacs.d/early-init.el"
 safe_link "${SCRIPT_DIR}/packages.el" "$HOME/.emacs.d/packages.el"
+safe_link "${SCRIPT_DIR}/lilypond" "$HOME/.emacs.d/lilypond"
 safe_link "${SCRIPT_DIR}/packages" "$HOME/.emacs.d/packages"
 safe_link "${SCRIPT_DIR}/funs" "$HOME/.emacs.d/funs"
 safe_link "${SCRIPT_DIR}/my-charcoal-light-theme.el" \

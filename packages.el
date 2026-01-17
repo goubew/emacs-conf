@@ -341,6 +341,12 @@
   (load-file (concat user-emacs-directory "funs/ledger-funs.el"))
   (add-hook 'ledger-mode-hook 'my-ledger-mode-settings))
 
+(use-package lilypond-mode
+  :init
+  (setq lilypond-pdf-command "firefox")
+  (setq lilypond-fancy-comments nil)
+  :mode ("\\.ly\\'" . lilypond-mode))
+
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)
