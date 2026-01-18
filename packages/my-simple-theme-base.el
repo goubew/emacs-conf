@@ -102,6 +102,15 @@
      (aw-leading-char-face
       (:background bg1 :foreground fg2))
 
+     ;; anzu
+     (anzu-replace-to (:foreground fg0))
+     (anzu-match-3 (:foreground fg2 :background bg1))
+     (anzu-match-2 (:foreground fg2 :background bg1))
+     (anzu-match-1 (:foreground fg2 :background bg1))
+     (anzu-replace-highlight (:inherit 'query-replace))
+     (anzu-mode-line-no-match (:inherit 'anzu-mode-line))
+     (anzu-mode-line (:weight 'bold :foreground bg1))
+
      ;; avy
      (avy-background-face (:foreground bg))
      (avy-lead-face       (:background bg1 :foreground fg2))
