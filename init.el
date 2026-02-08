@@ -103,6 +103,7 @@
 
   :bind (("C-c s" . save-buffer)
          ("C-c =" . indent-region)
+         ("C-c u" . universal-argument)
          :map minibuffer-local-map
          ("C-w" . backward-kill-word)))
 
