@@ -50,6 +50,8 @@
    scroll-margin 2
    show-trailing-whitespace t
    split-width-threshold 200
+   switch-to-buffer-obey-display-actions t
+   switch-to-buffer-in-dedicated-window 'pop
    tab-always-indent 'complete
    use-short-answers t
    vc-follow-symlinks t
@@ -70,6 +72,16 @@
                       mode-line-format-right-align
                       mode-line-misc-info
                       "%p (" mode-name ") "))
+
+  (setq display-buffer-alist
+        '(
+          ((major-mode . grep-mode)
+           (display-buffer-in-side-window)
+           (side . bottom)
+           (window-height . 0.25))
+          (".*"
+           (display-buffer-same-window
+            display-buffer-use-least-recent-window))))
 
   (menu-bar-mode -1)
   (recentf-mode 1)
