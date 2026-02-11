@@ -12,11 +12,6 @@
   :ensure t
   :hook (ansible-mode . ansible-doc-mode))
 
-(use-package anzu
-  :ensure t
-  :after evil
-  :config (global-anzu-mode))
-
 (use-package app-launcher
   :if (daemonp)
   :config

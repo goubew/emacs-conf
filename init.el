@@ -39,6 +39,7 @@
    frame-title-format "Emacs"
    help-window-select t
    inhibit-startup-screen t
+   isearch-lazy-count t
    ispell-program-name "aspell"
    mac-command-modifier 'control
    overflow-newline-into-fringe nil
