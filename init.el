@@ -79,6 +79,10 @@
            (display-buffer-in-side-window)
            (side . bottom)
            (window-height . 0.25))
+          ((major-mode . neotree-mode)
+           (display-buffer-in-side-window)
+           (side . left)
+           (window-width . 30))
           (".*"
            (display-buffer-same-window
             display-buffer-use-least-recent-window))))
