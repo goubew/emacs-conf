@@ -121,8 +121,8 @@
         xref-show-definitions-function #'consult-xref)
   :config
   (consult-customize
-   consult--source-bookmark consult--source-file-register
-   consult--source-recent-file consult--source-project-recent-file
+   consult-source-bookmark consult-source-file-register
+   consult-source-recent-file consult-source-project-recent-file
    :preview-key "M-.")
   (setq completion-in-region-function #'consult-completion-in-region))
 
