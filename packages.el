@@ -37,10 +37,14 @@
 
 (use-package cape
   :ensure t
-  :after consult
+  :bind ("C-c c" . cape-prefix-map)
   :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (dolist (capf '(elisp-completion-at-point
+                  comint-completion-at-point
+                  eglot-completion-at-point))
+    (advice-add capf :around #'cape-wrap-nonexclusive)))
 
 (use-package circe
   :ensure t
@@ -247,9 +251,8 @@
   (evil-set-initial-state 'grep-mode 'emacs)
   (load-file (concat user-emacs-directory "funs/evil-funs.el"))
   (evil-mode)
-  :bind (("C-c c" . evil-ex-nohighlight)
-         :map evil-normal-state-map
-         ("SPC" . my-emulate-ctrl-c)))
+  :bind (:map evil-normal-state-map
+              ("SPC" . my-emulate-ctrl-c)))
 
 (use-package evil-anzu
   :ensure t
