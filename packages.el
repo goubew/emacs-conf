@@ -32,8 +32,7 @@
   :ensure t
   :init
   (setq avy-single-candidate-jump nil)
-  :bind (("C-c j" . avy-goto-char-timer)
-         ("M-n" . avy-goto-char-timer)))
+  :bind ("C-j" . avy-goto-char-timer))
 
 (use-package cape
   :ensure t
@@ -434,8 +433,6 @@
 
 (use-package yaml-mode
   :ensure t
-  :init
-  (add-hook 'yaml-mode-hook (lambda() (display-line-numbers-mode 1)))
   :mode ("\\.ya?ml\\'" . yaml-mode))
 
 (use-package yasnippet
