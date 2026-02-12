@@ -120,8 +120,8 @@
 (use-package flyspell
   :config
   ;; Unmask the embark key bindings
-  (define-key flyspell-mode-map (kbd "C-.") nil)
-  (define-key flyspell-mode-map (kbd "C-;") nil)
+  (dolist (key '("C-." "C-;" "C-M-i"))
+    (define-key flyspell-mode-map (kbd key) nil))
   :hook ((prog-mode . flyspell-prog-mode)
          (yaml-mode . flyspell-prog-mode)
          (org-mode . flyspell-mode)))
