@@ -37,7 +37,7 @@
      (font-lock-number-face        (:foreground fg1))
      (font-lock-variable-name-face (:foreground fg2))
      (font-lock-type-face          (:foreground fg2))
-     (font-lock-warning-face       (:underline (:color fg0 :style 'line)))
+     (font-lock-warning-face       (:underline (:color yellow :style 'line)))
 
      ;; Basic faces
      (blink-matching-paren-offscreen  (:foreground fg2))
@@ -45,13 +45,13 @@
      (confusingly-reordered           (:inherit 'warning))
      (edmacro-label                   (:foreground fg1))
      (elisp-shorthand-font-lock-face  (:foreground fg1))
-     (error                           (:underline (:color fg2 :style 'line)))
+     (error                           (:underline (:color red :style 'line)))
      (separator-line                  (:height 0.1 :background bg1))
      (success                         (:inherit 'default))
-     (warning                         (:underline (:color fg :style 'line)))
+     (warning                         (:underline (:color yellow :style 'line)))
      (tool-bar                        (:inherit 'tab-bar))
      (tooltip                         (:inherit 'hl-line))
-     (trailing-whitespace             (:background fg :foreground bg))
+     (trailing-whitespace             (:underline (:color red :style 'line)))
      (escape-glyph                    (:foreground fg1))
      (header-line                     (:inherit 'mode-line))
      (homoglyph                       (:foreground fg1))
@@ -84,15 +84,15 @@
      (rainbow-delimiters-depth-10-face  (:foreground fg2))
      (rainbow-delimiters-depth-11-face  (:foreground fg0))
      (rainbow-delimiters-depth-12-face  (:foreground fg2))
-     (rainbow-delimiters-unmatched-face (:underline (:color fg1 :style 'line)))
+     (rainbow-delimiters-unmatched-face (:inherit 'error))
 
      ;; line numbers
-     (line-number              (:foreground fg0))
-     (line-number-current-line (:foreground fg0 :bold 't))
+     (line-number              (:foreground fg0 :background bg1))
+     (line-number-current-line (:inherit 'line-number :bold 't))
 
      ;; show-paren
      (show-paren-match    (:underline (:color fg0 :style 'line)))
-     (show-paren-mismatch (:underline (:color fg2 :style 'line)))
+     (show-paren-mismatch (:underline (:color red :style 'line)))
 
      ;; ace-window
      (aw-key-face                     (:inherit 'font-lock-builtin-face))
@@ -102,21 +102,12 @@
      (aw-leading-char-face
       (:background bg1 :foreground fg2))
 
-     ;; anzu
-     (anzu-replace-to (:foreground fg0))
-     (anzu-match-3 (:foreground fg2 :background bg1))
-     (anzu-match-2 (:foreground fg2 :background bg1))
-     (anzu-match-1 (:foreground fg2 :background bg1))
-     (anzu-replace-highlight (:inherit 'query-replace))
-     (anzu-mode-line-no-match (:inherit 'anzu-mode-line))
-     (anzu-mode-line (:weight 'bold :foreground bg1))
-
      ;; avy
      (avy-background-face (:foreground bg))
-     (avy-lead-face       (:background bg1 :foreground fg2))
-     (avy-lead-face-0     (:background bg1 :foreground fg1))
-     (avy-lead-face-1     (:background bg1 :foreground fg))
-     (avy-lead-face-2     (:background bg1 :foreground fg0))
+     (avy-lead-face       (:background aqua :foreground bg))
+     (avy-lead-face-0     (:background blue :foreground bg))
+     (avy-lead-face-1     (:background purple :foreground bg))
+     (avy-lead-face-2     (:background green :foreground bg))
 
      ;; circe
      (circe-fool-face               (:foreground fg0))
