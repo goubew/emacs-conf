@@ -24,7 +24,7 @@
      (mode-line           (:background fg :foreground bg))
      (mode-line-inactive  (:background bg1))
      (region              (:background bg2))
-     (secondary-selection (:background bg2))
+     (secondary-selection (:background bg1))
      (shadow              (:foreground fg0))
 
      ;; Built in syntax bad
@@ -559,8 +559,14 @@
      (meow-cheatsheet-highlight
       (:foreground fg0 :inherit 'meow-cheatsheet-command))
      (meow-cheatsheet-command (:inherit 'default))
-     (meow-search-indicator (:foreground fg2))
-     (meow-kmacro-cursor (:underline t))
+     (meow-search-indicator (:foreground fg0))
+     ;; (cursor              (:background fg2 :foreground bg))
+     (meow-beacon-cursor (:background red :foreground bg))
+     (meow-kmacro-cursor (:background orange :foreground bg))
+     (meow-insert-cursor (:background fg2 :foreground bg))
+     (meow-keypad-cursor (:background yellow :foreground bg))
+     (meow-motion-cursor (:background fg2 :foreground bg))
+     (meow-normal-cursor (:background yellow :foreground bg))
      (meow-keypad-cannot-display (:height 0.7 :foreground fg0))
      (meow-position-highlight-number (:background fg2 :foreground bg1))
      (meow-position-highlight-number-3

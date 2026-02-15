@@ -210,79 +210,11 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-(use-package evil
-  :ensure t
-  :defer t
-  :init
-  (setq
-   evil-default-state 'emacs
-   evil-disable-insert-state-bindings t
-   evil-insert-state-message nil
-   evil-normal-state-message nil
-   evil-motion-state-message nil
-   evil-visual-state-message nil
-   evil-replace-state-message nil
-   evil-operator-state-message nil
-   evil-respect-visual-line-mode t
-   evil-search-module 'evil-search
-   evil-ex-search-persistent-highlight nil
-   evil-symbol-word-search t
-   evil-shift-width 2
-   evil-undo-system 'undo-redo
-   evil-want-C-d-scroll t
-   evil-want-C-i-jump t
-   evil-want-C-u-delete t
-   evil-want-C-u-scroll t
-   evil-want-C-w-delete t
-   evil-want-keybinding nil
-   evil-emacs-state-tag "EMACS"
-   evil-insert-state-tag "INSERT"
-   evil-motion-state-tag "MOTION"
-   evil-normal-state-tag "NORMAL"
-   evil-visual-state-tag "VISUAL"
-   evil-replace-state-tag "REPLACE"
-   evil-operator-state-tag "OPERATOR")
-  :config
-  (evil-set-initial-state 'prog-mode 'normal)
-  (evil-set-initial-state 'text-mode 'normal)
-  (evil-set-initial-state 'conf-mode 'normal)
-  (evil-set-initial-state 'help-mode 'emacs)
-  (evil-set-initial-state 'grep-mode 'emacs)
-  (load-file (concat user-emacs-directory "funs/evil-funs.el"))
-  (evil-mode)
-  :bind (:map evil-normal-state-map
-              ("SPC" . my-emulate-ctrl-c)))
-
-(use-package evil-anzu
-  :ensure t
-  :after (anzu evil))
-
-(use-package evil-numbers
-  :ensure t
-  :after evil
-  :config
-  ;; Avoid using C-a C-x to keep the default C-x bindings
-  (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
-  (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
-
-(use-package evil-surround
-  :ensure t
-  :after evil
-  :config
-  (global-evil-surround-mode))
-
 (use-package exec-path-from-shell
   :if (eq system-type 'darwin)
   :ensure t
   :config
   (exec-path-from-shell-initialize))
-
-(use-package expand-region
-  :ensure t
-  :after evil
-  :bind (:map evil-visual-state-map
-         ("," . er/contract-region)
-         ("." . er/expand-region)))
 
 (use-package vc-fossil
   :ensure t
@@ -324,10 +256,10 @@
 
 (use-package key-chord
   :ensure t
-  :after evil
+  :after meow
   :config
   (key-chord-mode 1)
-  (key-chord-define evil-insert-state-map "fd" 'evil-normal-state))
+  (key-chord-define meow-insert-state-keymap "fd" 'meow-insert-exit))
 
 (use-package ledger-mode
   :ensure t
@@ -364,6 +296,21 @@
 (use-package markdown-mode
   :ensure t
   :mode ("\\.md\\'" . gfm-mode))
+
+(use-package meow
+  :ensure t
+  :init
+  (load-file (concat user-emacs-directory "funs/meow-funs.el"))
+  (setq
+   meow-keypad-self-insert-undefined nil
+   meow-use-clipboard t
+   meow-cursor-type-insert 'box)
+  :config
+  (dolist (entry '((helpful-mode . motion)
+                   (help-mode . motion)))
+    (push entry meow-mode-state-list))
+  (meow-setup)
+  (meow-global-mode 1))
 
 (use-package neotree
   :ensure t

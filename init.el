@@ -84,7 +84,8 @@
             (major-mode . conf-mode)
             (major-mode . prog-mode)
             (major-mode . text-mode)
-            (major-mode . help-mode))
+            (major-mode . help-mode)
+            (major-mode . helpful-mode))
            (display-buffer-same-window
             display-buffer-use-least-recent-window))))
 
