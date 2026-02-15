@@ -19,15 +19,11 @@ mkdir -p "$HOME/.emacs.d/funs"
 mkdir -p "$HOME/.saves"
 mkdir -p "$HOME/org"
 
-safe_link "${SCRIPT_DIR}/init.el" "$HOME/.emacs.d/init.el"
-safe_link "${SCRIPT_DIR}/early-init.el" "$HOME/.emacs.d/early-init.el"
-safe_link "${SCRIPT_DIR}/packages.el" "$HOME/.emacs.d/packages.el"
+for file in *.el; do
+  file_basename="$(basename $file)"
+  safe_link "${SCRIPT_DIR}/${file}" "$HOME/.emacs.d/${file_basename}"
+done
+
 safe_link "${SCRIPT_DIR}/lilypond" "$HOME/.emacs.d/lilypond"
 safe_link "${SCRIPT_DIR}/packages" "$HOME/.emacs.d/packages"
 safe_link "${SCRIPT_DIR}/funs" "$HOME/.emacs.d/funs"
-safe_link "${SCRIPT_DIR}/my-charcoal-light-theme.el" \
-          "$HOME/.emacs.d/my-charcoal-light-theme.el"
-safe_link "${SCRIPT_DIR}/my-gruvbox-light-theme.el" \
-          "$HOME/.emacs.d/my-gruvbox-light-theme.el"
-safe_link "${SCRIPT_DIR}/my-gruvbox-dark-theme.el" \
-          "$HOME/.emacs.d/my-gruvbox-dark-theme.el"
