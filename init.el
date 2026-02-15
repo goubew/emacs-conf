@@ -80,11 +80,11 @@
            (display-buffer-in-side-window)
            (side . bottom)
            (window-height . 0.25))
-          ((major-mode . neotree-mode)
-           (display-buffer-in-side-window)
-           (side . left)
-           (window-width . 30))
-          (".*"
+          ((or
+            (major-mode . conf-mode)
+            (major-mode . prog-mode)
+            (major-mode . text-mode)
+            (major-mode . help-mode))
            (display-buffer-same-window
             display-buffer-use-least-recent-window))))
 
