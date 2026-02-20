@@ -155,7 +155,10 @@
    org-src-window-setup t)
   :config
   (load-file (concat user-emacs-directory "funs/org-funs.el"))
-  :hook (org-mode . visual-line-mode))
+  (define-key org-mode-map (kbd "C-j") nil)
+  (add-hook 'org-mode-hook (lambda ()
+                             (electric-indent-mode -1)
+                             (visual-line-mode))))
 
 (use-package ox-ascii
   :defer t
