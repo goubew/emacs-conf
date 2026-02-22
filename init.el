@@ -72,7 +72,8 @@
                       " %b %l:%C "
                       mode-line-format-right-align
                       mode-line-misc-info
-                      "%p (" mode-name ") "))
+                      flymake-mode-line-counters
+                      " %p (" mode-name ") "))
 
   (setq display-buffer-alist
         '(

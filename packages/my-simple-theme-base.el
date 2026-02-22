@@ -166,6 +166,11 @@
      ;; highlight indent guides
      (highlight-indent-guides-character-face (:foreground fg0))
 
+     ;; flymake
+     (flymake-error (:inherit 'error))
+     (flymake-warning (:inherit 'warning))
+     (flymake-note (:underline (:color green :style 'line)))
+
      ;; flyspell
      (flyspell-duplicate (:underline (:color fg0 :style 'line)))
      (flyspell-incorrect (:underline (:color fg0 :style 'line)))
@@ -376,6 +381,8 @@
      (magit-section-heading             (:background bg :foreground fg1))
      (magit-section-highlight           (:weight 'bold))
      (magit-dimmed                      (:inherit 'shadow))
+     (magit-process-ng                  (:foreground red))
+     (magit-process-ok                  (:foreground green))
 
      ;; orderless
      (orderless-match-face-0 (:foreground fg2))
@@ -497,6 +504,7 @@
      ;; eglot
      (eglot-inlay-hint-face       (:foreground fg0 :background bg1 :height 0.8))
      (eglot-highlight-symbol-face (:underline t))
+     (eglot-mode-line nil)
 
      ;; sh-mode
      (sh-escaped-newline (:inherit 'font-lock-string-face))
@@ -541,6 +549,7 @@
      ;; markdown
      (markdown-pre-face (:inherit 'shadow))
      (markdown-inline-code-face (:foreground fg1))
+     (markdown-highlighting-face (:underline (:color fg2 :style 'line)))
 
      ;; doom modeline
      (doom-modeline-panel (:foreground fg2))
