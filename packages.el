@@ -295,6 +295,8 @@
 
 (use-package markdown-mode
   :ensure t
+  :config
+  (add-hook 'gfm-mode-hook 'visual-line-mode)
   :mode ("\\.md\\'" . gfm-mode))
 
 (use-package meow
