@@ -12,11 +12,6 @@
   :ensure t
   :hook (ansible-mode . ansible-doc-mode))
 
-(use-package app-launcher
-  :if (daemonp)
-  :config
-  (load-file (concat user-emacs-directory "funs/app-launcher-funs.el")))
-
 (use-package autothemer
   :ensure t
   :config
