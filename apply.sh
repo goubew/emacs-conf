@@ -19,7 +19,7 @@ mkdir -p "$HOME/.emacs.d/funs"
 mkdir -p "$HOME/.saves"
 mkdir -p "$HOME/org"
 
-for file in *.el; do
+for file in *.el *.eld; do
   file_basename="$(basename $file)"
   safe_link "${SCRIPT_DIR}/${file}" "$HOME/.emacs.d/${file_basename}"
 done

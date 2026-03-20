@@ -353,6 +353,22 @@
 (use-package snw-mode
   :mode (("\\.snw\\'" . snw-mode)))
 
+(use-package tempel
+  :ensure t
+  :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
+         ("M-*" . tempel-insert))
+  :init
+  (defun tempel-setup-capf ()
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand completion-at-point-functions)))
+  (add-hook 'conf-mode-hook 'tempel-setup-capf)
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf)
+  (setq tempel-path (concat user-emacs-directory "templates.eld"))
+  :config
+  (define-key tempel-map (kbd "M-n") #'tempel-next)
+  (define-key tempel-map (kbd "M-p") #'tempel-previous))
+
 (use-package treesit-auto
   :ensure t
   :init
@@ -383,10 +399,6 @@
 (use-package yaml-mode
   :ensure t
   :mode ("\\.ya?ml\\'" . yaml-mode))
-
-(use-package yasnippet
-  :ensure t
-  :hook (prog-mode . yas-minor-mode))
 
 (use-package zone-nyan
   :ensure t
