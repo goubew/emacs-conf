@@ -224,6 +224,10 @@
   :ensure t
   :commands 'git-timemachine)
 
+(use-package go-mode
+  :ensure t
+  :mode ("\\.go\\'" . go-mode))
+
 (use-package groovy-mode
   :ensure t
   :mode ("\\.\\(groovy\\|gradle\\)\\'" . groovy-mode))
