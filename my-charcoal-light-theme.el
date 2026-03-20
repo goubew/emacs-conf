@@ -6,10 +6,10 @@
 
  ((((class color) (min-colors #xFFFFFF))) ; col 2 Xterm/256
 
-  (bg3 "#ad9c74")
-  (bg2 "#bcab85")
-  (bg1 "#c9ba96")
-  (bg "#daceb0") ;; Default bg
+  (bg3 "#bcab85")
+  (bg2 "#d2c4a4")
+  (bg1 "#e7ddc4")
+  (bg "#fdf6e3") ;; Default bg
 
   (fg2 "#150f05")
   (fg1 "#2e2412")
