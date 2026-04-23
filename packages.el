@@ -115,8 +115,8 @@
         xref-show-definitions-function #'consult-xref)
   :config
   (consult-customize
-   consult-source-bookmark consult-source-file-register
-   consult-source-recent-file consult-source-project-recent-file
+   consult-source-recent-file
+   consult-source-project-recent-file
    :preview-key "M-.")
   (setq completion-in-region-function #'consult-completion-in-region))
 
@@ -367,14 +367,6 @@
   :config
   (define-key tempel-map (kbd "M-n") #'tempel-next)
   (define-key tempel-map (kbd "M-p") #'tempel-previous))
-
-(use-package treesit-auto
-  :ensure t
-  :init
-  (setq treesit-auto-install 'prompt)
-  :hook (after-init . global-treesit-auto-mode)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all))
 
 (use-package vertico
   :ensure t

@@ -77,7 +77,9 @@
 
   (setq display-buffer-alist
         '(
-          ((major-mode . grep-mode)
+          ((or
+            (major-mode . grep-mode)
+            (major-mode . compilation-mode))
            (display-buffer-in-side-window)
            (side . bottom)
            (window-height . 0.25))
