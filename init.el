@@ -35,17 +35,23 @@
   (setq
    auto-save-file-name-transforms '((".*" "~/.saves/" t))
    backup-directory-alist '(("." . "~/.saves"))
+   bidi-inhibit-bpa t
+   compilation-scroll-output 'first-error
    enable-recursive-minibuffers t
    frame-title-format "Emacs"
    help-window-select t
    inhibit-startup-screen t
    isearch-lazy-count t
    ispell-program-name "aspell"
+   kill-do-not-save-duplicates t
    mac-command-modifier 'control
    overflow-newline-into-fringe nil
+   read-process-output-max (* 4 1024 1024) ; 4MB
    recentf-max-menu-items 25
    recentf-max-saved-items 25
+   redisplay-skip-fontification-on-input t
    ring-bell-function 'ignore
+   save-interprogram-paste-before-kill t
    sentence-end-double-space nil
    scroll-conservatively 33
    scroll-margin 2
@@ -60,6 +66,8 @@
    x-underline-at-descent-line t)
 
   (setq-default
+   bidi-display-reordering 'left-to-right
+   bidi-paragraph-direction 'left-to-right
    fill-column 79
    indent-tabs-mode nil
    tab-width 4
