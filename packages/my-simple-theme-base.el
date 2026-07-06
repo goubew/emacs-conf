@@ -58,6 +58,10 @@
      (match                           (:foreground fg1))
      (vertical-border                 (:foreground bg1))
 
+     ;; anzu
+     (anzu-mode-line          (:inherit 'mode-line))
+     (anzu-mode-line-no-match (:inherit 'anzu-mode-line))
+
      ;; whitespace-mode
      (whitespace-empty            (:inherit 'shadow))
      (whitespace-hspace           (:inherit 'shadow))
@@ -125,8 +129,9 @@
      (consult-narrow-indicator (:foreground fg1))
 
      ;; completion-preview
-     (completion-preview-common (:foreground fg0))
-     (completion-preview-exact (:foreground fg0 (:underline (:color fg0 :style 'line))))
+     (completion-preview (:foreground aqua))
+     (completion-preview-common (:foreground aqua))
+     (completion-preview-exact (:foreground aqua (:underline (:color aqua :style 'line))))
 
      ;; custom
      (custom-button
