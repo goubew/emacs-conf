@@ -207,6 +207,7 @@
 
 (use-package evil
   :ensure t
+  :demand t
   :init
   (setq
    evil-default-state 'emacs
@@ -244,7 +245,7 @@
   (evil-set-initial-state 'help-mode 'emacs)
   (evil-set-initial-state 'grep-mode 'emacs)
   (load-file (concat user-emacs-directory "funs/evil-funs.el"))
-  (evil-mode)
+  (evil-mode 1)
   :bind (:map evil-normal-state-map
               ("SPC" . my-emulate-ctrl-c)))
 
