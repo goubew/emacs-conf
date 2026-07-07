@@ -118,6 +118,11 @@
         (add-hook 'server-after-make-frame-hook #'my-set-font)
       (my-set-font)))
 
+  (key-translate "C-x" "C-h")
+  (key-translate "C-c" "C-g")
+  (key-translate "C-g" "C-x")
+  (key-translate "C-h" "C-c")
+
   :bind (("C-c s" . save-buffer)
          ("C-c =" . indent-region)
          ("C-c u" . universal-argument)
