@@ -181,7 +181,7 @@
      (flyspell-incorrect (:underline (:color fg0 :style 'line)))
 
      ;; diff
-     (diff-added (:foreground fg2))
+     (diff-added (:foreground green))
      (diff-changed (:foreground fg1))
      (diff-changed-unspecified (:foreground fg1))
      (diff-context (:foreground fg))
@@ -194,10 +194,10 @@
      (diff-indicator-added (:inherit 'diff-added))
      (diff-indicator-changed (:inherit 'diff-changed))
      (diff-indicator-removed (:inherit 'diff-removed))
-     (diff-refine-added    (:background bg2 :foreground fg2))
-     (diff-refine-changed  (:background bg2 :foreground fg))
-     (diff-refine-removed  (:background bg2 :foreground fg0))
-     (diff-removed (:foreground fg0))
+     (diff-refine-added    (:weight 'bold :inherit 'diff-added))
+     (diff-refine-changed  (:weight 'bold :inherit 'diff-changed))
+     (diff-refine-removed  (:weight 'bold :inherit 'diff-removed))
+     (diff-removed (:foreground red))
 
      ;; diff-hl
      (diff-hl-change (:foreground fg :background fg))
@@ -330,7 +330,6 @@
      (lui-time-stamp-face           (:weight 'bold))
      (lui-irc-colors-monospace-face nil)
 
-     ;; TODO: Fix magit diff section
      ;; magit
      (magit-blame-highlight
       (:extend t :foreground fg2 :background bg2))
@@ -368,18 +367,19 @@
      (magit-log-date                    (:foreground fg1))
      (magit-log-author                  (:foreground fg1))
      (magit-log-graph                   (:foreground fg1))
-     (magit-diffstat-removed            (:foreground fg0))
-     (magit-diffstat-added              (:foreground fg2))
-     (magit-diff-context                (:foreground fg))
-     (magit-diff-context-highlight      (:background bg1 :foreground fg))
+     (magit-diffstat-removed            (:foreground red))
+     (magit-diffstat-added              (:foreground green))
+     (magit-diff-context                (:foreground fg0))
+     (magit-diff-context-highlight      (:background bg1 :inherit 'magit-diff-context))
      (magit-diff-base                   (:inherit 'default))
-     (magit-diff-base-highlight         (:background bg1 :foreground fg0))
+     (magit-diff-base-highlight         (:weight 'bold :foreground fg0))
      (magit-diff-file-heading           (:inherit 'default))
-     (magit-diff-removed                (:foreground fg0))
-     (magit-diff-removed-highlight      (:background bg1 :foreground fg0))
-     (magit-diff-added                  (:foreground fg2))
-     (magit-diff-added-highlight        (:background bg1 :foreground fg2))
-     (magit-diff-hunk-heading           (:background bg2 :foreground fg1))
+     (magit-diff-file-heading-highlight (:background bg1 :weight 'bold))
+     (magit-diff-removed                (:foreground red))
+     (magit-diff-removed-highlight      (:background bg1 :weight 'bold :inherit 'magit-diff-removed))
+     (magit-diff-added                  (:foreground green))
+     (magit-diff-added-highlight        (:background bg1 :weight 'bold :inherit 'magit-diff-added))
+     (magit-diff-hunk-heading           (:background bg1 :foreground fg1))
      (magit-diff-hunk-heading-highlight
       (:background bg2 :foreground fg1 :weight 'bold))
      (magit-section-heading-selection   (:background bg :foreground fg1))
