@@ -7,7 +7,10 @@
               ("C-c m o" . my-swap-h-c-file)))
 
 (use-package completion-preview
-  :hook ((prog-mode text-mode) . completion-preview-mode))
+  :hook ((prog-mode text-mode) . completion-preview-mode)
+  :bind (:map completion-preview-active-mode-map
+         ("M-n" . completion-preview-next-candidate)
+         ("M-p" . completion-preview-prev-candidate)))
 
 (use-package css-mode
   :defer t
