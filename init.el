@@ -214,3 +214,7 @@
    tab-bar-separator "|"
    tab-bar-new-button-show nil
    tab-bar-close-button-show nil))
+
+(use-package winner
+  :init
+  (winner-mode 1))
