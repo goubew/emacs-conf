@@ -19,3 +19,13 @@
           '(("gnu" . 10)
             ("nongnu" . 5)
             ("melpa" . 1)))))
+
+;; Adds repeat support to a whole keymap at once
+;; From Karthinks "It Bears Repeating"
+(defun repeatize (keymap)
+  "Add `repeat-mode' support to a KEYMAP."
+  (map-keymap
+   (lambda (_key cmd)
+     (when (symbolp cmd)
+       (put cmd 'repeat-map keymap)))
+   (symbol-value keymap)))

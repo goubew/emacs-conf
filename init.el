@@ -207,6 +207,10 @@
   :init
   (setq sh-basic-offset 2))
 
+(use-package smerge-mode
+  :config
+  (repeatize 'smerge-mode-map))
+
 (use-package tab-bar
   :defer t
   :init
