@@ -280,11 +280,6 @@
                ("," . er/contract-region)
                ("." . er/expand-region))))
 
-(use-package vc-fossil
-  :ensure t
-  :defer t
-  :init (add-to-list 'vc-handled-backends 'Fossil t))
-
 (use-package flyspell-correct
   :ensure t
   :bind ("C-C e s" . flyspell-correct-wrapper))
@@ -301,12 +296,9 @@
   :ensure t
   :mode ("\\.\\(groovy\\|gradle\\)\\'" . groovy-mode))
 
-(use-package highlight-indent-guides
+(use-package hcl-mode
   :ensure t
-  :hook (yaml-mode . highlight-indent-guides-mode)
-  :config
-  (setq highlight-indent-guides-auto-enabled nil)
-  (setq highlight-indent-guides-method 'bitmap))
+  :mode ("\\.hcl\\'" . hcl-mode))
 
 (use-package helpful
   :ensure t
@@ -315,7 +307,14 @@
          ("C-h k" . helpful-key)
          ("C-c C-d" . helpful-at-point)
          ("C-h F" . helpful-function)
-         ("C-h C" . helpful-command)))
+ 
+(use-package highlight-indent-guides
+  :ensure t
+  :hook (yaml-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-auto-enabled nil)
+  (setq highlight-indent-guides-method 'bitmap))
+        ("C-h C" . helpful-command)))
 
 (use-package js
   :defer t
@@ -424,6 +423,11 @@
   :config
   (define-key tempel-map (kbd "M-n") #'tempel-next)
   (define-key tempel-map (kbd "M-p") #'tempel-previous))
+
+(use-package vc-fossil
+  :ensure t
+  :defer t
+  :init (add-to-list 'vc-handled-backends 'Fossil t))
 
 (use-package vertico
   :ensure t
