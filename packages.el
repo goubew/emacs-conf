@@ -307,14 +307,14 @@
          ("C-h k" . helpful-key)
          ("C-c C-d" . helpful-at-point)
          ("C-h F" . helpful-function)
- 
+         ("C-h C" . helpful-command)))
+
 (use-package highlight-indent-guides
   :ensure t
   :hook (yaml-mode . highlight-indent-guides-mode)
   :config
   (setq highlight-indent-guides-auto-enabled nil)
   (setq highlight-indent-guides-method 'bitmap))
-        ("C-h C" . helpful-command)))
 
 (use-package js
   :defer t
