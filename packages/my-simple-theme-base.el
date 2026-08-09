@@ -130,9 +130,9 @@
      (consult-narrow-indicator (:foreground fg1))
 
      ;; completion-preview
-     (completion-preview (:foreground aqua))
-     (completion-preview-common (:foreground aqua))
-     (completion-preview-exact (:foreground aqua (:underline (:color aqua :style 'line))))
+     (completion-preview (:foreground yellow))
+     (completion-preview-common (:foreground yellow))
+     (completion-preview-exact (:foreground yellow (:underline (:color yellow :style 'line))))
 
      ;; custom
      (custom-button
