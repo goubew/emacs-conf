@@ -1,4 +1,4 @@
-;;;; lilypond-mode.el -- Major mode for editing GNU LilyPond music scores
+;;;; lilypond-mode.el -- Major mode for editing GNU LilyPond music scores  -*- lexical-binding: t; -*-
 ;;;; This file is part of LilyPond, the GNU music typesetter.
 ;;;;
 ;;;; Copyright (C) 1999--2023 Jan Nieuwenhuizen <janneke@gnu.org>

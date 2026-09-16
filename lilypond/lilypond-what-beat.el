@@ -1,4 +1,4 @@
-;;;; lilypond-what-beat.el --- Emacs support for checking beats and bar checks.
+;;;; lilypond-what-beat.el --- Emacs support for checking beats and bar checks.  -*- lexical-binding: t; -*-
 ;;;;
 ;;;; This file is part of LilyPond, the GNU music typesetter.
 ;;;;

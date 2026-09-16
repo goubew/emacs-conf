@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun my-org-header-link ()
   "Uses org-goto to prompt for a heading and creates a link"
   (interactive)

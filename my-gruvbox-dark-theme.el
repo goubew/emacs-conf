@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'my-theme-base)
 
 (my-theme-deftheme

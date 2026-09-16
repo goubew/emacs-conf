@@ -1,4 +1,4 @@
-;;; lilypond-indent.el --- Auto-indentation for lilypond code
+;;; lilypond-indent.el --- Auto-indentation for lilypond code  -*- lexical-binding: t; -*-
 ;;;;
 ;;;; This file is part of LilyPond, the GNU music typesetter.
 ;;;;

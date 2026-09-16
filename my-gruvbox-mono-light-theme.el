@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'my-simple-theme-base)
 
 (my-simple-theme-deftheme

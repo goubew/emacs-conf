@@ -1,4 +1,4 @@
-;;;; lilypond-font-lock.el --- syntax coloring for LilyPond mode
+;;;; lilypond-font-lock.el --- syntax coloring for LilyPond mode  -*- lexical-binding: t; -*-
 ;;;;
 ;;;; This file is part of LilyPond, the GNU music typesetter.
 ;;;;

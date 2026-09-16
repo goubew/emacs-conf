@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun my-count-paragraphs (start end)
   "Return number of paragraphs between START and END."
   (save-excursion

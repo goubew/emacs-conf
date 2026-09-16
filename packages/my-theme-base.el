@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'autothemer)
 
 (defmacro my-theme-deftheme (name description palette)

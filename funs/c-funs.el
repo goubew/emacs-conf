@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'project)
 (defun my-swap-h-c-file ()
   "Finds the associated .h or .c file in the current project"

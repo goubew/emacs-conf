@@ -1,4 +1,4 @@
-;;; lilypond-init.el --- Startup code for LilyPond mode
+;;; lilypond-init.el --- Startup code for LilyPond mode  -*- lexical-binding: t; -*-
 ;;
 ;; Instructions, extracted from Documentation/topdocs/INSTALL.texi: 
 

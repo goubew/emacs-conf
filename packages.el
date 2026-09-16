@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (use-package aggressive-indent
   :ensure t
   :commands 'aggressive-indent-mode)

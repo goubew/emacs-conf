@@ -1,4 +1,4 @@
-;;; snw-mode.el --- snw output syntax highlighting
+;;; snw-mode.el --- snw output syntax highlighting  -*- lexical-binding: t; -*-
 
 ;; This file is not part of GNU Emacs.
 

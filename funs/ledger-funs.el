@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun my--find-expense-matches ()
   "finds want or need Expenses: in the buffer to complete"
   (delete-dups (save-match-data

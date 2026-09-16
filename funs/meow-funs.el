@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun my-emulate-ctrl-c ()
   (interactive)
   (setq unread-command-events
