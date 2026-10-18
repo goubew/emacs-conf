@@ -18,6 +18,11 @@
   :init
   (setq css-indent-offset 2))
 
+(use-package dabbrev
+  :defer t
+  :init
+  (setq dabbrev-case-fold-search nil))
+
 (use-package eglot
   :init
   (setq eldoc-echo-area-use-multiline-p nil)
