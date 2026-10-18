@@ -210,6 +210,8 @@
   :ensure t
   :demand t
   :init
+  ;; Something seems broken about the published evil version
+  (defvar evil-mode-buffers '())
   (setq
    evil-default-state 'emacs
    evil-disable-insert-state-bindings t
