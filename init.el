@@ -35,6 +35,11 @@
          ("C-c l r" . eglot-rename)
          ("C-c l u" . xref-find-references)))
 
+(use-package eldoc
+  :defer t
+  :init
+  (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly))
+
 (use-package elec-pair
   :defer t
   :hook (prog-mode . electric-pair-local-mode))
@@ -135,6 +140,8 @@
          ("C-w" . backward-kill-word)))
 
 (use-package flymake
+  :init
+  (setq flymake-show-diagnostics-at-end-of-line t)
   :bind (("C-c e n" . flymake-goto-next-error)
          ("C-c e p" . flymake-goto-prev-error)))
 
@@ -155,6 +162,11 @@
 (use-package hippie-exp
   :defer t
   :bind ("M-/" . hippie-expand))
+
+(use-package isearch
+  :defer t
+  :init
+  (setq isearch-allow-motion t))
 
 (use-package java-ts-mode
   :defer t

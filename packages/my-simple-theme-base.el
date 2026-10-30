@@ -16,11 +16,12 @@
      (variable-pitch-text (:family nil))
 
      (cursor              (:background fg2 :foreground bg))
-     (fringe              (:background bg1))
+     (fringe              (:background bg2))
      (highlight           (:background bg1))
      (hl-line             (:background bg1))
      (link                (:foreground fg :underline t))
      (link-visited        (:foreground fg :underline t))
+     (margin              (:background bg1))
      (minibuffer-prompt   (:foreground fg0))
      (mode-line           (:background fg :foreground bg))
      (mode-line-inactive  (:background bg1))
