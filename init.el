@@ -190,7 +190,7 @@
   (define-key org-mode-map (kbd "C-j") nil)
   (add-hook 'org-mode-hook (lambda ()
                              (electric-indent-mode -1)
-                             (visual-line-mode))))
+                             (visual-line-mode 1))))
 
 (use-package ox-ascii
   :defer t

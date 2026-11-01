@@ -387,10 +387,14 @@
   (remove-hook 'olivetti-mode-on-hook 'visual-line-mode)
   (defun my-olivetti-window-hook ()
     "Enable olivetti based on mode and window configuration"
-    (if (and (derived-mode-p 'text-mode 'prog-mode 'conf-mode)
-             (window-full-width-p (selected-window)))
-        (olivetti-mode 1)
-      (olivetti-mode -1)))
+    (walk-windows
+     (lambda (window)
+       (with-selected-window window
+         (if (and (derived-mode-p 'text-mode 'prog-mode
+                                  'conf-mode 'helpful-mode)
+                  (one-window-p t))
+             (olivetti-mode 1)
+           (olivetti-mode -1))))))
   (add-hook 'window-configuration-change-hook 'my-olivetti-window-hook))
 
 (use-package orderless
