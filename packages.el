@@ -252,10 +252,6 @@
   :bind (:map evil-normal-state-map
               ("SPC" . my-emulate-ctrl-c)))
 
-(use-package evil-anzu
-  :ensure t
-  :after (anzu evil))
-
 (use-package evil-numbers
   :ensure t
   :after evil
@@ -403,10 +399,6 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles partial-completion)))))
-
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package rainbow-mode
   :ensure t

@@ -12,15 +12,24 @@
   (bg1 "#e7ddc4")
   (bg "#fdf6e3") ;; Default bg
 
-  (fg2 "#150f05")
+  (fg2 "#2e2412")
   (fg1 "#2e2412")
-  (fg "#4a3c25") ;; Default fg
-  (fg0 "#695a40")
-  (red "#9d0006")
-  (green "#79740e")
-  (yellow "#b57614")
-  (blue "#076678")
-  (purple "#8f3f71")
-  (aqua "#427b58")
-  (orange "#af3a03")
+  (fg "#2e2412") ;; Default fg
+  (fg0 "#695a40") ;; Color accent
+
+  (bgred "#fbcfca")
+  (bggreen "#cecfa4")
+  (bgyellow "#fae3af")
+  (bgblue "#bbbfbd")
+  (bgpurple "#d3b6be")
+  (bgaqua "#b1c0ac")
+  (bgorange "#fedbbe")
+
+  (fgred "#9d0006")
+  (fggreen "#79740e")
+  (fgyellow "#b57614")
+  (fgblue "#076678")
+  (fgpurple "#8f3f71")
+  (fgaqua "#427b58")
+  (fgorange "#af3a03")
   ))
